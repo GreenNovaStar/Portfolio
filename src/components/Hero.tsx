@@ -68,20 +68,17 @@ export function Hero() {
                 <span className="c-com">{card.comment}</span>
               </span>
               <span className="ln">
-                <span className="c-key">type</span> <span className="c-fn">{card.typeName}</span>{' '}
-                <span className="c-key">struct</span> {'{'}
+                <span className="c-key">class</span> <span className="c-fn">{card.typeName}</span>:
               </span>
               {card.fields.map((f) => (
                 <span className="ln" key={f.key}>
                   {'  '}
-                  <span className="c-key">{f.key}</span>: <span className="c-str">{f.value}</span>,
+                  <span className="c-key">{f.key}</span> = <span className="c-str">{f.value}</span>
                 </span>
               ))}
-              <span className="ln">{'}'}</span>
+              <span className="ln">&nbsp;</span>
               <span className="ln">
-                <span className="c-fn">{card.call.split('.')[0]}</span>.
-                <span className="c-fn">{card.call.split('.')[1]?.replace('()', '')}</span>(){' '}
-                <span className="cursor" />
+                <span className="c-fn">{card.call}</span> <span className="cursor" />
               </span>
             </div>
           </Reveal>

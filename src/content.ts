@@ -1,9 +1,10 @@
 /**
  * All site copy lives here so you can edit text without touching components.
- * Replace the PLACEHOLDER values below with your real details.
  *
- * Tip: anything in `hero.titleLead` / `hero.titleGradient` renders as the big
- * headline; the gradient part gets the accent treatment.
+ * Content is kept at (or below) the level of detail already public on your
+ * LinkedIn — public AWS product names + problem/approach/tech, no internal
+ * architecture. Items marked PLACEHOLDER are things your notes didn't contain;
+ * fill those in before going live.
  */
 
 export type IconName =
@@ -55,8 +56,8 @@ export const content = {
     name: 'Brian Yip',
     handle: '~/sde @ aws',
     initials: 'BY',
-    email: 'brian@brianyip.dev', // PLACEHOLDER
-    resumeHref: '#top', // PLACEHOLDER: link to a résumé PDF (e.g. /resume.pdf)
+    email: 'brian@example.com', // PLACEHOLDER: your real contact email
+    resumeHref: '#top', // PLACEHOLDER: drop a PDF in public/ and use '/Portfolio/resume.pdf'
   },
 
   nav: [
@@ -67,154 +68,164 @@ export const content = {
   ],
 
   hero: {
-    availability: 'Open to staff / senior IC conversations',
-    titleLead: 'Software that keeps its',
-    titleGradient: 'promises under load.',
+    availability: 'Currently building agentic AI at AWS',
+    titleLead: 'I build systems that make hard things',
+    titleGradient: 'reliable and automatic.',
     // Rich lede: {b: "..."} segments render bold/emphasized.
     lede: [
       "I'm ",
       { b: 'Brian Yip' },
-      ', a Software Development Engineer at AWS working on ',
-      { b: 'distributed systems and cloud infrastructure' },
-      ' — control planes, failover, and the unglamorous plumbing that makes "it just works" true.',
+      ', a Software Development Engineer at AWS. Right now I build ',
+      { b: 'agentic AI systems' },
+      ' that automate enterprise cloud migration — and before that I shipped protocol, backend, and console features for managed ',
+      { b: 'B2B file transfer' },
+      '.',
     ] as Array<string | { b: string }>,
     stats: [
-      { value: '6+', label: 'years shipping' },
-      { value: '4', label: 'regions on-call' },
-      { value: 'Go · Rust', label: 'primary stack' },
+      { value: 'AI agents', label: 'built on Bedrock' },
+      { value: '20+', label: 'AWS regions shipped to' },
+      { value: 'Python · Java · TS', label: 'primary stack' },
     ],
-    // The hero code card. Kept generic; edit freely.
+    // The hero code card (illustrative). Rendered as a small Python snippet.
     codeCard: {
-      path: '~/brian/profile.go',
-      comment: '// what I optimize for',
+      path: '~/brian/profile.py',
+      comment: '# what I optimize for',
       typeName: 'Engineer',
       fields: [
-        { key: 'Focus', value: '"resilient control planes"' },
-        { key: 'Cares', value: '["correctness", "latency", "blast radius"]' },
-        { key: 'Ships', value: '"small, reversible, observable"' },
-        { key: 'OnCall', value: '"calm"' },
+        { key: 'focus', value: '"agentic AI + reliable systems"' },
+        { key: 'cares', value: '["correctness", "clarity", "shipping"]' },
+        { key: 'ships', value: '"small, reversible, observable"' },
+        { key: 'now', value: '"AWS Transform"' },
       ],
-      call: 'brian.Reply()',
+      call: 'Engineer().reply()',
     },
   },
 
   about: {
     // Rich lead paragraph: {hl: "..."} segments get the gradient highlight.
     lead: [
-      'I build the layer most people never see and everyone depends on — the ',
-      { hl: 'coordination, state, and failover' },
-      ' that lets a fleet behave like one predictable system.',
+      'I build the software that makes complex enterprise workflows ',
+      { hl: 'reliable and automatic' },
+      ' — from AI agents that replace weeks of manual analysis to file-transfer protocols that resume instead of starting over.',
     ] as Array<string | { hl: string }>,
-    sub: "My work sits where design docs meet 3 a.m. pages: partial failures, consistency trade-offs, and rollout safety. I care about instrumentation before features, and I'd rather ship a smaller change I can reason about than a clever one I can't.",
-    interests: ['consensus', 'control planes', 'observability', 'chaos testing', 'API design'],
+    sub: 'I like going deep — chasing a bug down to a single byte at a protocol boundary — and shipping full-stack, from a React console to the CDK infrastructure under it. I care about correctness, honest engineering, and systems a teammate can reason about at 3 a.m.',
+    interests: [
+      'agentic AI',
+      'Amazon Bedrock',
+      'B2B protocols',
+      'event-driven systems',
+      'full-stack',
+      'developer experience',
+    ],
     glance: [
       { k: 'role', v: 'SDE II · AWS' },
-      { k: 'domain', v: 'Distributed systems / infra' },
-      { k: 'based', v: 'Seattle, WA · remote-friendly' },
-      { k: 'writes', v: 'Go, Rust, Java, TypeScript' },
-      { k: 'runs on', v: 'Kubernetes · gRPC · Terraform' },
+      { k: 'focus', v: 'Agentic AI · cloud migration' },
+      { k: 'previously', v: 'Transfer Family · B2B' },
+      { k: 'writes', v: 'Python, Java, TypeScript' },
+      { k: 'builds with', v: 'Bedrock · Lambda · CDK' },
     ],
   },
 
   work: {
     tag: 'Selected work',
     title: "Systems I've designed and shipped",
-    intro: 'A few projects that show how I think about failure, coordination, and developer experience.',
+    intro: 'A few projects that show how I think about automation, reliability, and developer experience.',
     projects: [
       {
-        name: 'Helios',
-        badge: 'flagship',
-        role: 'Lead engineer · regional failover control plane',
+        name: 'AWS Transform',
+        badge: 'current',
+        role: 'Compute & Cloud Economics AI agents',
         blurb:
-          'A control plane that orchestrates safe, staged failover across regions — turning a manual runbook into a reviewed, reversible workflow with pre-flight checks and automatic rollback on health regression.',
-        stack: ['Go', 'etcd', 'gRPC', 'Kubernetes', 'OpenTelemetry'],
-        year: '2023 — present',
+          'Two core AI agents in an agentic platform that turns weeks of manual solutions-architect analysis into an automated pipeline — right-sizing compute across On-Demand / RI / BYOL pricing models and projecting on-prem→AWS migration ROI for enterprises weighing multi-million-dollar moves.',
+        stack: ['Python', 'Amazon Bedrock', 'strands-agents', 'EC2'],
+        year: '2026 — present',
         icon: 'orbit',
         href: '#work',
-        linkLabel: 'Case study',
+        linkLabel: 'Read more',
         feature: true,
       },
       {
-        name: 'Driftless',
-        role: 'Config drift detection for infra fleets',
+        name: 'AS2 Restart Protocol',
+        role: 'Transfer Family · protocol + data plane',
         blurb:
-          'A schema-aware diff engine that compares declared vs. observed infrastructure state and surfaces meaningful drift — grouping noise, ranking risk, and opening pre-filled remediation PRs.',
-        stack: ['Rust', 'Terraform', 'Postgres'],
-        year: '2022',
+          "Added restart support to AWS Transfer Family's AS2 so large enterprise transfers resume from an interruption instead of restarting at byte zero — ETag-based negotiation and partial S3 reads. Tracked a subtle boundary bug down to a single byte with protocol-level instrumentation.",
+        stack: ['Java', 'AS2', 'Amazon S3'],
+        year: '2025',
         icon: 'pulse',
         href: '#work',
         linkLabel: 'View project',
       },
       {
-        name: 'Quorum',
-        role: 'Deterministic chaos harness',
+        name: 'AI Progress for EDI Mapping',
+        role: 'B2B Data Interchange · React console',
         blurb:
-          'A fault-injection framework for consensus code that replays deterministic partition and clock-skew scenarios, so a flaky race becomes a repeatable test you can bisect and fix.',
-        stack: ['Go', 'Raft', 'Docker'],
-        year: '2021',
+          'The console experience for Bedrock-powered EDI mapping generation — including a probabilistic progress indicator that paces honestly against historical latency for an AI operation with no real progress signal, holding at 99% until the result lands.',
+        stack: ['TypeScript', 'React', 'Amazon Bedrock'],
+        year: '2024',
         icon: 'node',
         href: '#work',
         linkLabel: 'View project',
       },
     ] as Project[],
-    // Region labels for the feature card's topology diagram.
-    topologyNodes: ['us-west-2', 'eu-west-1', 'us-east-1', 'ap-south-1'],
-    topologyCore: 'helios-cp',
+    // Region labels for the feature card's topology diagram (illustrative:
+    // the agent platform's analysis domains around a central assessment).
+    topologyNodes: ['compute', 'economics', 'pricing', 'network'],
+    topologyCore: 'assessment',
   },
 
   experience: {
     tag: 'Experience & stack',
     title: "Where I've been, what I reach for",
-    intro: 'Roughly six years across infrastructure teams — startup breadth, then depth at scale.',
+    intro: 'Two teams at AWS — B2B data transfer, then agentic AI for cloud migration.',
     timeline: [
       {
-        when: '2023 — now',
+        when: '2026 — now',
         org: 'Amazon Web Services',
         badge: 'current',
-        role: 'Software Development Engineer II',
+        role: 'SDE II · AWS Transform',
         blurb:
-          'Own components of a multi-region control plane; lead failover safety work and mentor two engineers through design reviews.',
+          'Own two core AI agents — Compute and Cloud Economics — in an agentic platform that automates enterprise VMware-to-AWS migration assessments. Built the executive-report output pipeline (PPTX / PDF / XLSX) across thousands of servers per assessment.',
       },
       {
-        when: '2021 — 2023',
+        when: '2026',
         org: 'Amazon Web Services',
-        role: 'Software Development Engineer I',
+        badge: 'promoted in 3 mo',
+        role: 'SDE I · AWS Transform',
         blurb:
-          'Built internal tooling for config integrity and rollout safety across a large service fleet.',
+          'Joined a greenfield migration-assessment platform and built the Compute and Cloud Economics agents from scratch — ramping on multi-agent architecture and cloud economics from zero.',
       },
       {
-        when: '2019 — 2021',
-        org: 'Northlink Systems',
-        badge: 'startup',
-        role: 'Backend Engineer',
+        when: '— 2025',
+        org: 'Amazon Web Services',
+        role: 'SDE I · Transfer Family & B2B',
         blurb:
-          'Early infra hire — designed the event pipeline and on-call practice as the platform grew from prototype to production.',
+          'Full-stack feature ownership across managed B2B file transfer — AS2 / SFTP protocol design, React consoles, CDK infrastructure, and rollouts across 20+ AWS regions. Mentored two interns to return offers.',
       },
     ] as TimelineItem[],
     skills: {
       title: 'Toolbox',
-      subtitle: "Things I'm currently productive in.",
+      subtitle: 'What I reach for day to day.',
       groups: [
-        { label: 'Languages', items: ['Go', 'Rust', 'Java', 'TypeScript', 'Python'] },
-        { label: 'Systems', items: ['Kubernetes', 'gRPC', 'etcd', 'Kafka', 'Postgres'] },
-        { label: 'Operate', items: ['Terraform', 'OpenTelemetry', 'Prometheus'] },
+        { label: 'Languages', items: ['Python', 'Java', 'TypeScript', 'JavaScript'] },
+        { label: 'AI & data', items: ['Amazon Bedrock', 'strands-agents', 'DynamoDB', 'EventBridge'] },
+        { label: 'Build & ship', items: ['React', 'AWS CDK', 'Lambda', 'S3', 'CloudFormation'] },
       ] as SkillGroup[],
     },
   },
 
   contact: {
     titleLead: "Let's build something",
-    titleGradient: 'that stays up.',
+    titleGradient: 'worth shipping.',
     blurb:
-      "If you're hiring for hard infrastructure problems — or just want to compare notes on failover — I'd love to talk.",
+      "If you're working on agentic AI, hard backend systems, or making enterprise software genuinely reliable — I'd love to compare notes.",
   },
 
   footer: {
-    copyright: '© 2026 Brian Yip · built from scratch, no template.',
+    copyright: '© 2026 Brian Yip · built from scratch.',
     socials: [
       { label: 'GitHub', href: 'https://github.com/GreenNovaStar', icon: 'github' },
-      { label: 'LinkedIn', href: '#top', icon: 'linkedin' }, // PLACEHOLDER
-      { label: 'Email', href: 'mailto:brian@brianyip.dev', icon: 'mail' }, // PLACEHOLDER
+      { label: 'LinkedIn', href: '#top', icon: 'linkedin' }, // PLACEHOLDER: your LinkedIn URL
+      { label: 'Email', href: 'mailto:brian@example.com', icon: 'mail' }, // PLACEHOLDER
     ] as SocialLink[],
   },
 } as const;
