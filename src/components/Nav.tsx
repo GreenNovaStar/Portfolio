@@ -11,7 +11,16 @@ export function Nav() {
   return (
     <header className="nav">
       <div className="wrap nav-inner">
-        <a className="brand" href="#top" aria-label={`${meta.name}, home`}>
+        <a
+          className="brand"
+          href="#top"
+          aria-label={`${meta.name}, home`}
+          onClick={(e) => {
+            e.preventDefault();
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+          }}
+        >
           <img
             className="mark"
             src={`${import.meta.env.BASE_URL}android-chrome-192x192.png`}
@@ -32,8 +41,17 @@ export function Nav() {
               {item.label}
             </a>
           ))}
+          <span className="nav-divider" aria-hidden="true" />
           <a
-            className="nav-terminal"
+            className="nav-ext"
+            href={meta.resumeHref}
+            {...(resumeIsFile ? { download: '' } : {})}
+          >
+            Résumé
+            <Icon name="download" />
+          </a>
+          <a
+            className="nav-ext"
             href={meta.terminalUrl}
             target="_blank"
             rel="noreferrer noopener"
@@ -76,14 +94,6 @@ export function Nav() {
               <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
             </svg>
           </button>
-          <a
-            className="btn btn-ghost nav-cta"
-            href={meta.resumeHref}
-            {...(resumeIsFile ? { download: '' } : {})}
-          >
-            <Icon name="download" />
-            Résumé
-          </a>
         </div>
       </div>
     </header>

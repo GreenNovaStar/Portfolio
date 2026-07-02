@@ -14,7 +14,7 @@ export default function App() {
       <div className="grid-floor" aria-hidden="true" />
 
       <Nav />
-      <main id="top">
+      <main>
         <Hero />
         <About />
         <Projects />

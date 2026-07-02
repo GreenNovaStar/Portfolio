@@ -85,6 +85,8 @@
 
   html {
     scroll-behavior: smooth;
+    /* Offset anchor jumps so the sticky nav (~68px) never covers the target. */
+    scroll-padding-top: 84px;
   }
 
   body {
@@ -421,21 +423,67 @@
     }
   }
 
-  .hero-grid {
+  /* Centered single-column hero */
+  .hero-center {
+    text-align: center;
+    padding-top: clamp(36px, 5vh, 64px);
+    padding-bottom: clamp(72px, 9vh, 120px);
+  }
+  /* Hero photo / avatar */
+  .hero-photo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 26px;
+  }
+  .hero-photo img,
+  .hero-photo-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    /* gradient ring */
+    border: 2px solid transparent;
+    background:
+      linear-gradient(var(--surface-solid), var(--surface-solid)) padding-box,
+      var(--grad) border-box;
+    box-shadow: 0 10px 34px -12px var(--glow-2);
+  }
+  .hero-photo-placeholder {
     display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 54px;
-    align-items: center;
-    margin-top: 26px;
+    place-items: center;
+    color: var(--text-faint);
+  }
+  .hero-photo-placeholder svg {
+    width: 52px;
+    height: 52px;
+  }
+
+  /* Centered hero: dissolve the pill into a quiet status line. */
+  .hero-center .eyebrow {
+    margin-bottom: 26px;
+    padding: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+    color: var(--text-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 11.5px;
+  }
+  .hero-center .intro {
+    margin-inline: auto;
+  }
+  .hero-center .hero-meta {
+    justify-content: center;
   }
 
   h1.display {
     font-family: var(--font-display, sans-serif);
     font-weight: 600;
-    font-size: clamp(38px, 5.6vw, 66px);
+    font-size: clamp(40px, 6vw, 72px);
     line-height: 1.03;
     letter-spacing: -0.028em;
-    margin: 0 0 22px;
+    margin: 0 0 24px;
   }
   .grad-text {
     background: var(--grad);
@@ -444,25 +492,19 @@
     color: transparent;
     padding-right: 0.06em;
   }
-  .lede {
-    font-size: clamp(16px, 1.4vw, 18.5px);
+  .intro {
+    font-size: clamp(16px, 1.4vw, 19px);
     color: var(--text-dim);
-    max-width: 46ch;
+    max-width: 60ch;
     margin: 0 0 30px;
   }
-  .lede b {
+  .intro b {
     color: var(--text);
     font-weight: 550;
   }
 
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-  }
   .hero-meta {
-    margin-top: 34px;
+    margin-top: 40px;
     display: flex;
     gap: 30px;
     flex-wrap: wrap;
@@ -487,75 +529,6 @@
     width: 1px;
     align-self: stretch;
     background: var(--border);
-  }
-
-  /* ---------- Code / terminal card ---------- */
-  .term-head {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 13px 16px;
-    border-bottom: 1px solid var(--border);
-  }
-  .term-head .dots {
-    display: flex;
-    gap: 7px;
-  }
-  .term-head .dots i {
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    display: inline-block;
-    opacity: 0.85;
-  }
-  .term-head .dots i:nth-child(1) {
-    background: #ff6058;
-  }
-  .term-head .dots i:nth-child(2) {
-    background: #ffbd2e;
-  }
-  .term-head .dots i:nth-child(3) {
-    background: #28c840;
-  }
-  .term-head .path {
-    margin-left: auto;
-    font-family: var(--font-mono, monospace);
-    font-size: 11.5px;
-    color: var(--text-faint);
-  }
-  .term-body {
-    padding: 20px 20px 22px;
-    font-family: var(--font-mono, monospace);
-    font-size: 13px;
-    line-height: 1.85;
-  }
-  .term-body .ln {
-    display: block;
-  }
-  .term-body .c-key {
-    color: var(--accent);
-  }
-  .term-body .c-str {
-    color: var(--accent-2);
-  }
-  .term-body .c-com {
-    color: var(--text-faint);
-  }
-  .term-body .c-fn {
-    color: var(--text);
-  }
-  .term-body .cursor {
-    display: inline-block;
-    width: 8px;
-    height: 15px;
-    translate: 0 2px;
-    background: var(--accent);
-    animation: blink 1.1s steps(1) infinite;
-  }
-  @keyframes blink {
-    50% {
-      opacity: 0;
-    }
   }
 
   /* ---------- Section scaffolding ---------- */
@@ -880,6 +853,43 @@
     margin: 0;
   }
 
+  .tl-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 20px;
+    padding: 9px 16px;
+    align-self: start;
+    font-family: var(--font-body, sans-serif);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-dim);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    cursor: pointer;
+    transition:
+      color 0.2s var(--ease),
+      border-color 0.2s var(--ease),
+      background 0.2s var(--ease);
+  }
+  .tl-more:hover {
+    color: var(--text);
+    border-color: var(--border-hi);
+    background: var(--surface-hi);
+  }
+  .tl-more-chevron {
+    display: inline-flex;
+    transition: transform 0.25s var(--ease);
+  }
+  .tl-more-chevron svg {
+    width: 15px;
+    height: 15px;
+  }
+  .tl-more-chevron.up {
+    transform: rotate(180deg);
+  }
+
   .skills-card {
     padding: 26px;
   }
@@ -1020,8 +1030,8 @@
     white-space: nowrap;
   }
 
-  /* Terminal cross-link in the nav */
-  .nav-terminal {
+  /* Résumé + Terminal cross-links in the nav */
+  .nav-ext {
     display: inline-flex;
     align-items: center;
     gap: 5px;
@@ -1034,14 +1044,21 @@
       color 0.2s var(--ease),
       background 0.2s var(--ease);
   }
-  .nav-terminal svg {
+  .nav-ext svg {
     width: 13px;
     height: 13px;
     opacity: 0.7;
   }
-  .nav-terminal:hover {
+  .nav-ext:hover {
     color: var(--text);
     background: var(--tag-bg);
+  }
+  /* Divider between in-page anchors and external links (Résumé / Terminal). */
+  .nav-divider {
+    width: 1px;
+    align-self: stretch;
+    margin: 8px 8px;
+    background: var(--border);
   }
 
   .foot {
@@ -1089,21 +1106,16 @@
       transform: none !important;
       transition: none;
     }
-    .status-dot::before,
-    .term-body .cursor {
+    .status-dot::before {
       animation: none !important;
     }
   }
 
   /* ---------- Responsive ---------- */
   @media (max-width: 940px) {
-    .hero-grid,
     .about,
     .xp {
       grid-template-columns: 1fr;
-    }
-    .hero-grid {
-      gap: 40px;
     }
     .work-grid {
       grid-template-columns: 1fr;
@@ -1112,8 +1124,16 @@
       flex-direction: column;
       align-items: flex-start;
     }
-    .nav-links {
+    /* Collapse in-page section anchors on mobile, but keep the
+       Résumé / Terminal cross-links reachable. */
+    .nav-links a:not(.nav-ext) {
       display: none;
+    }
+    .nav-divider {
+      display: none;
+    }
+    .nav-ext {
+      padding: 8px 10px;
     }
   }
   @media (max-width: 560px) {

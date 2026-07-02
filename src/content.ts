@@ -56,9 +56,12 @@ export const content = {
   meta: {
     name: 'Brian Yip',
     handle: '~/sde @ aws',
-    email: 'brianyip5@gmail.com',
+    email: 'contact@brianyip.dev',
     resumeHref: `${import.meta.env.BASE_URL}resume.pdf`,
     terminalUrl: 'https://terminal.brianyip.dev',
+    // Hero photo: drop an image in public/ (e.g. photo.jpg) and set this to
+    // `${import.meta.env.BASE_URL}photo.jpg`. Leave '' to show the placeholder.
+    photo: '',
   },
 
   nav: [
@@ -72,34 +75,21 @@ export const content = {
     availability: 'Currently building agentic AI at AWS',
     titleLead: 'I build across the stack:',
     titleGradient: 'protocol internals to AI agents.',
-    // Rich lede: {b: "..."} segments render bold/emphasized.
-    lede: [
+    // Rich intro paragraph: {b: "..."} segments render bold/emphasized.
+    intro: [
       "I'm ",
       { b: 'Brian Yip' },
-      ', a Software Development Engineer at AWS with 4+ years shipping end-to-end for enterprise customers — from ',
-      { b: 'AS2 protocol internals and B2BI consoles' },
+      ', a Software Development Engineer at AWS with 4+ years shipping end-to-end for enterprise customers, from ',
+      { b: 'AWS Transfer Family AS2' },
       ' to the ',
       { b: 'agentic AI systems' },
       ' I build today on AWS Transform.',
     ] as Array<string | { b: string }>,
     stats: [
       { value: '4+ yrs', label: 'shipping at AWS' },
-      { value: 'Full-stack', label: 'protocol → AI agents' },
-      { value: 'Python · Java · TS', label: 'primary stack' },
+      { value: 'Full-stack', label: 'AS2 protocol → AI agents' },
+      { value: 'TS · Java · Python', label: 'Languages' },
     ],
-    // The hero code card (illustrative). Rendered as a small Python snippet.
-    codeCard: {
-      path: '~/brian/profile.py',
-      comment: '# what I optimize for',
-      typeName: 'Engineer',
-      fields: [
-        { key: 'focus', value: '"agentic AI + reliable systems"' },
-        { key: 'stack', value: '["Python", "Java", "TypeScript"]' },
-        { key: 'ships', value: '"end-to-end, enterprise scale"' },
-        { key: 'now', value: '"AWS Transform"' },
-      ],
-      call: 'Engineer().reply()',
-    },
   },
 
   about: {
@@ -107,22 +97,22 @@ export const content = {
     lead: [
       'I build the software that makes complex enterprise workflows ',
       { hl: 'reliable and automatic' },
-      ' — from AI agents that replace weeks of manual analysis to file-transfer protocols that resume instead of starting over.',
+      ', from AI agents that replace weeks of manual analysis to file-transfer protocols that resume instead of starting over.',
     ] as Array<string | { hl: string }>,
-    sub: 'I like going deep — chasing a bug down to a single byte at a protocol boundary — and shipping full-stack, from a React console to the CDK infrastructure under it. I care about correctness, honest engineering, and systems a teammate can reason about at 3 a.m.',
+    sub: 'I like going deep, chasing a bug down to a single byte at a protocol boundary, then shipping full-stack from a React console to the CDK infrastructure under it. I care about correctness, honest engineering, and systems a teammate can reason about at 3 a.m.',
     interests: [
-      'agentic AI',
+      'Agentic AI',
       'Strands Agents',
       'AS2 / EDI protocols',
-      'distributed systems',
-      'full-stack',
-      'developer experience',
+      'Distributed systems',
+      'Full-stack',
+      'Developer experience',
     ],
     glance: [
       { k: 'role', v: 'SDE II · AWS' },
       { k: 'focus', v: 'Agentic AI · cloud migration' },
-      { k: 'previously', v: 'Transfer Family · B2BI' },
-      { k: 'writes', v: 'Python, Java, TypeScript' },
+      { k: 'previously', v: 'AWS Transfer Family (+ AWS B2BI away-team)' },
+      { k: 'writes', v: 'Java, TypeScript, JavaScript, Python' },
       { k: 'builds with', v: 'Strands Agents · Lambda · CDK' },
     ],
   },
@@ -137,7 +127,7 @@ export const content = {
         badge: 'current',
         role: 'Compute & Cloud Economics AI agents',
         blurb:
-          'Two core AI agents in an agentic platform that turns weeks of manual solutions-architect analysis into an automated pipeline — right-sizing compute across On-Demand / RI / BYOL pricing models and projecting on-prem→AWS migration ROI for enterprises weighing multi-million-dollar moves.',
+          'AI-powered migration-assessment agents that automate VMware-to-AWS planning: an EC2 compute agent for instance rightsizing, pricing, and licensing analysis, and a cloud-economics agent that quantifies migration ROI for enterprise customers.',
         stack: ['Python', 'Strands Agents', 'EC2', 'pytest'],
         year: '2026 — present',
         icon: 'orbit',
@@ -146,16 +136,16 @@ export const content = {
         name: 'AS2 Restart Protocol',
         role: 'Transfer Family · protocol + data plane',
         blurb:
-          "Added restart support to AWS Transfer Family's AS2 so large enterprise transfers resume from an interruption instead of restarting at byte zero — ETag-based negotiation and partial S3 reads. Tracked a subtle boundary bug down to a single byte with protocol-level instrumentation.",
+          'End-to-end AS2 file-transfer recovery for AWS Transfer Family. Large enterprise transfers resume from a network disconnection via partial S3 object fetching, instead of restarting from the beginning, supporting files of any size.',
         stack: ['Java', 'AS2', 'Amazon S3'],
         year: '2025',
         icon: 'pulse',
       },
       {
-        name: 'AS2 Interop Test Infra',
+        name: 'AS2 Interop Certification',
         role: 'Transfer Family · certification & reliability',
         blurb:
-          'Owned the in-situ testing that keeps AS2 certified with external trading partners each quarter (Drummond). Split reliability and interoperability testing into isolated ECS services so a reliability failure no longer blocks interop certification — reworking the CDK, image builds, and a test executor that routes through a fault-injecting proxy or straight to partners.',
+          'Led five Drummond AS2 interoperability certifications (2023–2025), keeping AWS AS2 compliant with industry standards across 21 trading partners. This included isolating reliability and interop test suites so a failure in one no longer blocks the other.',
         stack: ['Java', 'AWS CDK', 'ECS', 'Docker'],
         year: '2023 — 2025',
         icon: 'node',
@@ -166,16 +156,17 @@ export const content = {
   experience: {
     tag: 'Experience & stack',
     title: "Where I've been, what I reach for",
-    intro: 'Two teams at AWS — managed file transfer & B2BI, then agentic AI for cloud migration.',
+    intro: 'Two teams at AWS: managed file transfer, then agentic AI for cloud migration.',
+    // Show this many timeline entries; the rest collapse behind "View more".
+    visibleCount: 3,
     timeline: [
       {
         when: '2026 — now',
         team: 'AWS Transform',
-        badge: 'current',
         role: 'SDE II · Amazon Web Services',
         location: 'Boston, MA',
         blurb:
-          'Architecting AI-powered migration-assessment agents (Strands Agents) that automate VMware-to-AWS planning: an EC2 compute agent for rightsizing, pricing, and licensing analysis, and a cloud-economics agent that quantifies migration ROI. Built the agent evaluation framework — 100% pass rate across 60 scenarios.',
+          'Architecting AI-powered migration-assessment agents (Strands Agents) that automate VMware-to-AWS planning: an EC2 compute agent for rightsizing, pricing, and licensing analysis, and a cloud-economics agent that quantifies migration ROI.',
       },
       {
         when: '2022 — 2025',
@@ -183,20 +174,28 @@ export const content = {
         role: 'SDE I · Amazon Web Services',
         location: 'Santa Monica, CA',
         blurb:
-          'Owned AS2 protocol and B2B Data Interchange features end-to-end: transfer recovery via partial S3 fetch, the React/Redux B2BI console (team frontend SME), AI-powered EDI Generative Mapping, and five Drummond interoperability certifications across 21 trading partners.',
+          'Owned AS2 protocol features end-to-end: transfer recovery via partial S3 fetch and five Drummond interoperability certifications across 21 trading partners. As an away-team contributor to the sister B2B Data Interchange team, built the React/Redux console (frontend SME) and shipped AI-powered EDI Generative Mapping.',
+      },
+      {
+        when: '2021',
+        team: 'California State University, Northridge',
+        role: 'B.S. Computer Science',
+        location: 'GPA 3.70',
+        blurb:
+          'Graduated December 2021. Focused on systems, algorithms, and software engineering fundamentals.',
       },
     ] as TimelineItem[],
     skills: {
       title: 'Toolbox',
       subtitle: 'What I reach for day to day.',
       groups: [
-        { label: 'Languages', items: ['Java', 'Python', 'TypeScript', 'JavaScript', 'SQL'] },
+        { label: 'Languages', items: ['Java', 'TypeScript', 'JavaScript', 'Python'] },
         { label: 'Frontend', items: ['React', 'Redux'] },
         {
           label: 'Cloud & infra',
           items: ['Lambda', 'DynamoDB', 'ECS Fargate', 'EventBridge', 'CDK', 'CloudFormation'],
         },
-        { label: 'Tools', items: ['Strands Agents', 'Docker', 'pytest', 'Jest', 'JUnit'] },
+        { label: 'Tools', items: ['Strands Agents', 'Docker'] },
       ] as SkillGroup[],
     },
   },
@@ -206,12 +205,12 @@ export const content = {
     titleLead: "Let's build something",
     titleGradient: 'worth shipping.',
     blurb:
-      "If you're working on agentic AI, hard backend systems, or making enterprise software genuinely reliable — I'd love to compare notes.",
+      "If you're working on agentic AI, hard backend systems, or making enterprise software genuinely reliable, I'd love to compare notes.",
     methods: [
       {
         label: 'Email',
-        value: 'brianyip5@gmail.com',
-        href: 'mailto:brianyip5@gmail.com',
+        value: 'contact@brianyip.dev',
+        href: 'mailto:contact@brianyip.dev',
         icon: 'mail',
       },
       {
@@ -230,7 +229,8 @@ export const content = {
   },
 
   footer: {
-    copyright: '© 2026 Brian Yip · built from scratch.',
+    // {year} is replaced with the current year at render time.
+    copyright: '© {year} Brian Yip',
   },
 } as const;
 

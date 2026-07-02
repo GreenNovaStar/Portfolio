@@ -1,9 +1,15 @@
+import { useState } from 'react';
 import { content } from '../content';
 import { Reveal } from './Reveal';
 
 export function Experience() {
   const { experience } = content;
-  const { skills } = experience;
+  const { skills, timeline, visibleCount } = experience;
+  const [expanded, setExpanded] = useState(false);
+
+  const hasMore = timeline.length > visibleCount;
+  const shown = expanded || !hasMore ? timeline : timeline.slice(0, visibleCount);
+  const hiddenCount = timeline.length - visibleCount;
 
   return (
     <section id="experience" className="section">
@@ -18,7 +24,7 @@ export function Experience() {
 
         <div className="xp">
           <Reveal className="timeline">
-            {experience.timeline.map((item) => (
+            {shown.map((item) => (
               <div className="tl-item" key={`${item.team}-${item.when}`}>
                 <div className="when">{item.when}</div>
                 <div>
@@ -33,6 +39,21 @@ export function Experience() {
                 </div>
               </div>
             ))}
+            {hasMore && (
+              <button
+                type="button"
+                className="tl-more"
+                onClick={() => setExpanded((v) => !v)}
+                aria-expanded={expanded}
+              >
+                {expanded ? 'View less' : `View ${hiddenCount} more`}
+                <span className={`tl-more-chevron${expanded ? ' up' : ''}`} aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </span>
+              </button>
+            )}
           </Reveal>
 
           <Reveal as="aside" className="skills-card glass">
