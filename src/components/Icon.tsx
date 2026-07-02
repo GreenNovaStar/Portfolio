@@ -55,6 +55,13 @@ export function Icon({ name, className }: IconProps) {
           <path d="M7 17 17 7M8 7h9v9" />
         </svg>
       );
+    case 'download':
+      return (
+        <svg viewBox="0 0 24 24" className={className} {...stroke} strokeWidth={1.8} aria-hidden="true">
+          <path d="M12 3v12m0 0 4-4m-4 4-4-4" />
+          <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+        </svg>
+      );
     case 'github':
       return (
         <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">

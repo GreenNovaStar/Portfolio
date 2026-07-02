@@ -952,19 +952,123 @@
     margin: 0 0 14px;
     position: relative;
   }
+  .contact-card .sec-tag {
+    margin-bottom: 14px;
+  }
+  /* Centered sec-tag needs the rule on both sides of the label text. */
+  .contact-card .sec-tag::after {
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+  }
   .contact-card p {
     color: var(--text-dim);
     max-width: 44ch;
-    margin: 0 auto 28px;
+    margin: 0 auto 30px;
     position: relative;
     font-size: 16px;
   }
-  .contact-actions {
-    display: flex;
+  .contact-methods {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
     position: relative;
+    max-width: 620px;
+    margin-inline: auto;
+  }
+  .contact-method {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    text-align: left;
+    padding: 16px 18px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--tag-bg);
+    transition:
+      transform 0.2s var(--ease),
+      border-color 0.2s var(--ease),
+      background 0.2s var(--ease);
+  }
+  .contact-method:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-hi);
+    background: var(--surface-hi);
+  }
+  .contact-method .cm-icon {
+    flex: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: var(--surface-solid);
+    border: 1px solid var(--border);
+    color: var(--accent);
+  }
+  .contact-method .cm-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .contact-method .cm-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.3;
+  }
+  .contact-method .cm-label {
+    font-family: var(--font-display, sans-serif);
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--text);
+  }
+  .contact-method .cm-value {
+    font-family: var(--font-mono, monospace);
+    font-size: 12px;
+    color: var(--text-faint);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ---------- Résumé ---------- */
+  .resume-card {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 40px;
+    align-items: center;
+    padding: 40px 44px;
+    position: relative;
+  }
+  .resume-card .glow {
+    position: absolute;
+    inset: -20% auto auto -10%;
+    width: 45%;
+    height: 90%;
+    filter: blur(80px);
+    background: var(--grad-soft);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .resume-copy {
+    position: relative;
+  }
+  .resume-copy .sec-title {
+    margin-bottom: 12px;
+  }
+  .resume-intro {
+    color: var(--text-dim);
+    font-size: 15.5px;
+    max-width: 42ch;
+    margin: 0 0 24px;
+  }
+  .resume-highlights {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
   .foot {
@@ -1040,7 +1144,8 @@
   @media (max-width: 940px) {
     .hero-grid,
     .about,
-    .xp {
+    .xp,
+    .resume-card {
       grid-template-columns: 1fr;
     }
     .hero-grid {
@@ -1048,6 +1153,9 @@
     }
     .work-grid {
       grid-template-columns: 1fr;
+    }
+    .resume-card {
+      gap: 28px;
     }
     .sec-head {
       flex-direction: column;
@@ -1078,6 +1186,12 @@
     }
     .contact-card {
       padding: 40px 22px;
+    }
+    .contact-methods {
+      grid-template-columns: 1fr;
+    }
+    .resume-card {
+      padding: 32px 22px;
     }
     .tl-item {
       grid-template-columns: 1fr;

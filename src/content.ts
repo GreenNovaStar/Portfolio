@@ -14,8 +14,17 @@ export type IconName =
   | 'mail'
   | 'arrow'
   | 'arrowUpRight'
+  | 'download'
   | 'github'
   | 'linkedin';
+
+export interface ContactMethod {
+  label: string;
+  /** Display text under the label, e.g. an email or handle. */
+  value: string;
+  href: string;
+  icon: IconName;
+}
 
 export interface Project {
   name: string;
@@ -52,13 +61,13 @@ export const content = {
     handle: '~/sde @ aws',
     initials: 'BY',
     email: 'brian@example.com', // PLACEHOLDER: your real contact email
-    resumeHref: '#top', // PLACEHOLDER: drop a PDF in public/ and use '/Portfolio/resume.pdf'
   },
 
   nav: [
     { label: 'About', href: '#about' },
     { label: 'Work', href: '#work' },
     { label: 'Experience', href: '#experience' },
+    { label: 'Résumé', href: '#resume' },
     { label: 'Contact', href: '#contact' },
   ],
 
@@ -151,7 +160,7 @@ export const content = {
   experience: {
     tag: 'Experience & stack',
     title: "Where I've been, what I reach for",
-    intro: 'Two teams at AWS — B2B data transfer, then agentic AI for cloud migration.',
+    intro: 'Two teams at AWS — managed file transfer & B2BI, then agentic AI for cloud migration.',
     timeline: [
       {
         when: '2026 — now',
@@ -172,9 +181,9 @@ export const content = {
       {
         when: '2022 — 2025',
         org: 'Amazon Web Services',
-        role: 'SDE I · Transfer Family & B2B',
+        role: 'SDE I · Transfer Family & B2BI',
         blurb:
-          'Full-stack feature ownership across managed B2B file transfer — AS2 / SFTP protocol design, React consoles, CDK infrastructure, and rollouts across 20+ AWS regions. Mentored two interns to return offers.',
+          'Full-stack feature ownership across managed file transfer and B2B Data Interchange — AS2 / SFTP / EDI protocol design, React consoles, CDK infrastructure, and rollouts across 20+ AWS regions. Mentored two interns to return offers.',
       },
     ] as TimelineItem[],
     skills: {
@@ -188,11 +197,39 @@ export const content = {
     },
   },
 
+  resume: {
+    tag: 'Résumé',
+    title: 'The full story, on one page.',
+    intro: 'The highlights are here — the résumé has the dates, scope, and detail.',
+    highlights: [
+      { k: 'role', v: 'SDE II · AWS' },
+      { k: 'focus', v: 'Agentic AI · distributed systems' },
+      { k: 'experience', v: 'Full-stack: protocol → infra → console' },
+      { k: 'stack', v: 'Python · Java · TypeScript' },
+    ],
+    // PLACEHOLDER: drop a PDF in public/ and set this to '/Portfolio/resume.pdf'
+    downloadHref: '#top',
+    downloadLabel: 'Download résumé (PDF)',
+  },
+
   contact: {
+    tag: 'Contact',
     titleLead: "Let's build something",
     titleGradient: 'worth shipping.',
     blurb:
       "If you're working on agentic AI, hard backend systems, or making enterprise software genuinely reliable — I'd love to compare notes.",
+    methods: [
+      // PLACEHOLDER: real email
+      { label: 'Email', value: 'brian@example.com', href: 'mailto:brian@example.com', icon: 'mail' },
+      // PLACEHOLDER: real LinkedIn URL
+      { label: 'LinkedIn', value: '/in/brianyip', href: '#top', icon: 'linkedin' },
+      {
+        label: 'GitHub',
+        value: '@GreenNovaStar',
+        href: 'https://github.com/GreenNovaStar',
+        icon: 'github',
+      },
+    ] as ContactMethod[],
   },
 
   footer: {
