@@ -25,11 +25,6 @@ export interface Project {
   stack: string[];
   year: string;
   icon: IconName;
-  href: string;
-  /** Link label, e.g. "Case study" or "View project". */
-  linkLabel: string;
-  /** Feature project renders large with the topology diagram. */
-  feature?: boolean;
 }
 
 export interface TimelineItem {
@@ -140,9 +135,6 @@ export const content = {
         stack: ['Python', 'Amazon Bedrock', 'strands-agents', 'EC2'],
         year: '2026 — present',
         icon: 'orbit',
-        href: '#work',
-        linkLabel: 'Read more',
-        feature: true,
       },
       {
         name: 'AS2 Restart Protocol',
@@ -152,25 +144,8 @@ export const content = {
         stack: ['Java', 'AS2', 'Amazon S3'],
         year: '2025',
         icon: 'pulse',
-        href: '#work',
-        linkLabel: 'View project',
-      },
-      {
-        name: 'AI Progress for EDI Mapping',
-        role: 'B2B Data Interchange · React console',
-        blurb:
-          'The console experience for Bedrock-powered EDI mapping generation — including a probabilistic progress indicator that paces honestly against historical latency for an AI operation with no real progress signal, holding at 99% until the result lands.',
-        stack: ['TypeScript', 'React', 'Amazon Bedrock'],
-        year: '2024',
-        icon: 'node',
-        href: '#work',
-        linkLabel: 'View project',
       },
     ] as Project[],
-    // Region labels for the feature card's topology diagram (illustrative:
-    // the agent platform's analysis domains around a central assessment).
-    topologyNodes: ['compute', 'economics', 'pricing', 'network'],
-    topologyCore: 'assessment',
   },
 
   experience: {
@@ -195,7 +170,7 @@ export const content = {
           'Joined a greenfield migration-assessment platform and built the Compute and Cloud Economics agents from scratch — ramping on multi-agent architecture and cloud economics from zero.',
       },
       {
-        when: '— 2025',
+        when: '2022 — 2025',
         org: 'Amazon Web Services',
         role: 'SDE I · Transfer Family & B2B',
         blurb:

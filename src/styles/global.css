@@ -704,9 +704,6 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
-  .work-grid .feature {
-    grid-column: 1 / -1;
-  }
   .card {
     position: relative;
     border-radius: var(--radius);
@@ -845,62 +842,6 @@
     border-radius: 6px;
     border: 1px solid var(--border);
     font-weight: 400;
-  }
-
-  .feature {
-    display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 30px;
-    align-items: center;
-  }
-  .feature .fbody {
-    min-height: 0;
-  }
-  .feature .fviz {
-    align-self: stretch;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: linear-gradient(160deg, var(--surface-hi), transparent);
-    min-height: 210px;
-    position: relative;
-    overflow: hidden;
-    display: grid;
-    place-items: center;
-  }
-
-  /* mini distributed-systems topology diagram */
-  .topo {
-    width: 92%;
-    height: 82%;
-  }
-  .topo line {
-    stroke: var(--border-hi);
-    stroke-width: 1.2;
-  }
-  .topo .edge-live {
-    stroke: url(#edgeGrad);
-    stroke-width: 1.6;
-    stroke-dasharray: 4 6;
-    animation: dash 2.4s linear infinite;
-  }
-  @keyframes dash {
-    to {
-      stroke-dashoffset: -20;
-    }
-  }
-  .topo circle.node {
-    fill: var(--surface-solid);
-    stroke: var(--border-hi);
-    stroke-width: 1.4;
-  }
-  .topo circle.core {
-    fill: url(#coreGrad);
-    stroke: none;
-  }
-  .topo text {
-    font-family: var(--font-mono, monospace);
-    font-size: 8px;
-    fill: var(--text-faint);
   }
 
   /* ---------- Experience / Skills ---------- */
@@ -1090,8 +1031,7 @@
       transition: none;
     }
     .status-dot::before,
-    .term-body .cursor,
-    .topo .edge-live {
+    .term-body .cursor {
       animation: none !important;
     }
   }
@@ -1100,7 +1040,6 @@
   @media (max-width: 940px) {
     .hero-grid,
     .about,
-    .feature,
     .xp {
       grid-template-columns: 1fr;
     }
@@ -1109,9 +1048,6 @@
     }
     .work-grid {
       grid-template-columns: 1fr;
-    }
-    .feature {
-      gap: 22px;
     }
     .sec-head {
       flex-direction: column;
