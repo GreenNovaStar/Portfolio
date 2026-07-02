@@ -201,22 +201,9 @@
     width: 34px;
     height: 34px;
     border-radius: 10px;
-    background: var(--grad);
-    display: grid;
-    place-items: center;
-    color: #0a0b12;
-    font-weight: 700;
-    font-size: 14px;
-    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    object-fit: cover;
     box-shadow: 0 6px 18px -6px var(--glow-2);
-    position: relative;
-  }
-  .brand .mark::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 10px;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--border);
   }
   .brand .who {
     display: flex;
@@ -1033,42 +1020,28 @@
     white-space: nowrap;
   }
 
-  /* ---------- Résumé ---------- */
-  .resume-card {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 40px;
+  /* Terminal cross-link in the nav */
+  .nav-terminal {
+    display: inline-flex;
     align-items: center;
-    padding: 40px 44px;
-    position: relative;
-  }
-  .resume-card .glow {
-    position: absolute;
-    inset: -20% auto auto -10%;
-    width: 45%;
-    height: 90%;
-    filter: blur(80px);
-    background: var(--grad-soft);
-    opacity: 0.18;
-    pointer-events: none;
-  }
-  .resume-copy {
-    position: relative;
-  }
-  .resume-copy .sec-title {
-    margin-bottom: 12px;
-  }
-  .resume-intro {
+    gap: 5px;
+    padding: 8px 13px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 450;
     color: var(--text-dim);
-    font-size: 15.5px;
-    max-width: 42ch;
-    margin: 0 0 24px;
+    transition:
+      color 0.2s var(--ease),
+      background 0.2s var(--ease);
   }
-  .resume-highlights {
-    position: relative;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  .nav-terminal svg {
+    width: 13px;
+    height: 13px;
+    opacity: 0.7;
+  }
+  .nav-terminal:hover {
+    color: var(--text);
+    background: var(--tag-bg);
   }
 
   .foot {
@@ -1087,32 +1060,14 @@
     color: var(--text-faint);
     font-family: var(--font-mono, monospace);
   }
-  .foot-links {
-    display: flex;
-    gap: 8px;
+  .foot-terminal {
+    font-family: var(--font-mono, monospace);
+    font-size: 13px;
+    color: var(--text-faint);
+    transition: color 0.2s var(--ease);
   }
-  .foot-links a {
-    width: 36px;
-    height: 36px;
-    border-radius: 9px;
-    display: grid;
-    place-items: center;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text-dim);
-    transition:
-      color 0.2s var(--ease),
-      border-color 0.2s var(--ease),
-      transform 0.2s var(--ease);
-  }
-  .foot-links a:hover {
-    color: var(--text);
-    border-color: var(--border-hi);
-    transform: translateY(-2px);
-  }
-  .foot-links a svg {
-    width: 17px;
-    height: 17px;
+  .foot-terminal:hover {
+    color: var(--accent);
   }
 
   /* ---------- Scroll reveal ---------- */
@@ -1144,8 +1099,7 @@
   @media (max-width: 940px) {
     .hero-grid,
     .about,
-    .xp,
-    .resume-card {
+    .xp {
       grid-template-columns: 1fr;
     }
     .hero-grid {
@@ -1153,9 +1107,6 @@
     }
     .work-grid {
       grid-template-columns: 1fr;
-    }
-    .resume-card {
-      gap: 28px;
     }
     .sec-head {
       flex-direction: column;
@@ -1172,9 +1123,6 @@
     .hero {
       padding: 60px 0 46px;
     }
-    .nav-cta {
-      display: none;
-    }
     .brand .who span {
       display: none;
     }
@@ -1189,9 +1137,6 @@
     }
     .contact-methods {
       grid-template-columns: 1fr;
-    }
-    .resume-card {
-      padding: 32px 22px;
     }
     .tl-item {
       grid-template-columns: 1fr;

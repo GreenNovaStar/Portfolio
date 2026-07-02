@@ -49,25 +49,20 @@ export interface SkillGroup {
   items: string[];
 }
 
-export interface SocialLink {
-  label: string;
-  href: string;
-  icon: IconName;
-}
-
 export const content = {
   meta: {
     name: 'Brian Yip',
     handle: '~/sde @ aws',
-    initials: 'BY',
     email: 'brian@example.com', // PLACEHOLDER: your real contact email
+    // PLACEHOLDER: drop a PDF in public/ and set this to '/Portfolio/resume.pdf'
+    resumeHref: '#top',
+    terminalUrl: 'https://terminal.brianyip.dev',
   },
 
   nav: [
     { label: 'About', href: '#about' },
     { label: 'Work', href: '#work' },
     { label: 'Experience', href: '#experience' },
-    { label: 'Résumé', href: '#resume' },
     { label: 'Contact', href: '#contact' },
   ],
 
@@ -124,7 +119,7 @@ export const content = {
     glance: [
       { k: 'role', v: 'SDE II · AWS' },
       { k: 'focus', v: 'Agentic AI · cloud migration' },
-      { k: 'previously', v: 'Transfer Family · B2B' },
+      { k: 'previously', v: 'Transfer Family · B2BI' },
       { k: 'writes', v: 'Python, Java, TypeScript' },
       { k: 'builds with', v: 'Bedrock · Lambda · CDK' },
     ],
@@ -153,6 +148,15 @@ export const content = {
         stack: ['Java', 'AS2', 'Amazon S3'],
         year: '2025',
         icon: 'pulse',
+      },
+      {
+        name: 'AS2 Interop Test Infra',
+        role: 'Transfer Family · certification & reliability',
+        blurb:
+          'Owned the in-situ testing that keeps AS2 certified with external trading partners each quarter (Drummond). Split reliability and interoperability testing into isolated ECS services so a reliability failure no longer blocks interop certification — reworking the CDK, image builds, and a test executor that routes through a fault-injecting proxy or straight to partners.',
+        stack: ['Java', 'AWS CDK', 'ECS', 'Docker'],
+        year: '2023 — 2025',
+        icon: 'node',
       },
     ] as Project[],
   },
@@ -197,21 +201,6 @@ export const content = {
     },
   },
 
-  resume: {
-    tag: 'Résumé',
-    title: 'The full story, on one page.',
-    intro: 'The highlights are here — the résumé has the dates, scope, and detail.',
-    highlights: [
-      { k: 'role', v: 'SDE II · AWS' },
-      { k: 'focus', v: 'Agentic AI · distributed systems' },
-      { k: 'experience', v: 'Full-stack: protocol → infra → console' },
-      { k: 'stack', v: 'Python · Java · TypeScript' },
-    ],
-    // PLACEHOLDER: drop a PDF in public/ and set this to '/Portfolio/resume.pdf'
-    downloadHref: '#top',
-    downloadLabel: 'Download résumé (PDF)',
-  },
-
   contact: {
     tag: 'Contact',
     titleLead: "Let's build something",
@@ -234,11 +223,6 @@ export const content = {
 
   footer: {
     copyright: '© 2026 Brian Yip · built from scratch.',
-    socials: [
-      { label: 'GitHub', href: 'https://github.com/GreenNovaStar', icon: 'github' },
-      { label: 'LinkedIn', href: '#top', icon: 'linkedin' }, // PLACEHOLDER: your LinkedIn URL
-      { label: 'Email', href: 'mailto:brian@example.com', icon: 'mail' }, // PLACEHOLDER
-    ] as SocialLink[],
   },
 } as const;
 

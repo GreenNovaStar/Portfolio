@@ -1,17 +1,25 @@
 import { content } from '../content';
+import { Icon } from './Icon';
 import { useTheme } from '../hooks/useTheme';
 
 export function Nav() {
   const { toggle } = useTheme();
   const { meta, nav } = content;
+  const resumeIsFile =
+    meta.resumeHref.startsWith('/') || meta.resumeHref.startsWith('http');
 
   return (
     <header className="nav">
       <div className="wrap nav-inner">
         <a className="brand" href="#top" aria-label={`${meta.name}, home`}>
-          <span className="mark" aria-hidden="true">
-            {meta.initials}
-          </span>
+          <img
+            className="mark"
+            src={`${import.meta.env.BASE_URL}android-chrome-192x192.png`}
+            alt=""
+            width={34}
+            height={34}
+            aria-hidden="true"
+          />
           <span className="who">
             <b>{meta.name}</b>
             <span>{meta.handle}</span>
@@ -24,6 +32,15 @@ export function Nav() {
               {item.label}
             </a>
           ))}
+          <a
+            className="nav-terminal"
+            href={meta.terminalUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Terminal
+            <Icon name="arrowUpRight" />
+          </a>
         </nav>
 
         <div className="nav-right">
@@ -59,8 +76,13 @@ export function Nav() {
               <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
             </svg>
           </button>
-          <a className="btn btn-ghost nav-cta" href="#contact">
-            Get in touch
+          <a
+            className="btn btn-ghost nav-cta"
+            href={meta.resumeHref}
+            {...(resumeIsFile ? { download: '' } : {})}
+          >
+            <Icon name="download" />
+            Résumé
           </a>
         </div>
       </div>
