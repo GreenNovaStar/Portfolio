@@ -38,9 +38,12 @@ export interface Project {
 
 export interface TimelineItem {
   when: string;
-  org: string;
+  /** Team name — the headline of the entry. */
+  team: string;
   badge?: string;
+  /** Role + org + location, shown as the subtitle. */
   role: string;
+  location: string;
   blurb: string;
 }
 
@@ -53,9 +56,8 @@ export const content = {
   meta: {
     name: 'Brian Yip',
     handle: '~/sde @ aws',
-    email: 'brian@example.com', // PLACEHOLDER: your real contact email
-    // PLACEHOLDER: drop a PDF in public/ and set this to '/Portfolio/resume.pdf'
-    resumeHref: '#top',
+    email: 'brianyip5@gmail.com',
+    resumeHref: `${import.meta.env.BASE_URL}resume.pdf`,
     terminalUrl: 'https://terminal.brianyip.dev',
   },
 
@@ -68,21 +70,21 @@ export const content = {
 
   hero: {
     availability: 'Currently building agentic AI at AWS',
-    titleLead: 'I build systems that make hard things',
-    titleGradient: 'reliable and automatic.',
+    titleLead: 'I build across the stack:',
+    titleGradient: 'protocol internals to AI agents.',
     // Rich lede: {b: "..."} segments render bold/emphasized.
     lede: [
       "I'm ",
       { b: 'Brian Yip' },
-      ', a Software Development Engineer at AWS. Right now I build ',
+      ', a Software Development Engineer at AWS with 4+ years shipping end-to-end for enterprise customers — from ',
+      { b: 'AS2 protocol internals and B2BI consoles' },
+      ' to the ',
       { b: 'agentic AI systems' },
-      ' that automate enterprise cloud migration — and before that I shipped protocol, backend, and console features for managed ',
-      { b: 'B2B file transfer' },
-      '.',
+      ' I build today on AWS Transform.',
     ] as Array<string | { b: string }>,
     stats: [
-      { value: 'AI agents', label: 'built on Bedrock' },
-      { value: '20+', label: 'AWS regions shipped to' },
+      { value: '4+ yrs', label: 'shipping at AWS' },
+      { value: 'Full-stack', label: 'protocol → AI agents' },
       { value: 'Python · Java · TS', label: 'primary stack' },
     ],
     // The hero code card (illustrative). Rendered as a small Python snippet.
@@ -92,8 +94,8 @@ export const content = {
       typeName: 'Engineer',
       fields: [
         { key: 'focus', value: '"agentic AI + reliable systems"' },
-        { key: 'cares', value: '["correctness", "clarity", "shipping"]' },
-        { key: 'ships', value: '"small, reversible, observable"' },
+        { key: 'stack', value: '["Python", "Java", "TypeScript"]' },
+        { key: 'ships', value: '"end-to-end, enterprise scale"' },
         { key: 'now', value: '"AWS Transform"' },
       ],
       call: 'Engineer().reply()',
@@ -110,9 +112,9 @@ export const content = {
     sub: 'I like going deep — chasing a bug down to a single byte at a protocol boundary — and shipping full-stack, from a React console to the CDK infrastructure under it. I care about correctness, honest engineering, and systems a teammate can reason about at 3 a.m.',
     interests: [
       'agentic AI',
-      'Amazon Bedrock',
-      'B2B protocols',
-      'event-driven systems',
+      'Strands Agents',
+      'AS2 / EDI protocols',
+      'distributed systems',
       'full-stack',
       'developer experience',
     ],
@@ -121,7 +123,7 @@ export const content = {
       { k: 'focus', v: 'Agentic AI · cloud migration' },
       { k: 'previously', v: 'Transfer Family · B2BI' },
       { k: 'writes', v: 'Python, Java, TypeScript' },
-      { k: 'builds with', v: 'Bedrock · Lambda · CDK' },
+      { k: 'builds with', v: 'Strands Agents · Lambda · CDK' },
     ],
   },
 
@@ -136,7 +138,7 @@ export const content = {
         role: 'Compute & Cloud Economics AI agents',
         blurb:
           'Two core AI agents in an agentic platform that turns weeks of manual solutions-architect analysis into an automated pipeline — right-sizing compute across On-Demand / RI / BYOL pricing models and projecting on-prem→AWS migration ROI for enterprises weighing multi-million-dollar moves.',
-        stack: ['Python', 'Amazon Bedrock', 'strands-agents', 'EC2'],
+        stack: ['Python', 'Strands Agents', 'EC2', 'pytest'],
         year: '2026 — present',
         icon: 'orbit',
       },
@@ -168,35 +170,33 @@ export const content = {
     timeline: [
       {
         when: '2026 — now',
-        org: 'Amazon Web Services',
+        team: 'AWS Transform',
         badge: 'current',
-        role: 'SDE II · AWS Transform',
+        role: 'SDE II · Amazon Web Services',
+        location: 'Boston, MA',
         blurb:
-          'Own two core AI agents — Compute and Cloud Economics — in an agentic platform that automates enterprise VMware-to-AWS migration assessments. Built the executive-report output pipeline (PPTX / PDF / XLSX) across thousands of servers per assessment.',
-      },
-      {
-        when: '2026',
-        org: 'Amazon Web Services',
-        badge: 'promoted in 3 mo',
-        role: 'SDE I · AWS Transform',
-        blurb:
-          'Joined a greenfield migration-assessment platform and built the Compute and Cloud Economics agents from scratch — ramping on multi-agent architecture and cloud economics from zero.',
+          'Architecting AI-powered migration-assessment agents (Strands Agents) that automate VMware-to-AWS planning: an EC2 compute agent for rightsizing, pricing, and licensing analysis, and a cloud-economics agent that quantifies migration ROI. Built the agent evaluation framework — 100% pass rate across 60 scenarios.',
       },
       {
         when: '2022 — 2025',
-        org: 'Amazon Web Services',
-        role: 'SDE I · Transfer Family & B2BI',
+        team: 'AWS Transfer Family',
+        role: 'SDE I · Amazon Web Services',
+        location: 'Santa Monica, CA',
         blurb:
-          'Full-stack feature ownership across managed file transfer and B2B Data Interchange — AS2 / SFTP / EDI protocol design, React consoles, CDK infrastructure, and rollouts across 20+ AWS regions. Mentored two interns to return offers.',
+          'Owned AS2 protocol and B2B Data Interchange features end-to-end: transfer recovery via partial S3 fetch, the React/Redux B2BI console (team frontend SME), AI-powered EDI Generative Mapping, and five Drummond interoperability certifications across 21 trading partners.',
       },
     ] as TimelineItem[],
     skills: {
       title: 'Toolbox',
       subtitle: 'What I reach for day to day.',
       groups: [
-        { label: 'Languages', items: ['Python', 'Java', 'TypeScript', 'JavaScript'] },
-        { label: 'AI & data', items: ['Amazon Bedrock', 'strands-agents', 'DynamoDB', 'EventBridge'] },
-        { label: 'Build & ship', items: ['React', 'AWS CDK', 'Lambda', 'S3', 'CloudFormation'] },
+        { label: 'Languages', items: ['Java', 'Python', 'TypeScript', 'JavaScript', 'SQL'] },
+        { label: 'Frontend', items: ['React', 'Redux'] },
+        {
+          label: 'Cloud & infra',
+          items: ['Lambda', 'DynamoDB', 'ECS Fargate', 'EventBridge', 'CDK', 'CloudFormation'],
+        },
+        { label: 'Tools', items: ['Strands Agents', 'Docker', 'pytest', 'Jest', 'JUnit'] },
       ] as SkillGroup[],
     },
   },
@@ -208,10 +208,18 @@ export const content = {
     blurb:
       "If you're working on agentic AI, hard backend systems, or making enterprise software genuinely reliable — I'd love to compare notes.",
     methods: [
-      // PLACEHOLDER: real email
-      { label: 'Email', value: 'brian@example.com', href: 'mailto:brian@example.com', icon: 'mail' },
-      // PLACEHOLDER: real LinkedIn URL
-      { label: 'LinkedIn', value: '/in/brianyip', href: '#top', icon: 'linkedin' },
+      {
+        label: 'Email',
+        value: 'brianyip5@gmail.com',
+        href: 'mailto:brianyip5@gmail.com',
+        icon: 'mail',
+      },
+      {
+        label: 'LinkedIn',
+        value: '/in/brian-yip-dev',
+        href: 'https://linkedin.com/in/brian-yip-dev',
+        icon: 'linkedin',
+      },
       {
         label: 'GitHub',
         value: '@GreenNovaStar',

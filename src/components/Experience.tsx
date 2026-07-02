@@ -19,14 +19,16 @@ export function Experience() {
         <div className="xp">
           <Reveal className="timeline">
             {experience.timeline.map((item) => (
-              <div className="tl-item" key={`${item.org}-${item.when}`}>
+              <div className="tl-item" key={`${item.team}-${item.when}`}>
                 <div className="when">{item.when}</div>
                 <div>
                   <p className="who2">
-                    {item.org}
+                    {item.team}
                     {item.badge && <span className="badge">{item.badge}</span>}
                   </p>
-                  <div className="rol">{item.role}</div>
+                  <div className="rol">
+                    {item.role} · {item.location}
+                  </div>
                   <p>{item.blurb}</p>
                 </div>
               </div>
