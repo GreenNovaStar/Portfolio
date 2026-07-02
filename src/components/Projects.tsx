@@ -34,12 +34,12 @@ function ProjectCard({ project }: { project: Project }) {
         <span className="picon" aria-hidden="true">
           <Icon name={project.icon} />
         </span>
-        <span className="yr">{project.year}</span>
+        <span className="pmeta">
+          {project.badge && <span className="badge">{project.badge}</span>}
+          <span className="yr">{project.year}</span>
+        </span>
       </div>
-      <h3>
-        {project.name}
-        {project.badge && <span className="badge">{project.badge}</span>}
-      </h3>
+      <h3>{project.name}</h3>
       <div className="role">{project.role}</div>
       <p>{project.blurb}</p>
       <div className="stack">
@@ -47,6 +47,18 @@ function ProjectCard({ project }: { project: Project }) {
           <span key={tech}>{tech}</span>
         ))}
       </div>
+      {project.link && (
+        <a
+          className="link"
+          href={project.link.href}
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label={`${project.link.label}: ${project.name}`}
+        >
+          {project.link.label}
+          <Icon name="arrowUpRight" />
+        </a>
+      )}
     </Reveal>
   );
 }

@@ -74,6 +74,54 @@ export function Icon({ name, className }: IconProps) {
           <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.64h.05c.53-1 1.83-2.05 3.76-2.05C20.5 8.59 21 11.16 21 14.13V21h-4v-6.1c0-1.45-.03-3.32-2.02-3.32-2.02 0-2.33 1.58-2.33 3.21V21H9z" />
         </svg>
       );
+    case 'cpu':
+      return (
+        <svg viewBox="0 0 24 24" className={className} {...stroke} aria-hidden="true">
+          <rect x="6" y="6" width="12" height="12" rx="2" />
+          <rect x="9.5" y="9.5" width="5" height="5" rx="1" />
+          <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" />
+        </svg>
+      );
+    case 'transfer':
+      return (
+        <svg viewBox="0 0 24 24" className={className} {...stroke} aria-hidden="true">
+          <path d="M4 8h13m0 0-4-4m4 4-4 4" />
+          <path d="M20 16H7m0 0 4-4m-4 4 4 4" />
+        </svg>
+      );
+    case 'shield':
+      return (
+        <svg viewBox="0 0 24 24" className={className} {...stroke} aria-hidden="true">
+          <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      );
+    case 'mobile':
+      return (
+        <svg viewBox="0 0 24 24" className={className} {...stroke} aria-hidden="true">
+          <rect x="7" y="3" width="10" height="18" rx="2.5" />
+          <path d="M11 18h2" />
+        </svg>
+      );
+    case 'spark':
+      return (
+        <svg viewBox="0 0 24 24" className={className} {...stroke} aria-hidden="true">
+          <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" />
+        </svg>
+      );
+    case 'terminal':
+      return (
+        <svg viewBox="0 0 24 24" className={className} {...stroke} aria-hidden="true">
+          <rect x="3" y="4" width="18" height="16" rx="2" />
+          <path d="m7 9 3 3-3 3M13 15h4" />
+        </svg>
+      );
+    case 'code':
+      return (
+        <svg viewBox="0 0 24 24" className={className} {...stroke} aria-hidden="true">
+          <path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 4l-4 16" />
+        </svg>
+      );
     default:
       return null;
   }

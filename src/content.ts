@@ -16,7 +16,14 @@ export type IconName =
   | 'arrowUpRight'
   | 'download'
   | 'github'
-  | 'linkedin';
+  | 'linkedin'
+  | 'cpu'
+  | 'transfer'
+  | 'shield'
+  | 'mobile'
+  | 'spark'
+  | 'terminal'
+  | 'code';
 
 export interface ContactMethod {
   label: string;
@@ -34,6 +41,8 @@ export interface Project {
   stack: string[];
   year: string;
   icon: IconName;
+  /** Optional external link (e.g. a public repo). Renders a link on the card. */
+  link?: { label: string; href: string };
 }
 
 export interface TimelineItem {
@@ -109,11 +118,11 @@ export const content = {
       'Developer experience',
     ],
     glance: [
-      { k: 'role', v: 'SDE II · AWS' },
-      { k: 'focus', v: 'Agentic AI · cloud migration' },
-      { k: 'previously', v: 'AWS Transfer Family (+ AWS B2BI away-team)' },
-      { k: 'writes', v: 'Java, TypeScript, JavaScript, Python' },
-      { k: 'builds with', v: 'Strands Agents · Lambda · CDK' },
+      { k: 'What I do', v: 'SDE II · AWS' },
+      { k: 'Building on the side', v: 'A MyAnimeList mobile app (Flutter)' },
+      { k: 'Before this', v: 'AWS Transfer Family (+ AWS B2BI away-team)' },
+      { k: 'Languages', v: 'Dart, Java, TypeScript, JavaScript, Python' },
+      { k: 'Tools', v: 'Strands Agents · Lambda · CDK' },
     ],
   },
 
@@ -123,32 +132,46 @@ export const content = {
     intro: 'A few projects that show how I think about automation, reliability, and developer experience.',
     projects: [
       {
-        name: 'AWS Transform',
+        name: 'Compute & Cloud Economics AI agents',
         badge: 'current',
-        role: 'Compute & Cloud Economics AI agents',
+        role: 'AWS Transform',
         blurb:
           'AI-powered migration-assessment agents that automate VMware-to-AWS planning: an EC2 compute agent for instance rightsizing, pricing, and licensing analysis, and a cloud-economics agent that quantifies migration ROI for enterprise customers.',
         stack: ['Python', 'Strands Agents', 'EC2', 'pytest'],
         year: '2026 — present',
-        icon: 'orbit',
+        icon: 'cpu',
       },
       {
         name: 'AS2 Restart Protocol',
-        role: 'Transfer Family · protocol + data plane',
+        role: 'AWS Transfer Family · protocol + data plane',
         blurb:
           'End-to-end AS2 file-transfer recovery for AWS Transfer Family. Large enterprise transfers resume from a network disconnection via partial S3 object fetching, instead of restarting from the beginning, supporting files of any size.',
         stack: ['Java', 'AS2', 'Amazon S3'],
         year: '2025',
-        icon: 'pulse',
+        icon: 'transfer',
       },
       {
         name: 'AS2 Interop Certification',
-        role: 'Transfer Family · certification & reliability',
+        role: 'AWS Transfer Family · certification & reliability',
         blurb:
           'Led five Drummond AS2 interoperability certifications (2023–2025), keeping AWS AS2 compliant with industry standards across 21 trading partners. This included isolating reliability and interop test suites so a failure in one no longer blocks the other.',
         stack: ['Java', 'AWS CDK', 'ECS', 'Docker'],
         year: '2023 — 2025',
-        icon: 'node',
+        icon: 'shield',
+      },
+      {
+        name: 'MyAnimeList Client',
+        badge: 'side project',
+        role: 'Unofficial MyAnimeList mobile app',
+        blurb:
+          'A cross-platform mobile client for MyAnimeList, built with Flutter. Browse and track anime and manga against the public MyAnimeList API, with a native feel on both iOS and Android.',
+        stack: ['Flutter', 'Dart'],
+        year: '2025',
+        icon: 'mobile',
+        link: {
+          label: 'View on GitHub',
+          href: 'https://github.com/GreenNovaStar/MyAnimeList_Client',
+        },
       },
     ] as Project[],
   },
