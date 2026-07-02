@@ -1,22 +1,27 @@
-import React from 'react';
+import { Nav } from './components/Nav';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
-import { Experience } from './components/Experience';
 import { Projects } from './components/Projects';
-import { Skills } from './components/Skills';
+import { Experience } from './components/Experience';
 import { Contact } from './components/Contact';
+import { Footer } from './components/Footer';
 
-const App = () => {
+export default function App() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      <Hero />
-      <About />
-      <Experience />
-      <Projects />
-      <Skills />
-      <Contact />
-    </div>
-  );
-};
+    <>
+      {/* Ambient background layers (fixed, behind content) */}
+      <div className="aura" aria-hidden="true" />
+      <div className="grid-floor" aria-hidden="true" />
 
-export default App;
+      <Nav />
+      <main id="top">
+        <Hero />
+        <About />
+        <Projects />
+        <Experience />
+        <Contact />
+      </main>
+      <Footer />
+    </>
+  );
+}

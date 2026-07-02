@@ -1,10 +1,32 @@
-import React from 'react';
+import { content } from '../content';
+import { Icon } from './Icon';
+import { Reveal } from './Reveal';
 
-export const Contact: React.FC = () => (
-  <section id="contact" className="py-20 px-6 max-w-4xl mx-auto">
-    <h2 className="text-3xl font-bold mb-8">Contact</h2>
-    <p className="text-lg text-gray-700 dark:text-gray-300">
-      TODO
-    </p>
-  </section>
-);
+export function Contact() {
+  const { contact, meta } = content;
+
+  return (
+    <section id="contact" className="contact">
+      <div className="wrap">
+        <Reveal className="contact-card glass">
+          <span className="glow" aria-hidden="true" />
+          <h2>
+            {contact.titleLead}
+            <br />
+            <span className="grad-text">{contact.titleGradient}</span>
+          </h2>
+          <p>{contact.blurb}</p>
+          <div className="contact-actions">
+            <a className="btn btn-primary" href={`mailto:${meta.email}`}>
+              <Icon name="mail" />
+              {meta.email}
+            </a>
+            <a className="btn btn-ghost" href={meta.resumeHref}>
+              Download résumé
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
