@@ -659,12 +659,16 @@
   }
 
   /* ---------- Work cards ---------- */
+  /* Flex + wrap so an odd final card centers instead of leaving a gap. */
   .work-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 20px;
   }
   .card {
+    flex: 1 1 calc(50% - 10px);
+    max-width: calc(50% - 10px);
     position: relative;
     border-radius: var(--radius);
     padding: 26px;
@@ -1124,8 +1128,9 @@
     .xp {
       grid-template-columns: 1fr;
     }
-    .work-grid {
-      grid-template-columns: 1fr;
+    .work-grid .card {
+      flex-basis: 100%;
+      max-width: 100%;
     }
     .sec-head {
       flex-direction: column;

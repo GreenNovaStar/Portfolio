@@ -6,7 +6,7 @@ export function Projects() {
   const { work } = content;
 
   return (
-    <section id="work" className="section">
+    <section id="projects" className="section">
       <div className="wrap">
         <Reveal className="sec-head">
           <div>

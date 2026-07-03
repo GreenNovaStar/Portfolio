@@ -75,7 +75,7 @@ export const content = {
 
   nav: [
     { label: 'About', href: '#about' },
-    { label: 'Work', href: '#work' },
+    { label: 'Projects', href: '#projects' },
     { label: 'Experience', href: '#experience' },
     { label: 'Contact', href: '#contact' },
   ],
@@ -127,50 +127,47 @@ export const content = {
   },
 
   work: {
-    tag: 'Selected work',
-    title: "Systems I've designed and shipped",
-    intro: 'A few projects that show how I think about automation, reliability, and developer experience.',
+    tag: 'Projects',
+    title: 'Things I build on my own time',
+    intro: 'Side projects and coursework — the stuff you can actually go poke at.',
     projects: [
       {
-        name: 'Compute & Cloud Economics AI agents',
-        badge: 'current',
-        role: 'AWS Transform',
+        name: 'TastEZ',
+        role: 'Recipe & pairing mobile app',
         blurb:
-          'AI-powered migration-assessment agents that automate VMware-to-AWS planning: an EC2 compute agent for instance rightsizing, pricing, and licensing analysis, and a cloud-economics agent that quantifies migration ROI for enterprise customers.',
-        stack: ['Python', 'Strands Agents', 'EC2', 'pytest'],
-        year: '2026 — present',
-        icon: 'cpu',
-      },
-      {
-        name: 'AS2 Restart Protocol',
-        role: 'AWS Transfer Family · protocol + data plane',
-        blurb:
-          'End-to-end AS2 file-transfer recovery for AWS Transfer Family. Large enterprise transfers resume from a network disconnection via partial S3 object fetching, instead of restarting from the beginning, supporting files of any size.',
-        stack: ['Java', 'AS2', 'Amazon S3'],
-        year: '2025',
-        icon: 'transfer',
-      },
-      {
-        name: 'AS2 Interop Certification',
-        role: 'AWS Transfer Family · certification & reliability',
-        blurb:
-          'Led five Drummond AS2 interoperability certifications (2023–2025), keeping AWS AS2 compliant with industry standards across 21 trading partners. This included isolating reliability and interop test suites so a failure in one no longer blocks the other.',
-        stack: ['Java', 'AWS CDK', 'ECS', 'Docker'],
-        year: '2023 — 2025',
-        icon: 'shield',
-      },
-      {
-        name: 'MyAnimeList Client',
-        badge: 'side project',
-        role: 'Unofficial MyAnimeList mobile app',
-        blurb:
-          'A cross-platform mobile client for MyAnimeList, built with Flutter. Browse and track anime and manga against the public MyAnimeList API, with a native feel on both iOS and Android.',
-        stack: ['Flutter', 'Dart'],
-        year: '2025',
+          'A cross-platform Flutter app that helps home cooks decide what to make: it pulls recipes from the Spoonacular API and pairs them with drinks and nearby ingredient sources via Google Maps. Built as a CSUN senior capstone.',
+        stack: ['Flutter', 'Dart', 'Spoonacular API', 'Google Maps API'],
+        year: '2021',
         icon: 'mobile',
         link: {
           label: 'View on GitHub',
+          href: 'https://github.com/GreenNovaStar/TastEZ',
+        },
+      },
+      {
+        name: 'MyAnimeList Client',
+        role: 'Unofficial MyAnimeList mobile app',
+        blurb:
+          'A cross-platform Flutter client for MyAnimeList across Android, iOS, and Web. Browse trending and airing anime, search the catalog, and track a personal watchlist against the MyAnimeList API.',
+        stack: ['Flutter', 'Dart', 'REST API'],
+        year: '2021',
+        icon: 'spark',
+        link: {
+          label: 'View on GitHub',
           href: 'https://github.com/GreenNovaStar/MyAnimeList_Client',
+        },
+      },
+      {
+        name: 'MoChinko',
+        role: 'Browser Pachinko game',
+        blurb:
+          'A playable browser Pachinko game built with Phaser.js: drop a ball, watch it bounce through the pins, and land in a scoring pocket. Runs entirely in the browser with a live demo.',
+        stack: ['JavaScript', 'Phaser.js', 'HTML', 'CSS'],
+        year: '2021',
+        icon: 'node',
+        link: {
+          label: 'Play the demo',
+          href: 'https://greennovastar.github.io/MoChinko/',
         },
       },
     ] as Project[],
