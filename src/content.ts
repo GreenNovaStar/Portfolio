@@ -68,9 +68,9 @@ export const content = {
     email: 'contact@brianyip.dev',
     resumeHref: `${import.meta.env.BASE_URL}resume.pdf`,
     terminalUrl: 'https://terminal.brianyip.dev',
-    // Hero photo: drop an image in public/ (e.g. photo.jpg) and set this to
-    // `${import.meta.env.BASE_URL}photo.jpg`. Leave '' to show the placeholder.
-    photo: '',
+    // Hero photo: drop an image in public/ and reference it via BASE_URL.
+    // Leave '' to show the silhouette placeholder.
+    photo: `${import.meta.env.BASE_URL}photo.jpg`,
   },
 
   nav: [
@@ -129,15 +129,15 @@ export const content = {
   work: {
     tag: 'Projects',
     title: 'Things I build on my own time',
-    intro: 'Side projects and coursework — the stuff you can actually go poke at.',
+    intro: 'Side projects and coursework: the stuff you can actually go poke at.',
     projects: [
       {
         name: 'TastEZ',
         role: 'Recipe & pairing mobile app',
         blurb:
-          'A cross-platform Flutter app that helps home cooks decide what to make: it pulls recipes from the Spoonacular API and pairs them with drinks and nearby ingredient sources via Google Maps. Built as a CSUN senior capstone.',
+          'A cross-platform Flutter app that helps home cooks decide what to make: it pulls recipes from the Spoonacular API, suggests drink pairings, and finds nearby ingredient sources via Google Maps. Built as a CSUN senior capstone.',
         stack: ['Flutter', 'Dart', 'Spoonacular API', 'Google Maps API'],
-        year: '2021',
+        year: '2021 — 2022',
         icon: 'mobile',
         link: {
           label: 'View on GitHub',
@@ -150,7 +150,7 @@ export const content = {
         blurb:
           'A cross-platform Flutter client for MyAnimeList across Android, iOS, and Web. Browse trending and airing anime, search the catalog, and track a personal watchlist against the MyAnimeList API.',
         stack: ['Flutter', 'Dart', 'REST API'],
-        year: '2021',
+        year: '2021 — present',
         icon: 'spark',
         link: {
           label: 'View on GitHub',
@@ -161,7 +161,7 @@ export const content = {
         name: 'MoChinko',
         role: 'Browser Pachinko game',
         blurb:
-          'A playable browser Pachinko game built with Phaser.js: drop a ball, watch it bounce through the pins, and land in a scoring pocket. Runs entirely in the browser with a live demo.',
+          'A playable Pachinko game built with Phaser.js: drop a ball, watch it bounce through the pins, and land in a scoring pocket. Runs entirely in the browser, with a live demo you can try right now.',
         stack: ['JavaScript', 'Phaser.js', 'HTML', 'CSS'],
         year: '2021',
         icon: 'node',
@@ -225,7 +225,7 @@ export const content = {
     titleLead: "Let's build something",
     titleGradient: 'worth shipping.',
     blurb:
-      "If you're working on agentic AI, hard backend systems, or making enterprise software genuinely reliable, I'd love to compare notes.",
+      "If you're working on agentic AI, hard backend systems, or enterprise software that has to stay reliable, I'd love to compare notes.",
     methods: [
       {
         label: 'Email',
