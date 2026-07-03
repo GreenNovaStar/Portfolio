@@ -118,7 +118,7 @@ export const content = {
       'Developer experience',
     ],
     glance: [
-      { k: 'What I do', v: 'SDE II · AWS' },
+      { k: 'Role', v: 'SDE II · AWS' },
       { k: 'Building on the side', v: 'A MyAnimeList mobile app (Flutter)' },
       { k: 'Before this', v: 'AWS Transfer Family (+ AWS B2BI away-team)' },
       { k: 'Languages', v: 'Dart, Java, TypeScript, JavaScript, Python' },
