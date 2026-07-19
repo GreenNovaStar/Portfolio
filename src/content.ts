@@ -122,12 +122,21 @@ export const content = {
 
   experience: {
     title: 'Experience',
-    intro: 'Two teams at AWS: managed file transfer, then agentic AI for cloud migration.',
+    intro:
+      'Managed file transfer, then agentic AI for cloud migration — and next, satellite software at Amazon Leo.',
     // Show this many timeline entries; the rest collapse behind "View more".
-    visibleCount: 3,
+    visibleCount: 4,
     timeline: [
       {
-        when: '2026 — now',
+        when: 'aug 2026 — now',
+        team: 'Amazon Leo (Kuiper)',
+        role: 'Software I&T Engineer · Amazon',
+        location: 'Northridge, CA',
+        blurb:
+          "Starting August 2026: software integration & test for Amazon Leo, Amazon's low-Earth-orbit satellite broadband constellation (formerly Project Kuiper).",
+      },
+      {
+        when: 'jan 2026 — aug 2026',
         team: 'AWS Transform',
         role: 'SDE II · Amazon Web Services',
         location: 'Boston, MA',
@@ -135,7 +144,7 @@ export const content = {
           'Architecting AI-powered migration-assessment agents (Strands Agents) that automate VMware-to-AWS planning: an EC2 compute agent for rightsizing, pricing, and licensing analysis, and a cloud-economics agent that quantifies migration ROI.',
       },
       {
-        when: '2022 — 2025',
+        when: 'jul 2022 — jan 2026',
         team: 'AWS Transfer Family',
         role: 'SDE I · Amazon Web Services',
         location: 'Santa Monica, CA',
@@ -143,7 +152,7 @@ export const content = {
           'Owned AS2 protocol features end-to-end: transfer recovery via partial S3 fetch and five Drummond interoperability certifications across 21 trading partners. As an away-team contributor to the sister B2B Data Interchange team, built the React/Redux console (frontend SME) and shipped AI-powered EDI Generative Mapping.',
       },
       {
-        when: '2021',
+        when: '2015 — 2021',
         team: 'California State University, Northridge',
         role: 'B.S. Computer Science',
         location: 'GPA 3.70',
