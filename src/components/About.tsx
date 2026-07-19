@@ -1,5 +1,4 @@
 import { content } from '../content';
-import { Reveal } from './Reveal';
 
 export function About() {
   const { about } = content;
@@ -7,37 +6,20 @@ export function About() {
   return (
     <section id="about" className="section">
       <div className="wrap">
-        <div className="about">
-          <Reveal className="about-copy">
-            <div className="sec-tag">About</div>
-            <p>
-              {about.lead.map((seg, i) =>
-                typeof seg === 'string' ? seg : (
-                  <span className="hl" key={i}>
-                    {seg.hl}
-                  </span>
-                ),
-              )}
-            </p>
-            <p className="sub">{about.sub}</p>
-            <div className="chips" aria-label="Areas of interest">
-              {about.interests.map((tag) => (
-                <span className="chip" key={tag}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </Reveal>
+        <div className="sec-tag">about</div>
+        <div className="about-copy">
+          <p>{about.lead}</p>
+          <p className="sub">{about.sub}</p>
+        </div>
 
-          <Reveal as="aside" className="about-card glass">
-            <h3>At a glance</h3>
-            {about.glance.map((row) => (
-              <div className="kv" key={row.k}>
-                <span className="k">{row.k}</span>
-                <span className="v">{row.v}</span>
-              </div>
-            ))}
-          </Reveal>
+        <div className="glance" role="table" aria-label="At a glance">
+          <div className="filename"># at-a-glance.yml</div>
+          {about.glance.map((row) => (
+            <div className="kv" key={row.k} role="row">
+              <span className="k">{row.k.toLowerCase().replace(/ /g, '_')}</span>
+              <span className="v">{row.v}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>

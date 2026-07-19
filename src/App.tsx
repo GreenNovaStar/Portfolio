@@ -9,10 +9,6 @@ import { Footer } from './components/Footer';
 export default function App() {
   return (
     <>
-      {/* Ambient background layers (fixed, behind content) */}
-      <div className="aura" aria-hidden="true" />
-      <div className="grid-floor" aria-hidden="true" />
-
       <Nav />
       <main>
         <Hero />

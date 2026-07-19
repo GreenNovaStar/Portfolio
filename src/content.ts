@@ -3,45 +3,23 @@
  *
  * Content is kept at (or below) the level of detail already public on your
  * LinkedIn — public AWS product names + problem/approach/tech, no internal
- * architecture. Items marked PLACEHOLDER are things your notes didn't contain;
- * fill those in before going live.
+ * architecture.
  */
-
-export type IconName =
-  | 'orbit'
-  | 'pulse'
-  | 'node'
-  | 'mail'
-  | 'arrow'
-  | 'arrowUpRight'
-  | 'download'
-  | 'github'
-  | 'linkedin'
-  | 'cpu'
-  | 'transfer'
-  | 'shield'
-  | 'mobile'
-  | 'spark'
-  | 'terminal'
-  | 'code';
 
 export interface ContactMethod {
   label: string;
-  /** Display text under the label, e.g. an email or handle. */
+  /** Display text, e.g. an email or handle. */
   value: string;
   href: string;
-  icon: IconName;
 }
 
 export interface Project {
   name: string;
-  badge?: string;
   role: string;
   blurb: string;
   stack: string[];
   year: string;
-  icon: IconName;
-  /** Optional external link (e.g. a public repo). Renders a link on the card. */
+  /** Optional external link (e.g. a public repo). */
   link?: { label: string; href: string };
 }
 
@@ -49,8 +27,7 @@ export interface TimelineItem {
   when: string;
   /** Team name — the headline of the entry. */
   team: string;
-  badge?: string;
-  /** Role + org + location, shown as the subtitle. */
+  /** Role + org, shown as the subtitle. */
   role: string;
   location: string;
   blurb: string;
@@ -64,26 +41,18 @@ export interface SkillGroup {
 export const content = {
   meta: {
     name: 'Brian Yip',
-    handle: '~/sde @ aws',
+    handle: 'Software Engineer · AWS',
     email: 'contact@brianyip.dev',
     resumeHref: `${import.meta.env.BASE_URL}resume.pdf`,
     terminalUrl: 'https://terminal.brianyip.dev',
     // Hero photo: drop an image in public/ and reference it via BASE_URL.
-    // Leave '' to show the silhouette placeholder.
+    // Leave '' to hide.
     photo: `${import.meta.env.BASE_URL}photo.jpg`,
   },
 
-  nav: [
-    { label: 'About', href: '#about' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Contact', href: '#contact' },
-  ],
-
   hero: {
     availability: 'Currently building agentic AI at AWS',
-    titleLead: 'I build across the stack:',
-    titleGradient: 'protocol internals to AI agents.',
+    title: 'I build across the stack, from protocol internals to AI agents.',
     // Rich intro paragraph: {b: "..."} segments render bold/emphasized.
     intro: [
       "I'm ",
@@ -94,29 +63,11 @@ export const content = {
       { b: 'agentic AI systems' },
       ' I build today on AWS Transform.',
     ] as Array<string | { b: string }>,
-    stats: [
-      { value: '4+ yrs', label: 'shipping at AWS' },
-      { value: 'Full-stack', label: 'AS2 protocol → AI agents' },
-      { value: 'TS · Java · Python', label: 'Languages' },
-    ],
   },
 
   about: {
-    // Rich lead paragraph: {hl: "..."} segments get the gradient highlight.
-    lead: [
-      'I build the software that makes complex enterprise workflows ',
-      { hl: 'reliable and automatic' },
-      ', from AI agents that replace weeks of manual analysis to file-transfer protocols that resume instead of starting over.',
-    ] as Array<string | { hl: string }>,
+    lead: 'I build the software that makes complex enterprise workflows reliable and automatic, from AI agents that replace weeks of manual analysis to file-transfer protocols that resume instead of starting over.',
     sub: 'I like going deep, chasing a bug down to a single byte at a protocol boundary, then shipping full-stack from a React console to the CDK infrastructure under it. I care about correctness, honest engineering, and systems a teammate can reason about at 3 a.m.',
-    interests: [
-      'Agentic AI',
-      'Strands Agents',
-      'AS2 / EDI protocols',
-      'Distributed systems',
-      'Full-stack',
-      'Developer experience',
-    ],
     glance: [
       { k: 'Role', v: 'SDE II · AWS' },
       { k: 'Building on the side', v: 'A MyAnimeList mobile app (Flutter)' },
@@ -127,8 +78,7 @@ export const content = {
   },
 
   work: {
-    tag: 'Projects',
-    title: 'Things I build on my own time',
+    title: 'Projects',
     intro: 'Side projects and coursework: the stuff you can actually go poke at.',
     projects: [
       {
@@ -138,7 +88,6 @@ export const content = {
           'A cross-platform Flutter app that helps home cooks decide what to make: it pulls recipes from the Spoonacular API, suggests drink pairings, and finds nearby ingredient sources via Google Maps. Built as a CSUN senior capstone.',
         stack: ['Flutter', 'Dart', 'Spoonacular API', 'Google Maps API'],
         year: '2021 — 2022',
-        icon: 'mobile',
         link: {
           label: 'View on GitHub',
           href: 'https://github.com/GreenNovaStar/TastEZ',
@@ -151,7 +100,6 @@ export const content = {
           'A cross-platform Flutter client for MyAnimeList across Android, iOS, and Web. Browse trending and airing anime, search the catalog, and track a personal watchlist against the MyAnimeList API.',
         stack: ['Flutter', 'Dart', 'REST API'],
         year: '2021 — present',
-        icon: 'spark',
         link: {
           label: 'View on GitHub',
           href: 'https://github.com/GreenNovaStar/MyAnimeList_Client',
@@ -164,7 +112,6 @@ export const content = {
           'A playable Pachinko game built with Phaser.js: drop a ball, watch it bounce through the pins, and land in a scoring pocket. Runs entirely in the browser, with a live demo you can try right now.',
         stack: ['JavaScript', 'Phaser.js', 'HTML', 'CSS'],
         year: '2021',
-        icon: 'node',
         link: {
           label: 'Play the demo',
           href: 'https://greennovastar.github.io/MoChinko/',
@@ -174,8 +121,7 @@ export const content = {
   },
 
   experience: {
-    tag: 'Experience & stack',
-    title: "Where I've been, what I reach for",
+    title: 'Experience',
     intro: 'Two teams at AWS: managed file transfer, then agentic AI for cloud migration.',
     // Show this many timeline entries; the rest collapse behind "View more".
     visibleCount: 3,
@@ -207,7 +153,6 @@ export const content = {
     ] as TimelineItem[],
     skills: {
       title: 'Toolbox',
-      subtitle: 'What I reach for day to day.',
       groups: [
         { label: 'Languages', items: ['Java', 'TypeScript', 'JavaScript', 'Python'] },
         { label: 'Frontend', items: ['React', 'Redux'] },
@@ -221,9 +166,7 @@ export const content = {
   },
 
   contact: {
-    tag: 'Contact',
-    titleLead: "Let's build something",
-    titleGradient: 'worth shipping.',
+    title: 'Contact',
     blurb:
       "If you're working on agentic AI, hard backend systems, or enterprise software that has to stay reliable, I'd love to compare notes.",
     methods: [
@@ -231,19 +174,16 @@ export const content = {
         label: 'Email',
         value: 'contact@brianyip.dev',
         href: 'mailto:contact@brianyip.dev',
-        icon: 'mail',
       },
       {
         label: 'LinkedIn',
         value: '/in/brian-yip-dev',
         href: 'https://linkedin.com/in/brian-yip-dev',
-        icon: 'linkedin',
       },
       {
         label: 'GitHub',
         value: '@GreenNovaStar',
         href: 'https://github.com/GreenNovaStar',
-        icon: 'github',
       },
     ] as ContactMethod[],
   },

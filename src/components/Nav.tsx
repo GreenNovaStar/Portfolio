@@ -1,10 +1,9 @@
 import { content } from '../content';
-import { Icon } from './Icon';
 import { useTheme } from '../hooks/useTheme';
 
 export function Nav() {
   const { toggle } = useTheme();
-  const { meta, nav } = content;
+  const { meta } = content;
   const resumeIsFile =
     meta.resumeHref.startsWith('/') || meta.resumeHref.startsWith('http');
 
@@ -21,34 +20,16 @@ export function Nav() {
             window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
           }}
         >
-          <img
-            className="mark"
-            src={`${import.meta.env.BASE_URL}android-chrome-192x192.png`}
-            alt=""
-            width={34}
-            height={34}
-            aria-hidden="true"
-          />
-          <span className="who">
-            <b>{meta.name}</b>
-            <span>{meta.handle}</span>
-          </span>
+          <b>{meta.name}</b>
         </a>
 
         <nav className="nav-links" aria-label="Primary">
-          {nav.map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label}
-            </a>
-          ))}
-          <span className="nav-divider" aria-hidden="true" />
           <a
             className="nav-ext"
             href={meta.resumeHref}
             {...(resumeIsFile ? { download: '' } : {})}
           >
-            Résumé
-            <Icon name="download" />
+            résumé
           </a>
           <a
             className="nav-ext"
@@ -56,12 +37,8 @@ export function Nav() {
             target="_blank"
             rel="noreferrer noopener"
           >
-            Terminal
-            <Icon name="arrowUpRight" />
+            terminal ↗
           </a>
-        </nav>
-
-        <div className="nav-right">
           <button
             className="toggle"
             type="button"
@@ -94,7 +71,7 @@ export function Nav() {
               <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
             </svg>
           </button>
-        </div>
+        </nav>
       </div>
     </header>
   );
