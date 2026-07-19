@@ -3,7 +3,7 @@ import { useTheme } from '../hooks/useTheme';
 
 export function Nav() {
   const { toggle } = useTheme();
-  const { meta } = content;
+  const { meta, nav } = content;
   const resumeIsFile =
     meta.resumeHref.startsWith('/') || meta.resumeHref.startsWith('http');
 
@@ -24,6 +24,12 @@ export function Nav() {
         </a>
 
         <nav className="nav-links" aria-label="Primary">
+          {nav.map((item) => (
+            <a key={item.href} href={item.href}>
+              {item.label}
+            </a>
+          ))}
+          <span className="nav-divider" aria-hidden="true" />
           <a
             className="nav-ext"
             href={meta.resumeHref}
@@ -39,7 +45,9 @@ export function Nav() {
           >
             terminal ↗
           </a>
-          <button
+        </nav>
+
+        <button
             className="toggle"
             type="button"
             onClick={toggle}
@@ -69,9 +77,8 @@ export function Nav() {
               aria-hidden="true"
             >
               <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
-            </svg>
-          </button>
-        </nav>
+          </svg>
+        </button>
       </div>
     </header>
   );

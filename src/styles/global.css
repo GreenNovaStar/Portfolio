@@ -108,7 +108,6 @@
   .nav-inner {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     height: 56px;
     gap: 16px;
     font-family: var(--font-mono);
@@ -119,10 +118,30 @@
     font-size: 13.5px;
   }
 
+  /* Links pushed right within the column; the toggle is pinned to the
+     browser edge, outside the content column. */
   .nav-links {
     display: flex;
     align-items: center;
     gap: 14px;
+    margin-left: auto;
+  }
+  .nav-links a {
+    color: var(--text-dim);
+  }
+  .nav-links a:hover {
+    color: var(--text);
+  }
+  .nav-divider {
+    width: 1px;
+    height: 16px;
+    background: var(--border-hi);
+  }
+  .nav .toggle {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
   }
   .nav-ext {
     color: var(--text-dim);
@@ -168,9 +187,10 @@
     align-items: center;
     gap: 14px;
     font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--text-faint);
-    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 20px;
   }
   .sec-tag::before {
     content: '~/';
@@ -451,10 +471,9 @@
   }
 
   /* ---------- Education / Toolbox ---------- */
+  /* Toolbox reuses the .glance config-block styling. */
   .skills {
-    margin-top: 28px;
-    padding-top: 20px;
-    border-top: 1px dashed var(--border);
+    margin-top: 32px;
   }
   .edu {
     display: flex;
@@ -469,28 +488,6 @@
     font-family: var(--font-mono);
     font-size: 12.5px;
     color: var(--text-faint);
-  }
-  .skills h3 {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-faint);
-    margin: 0 0 12px;
-  }
-  .skgroup {
-    display: flex;
-    gap: 12px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    padding: 3px 0;
-  }
-  .skgroup .lab {
-    color: var(--accent-2);
-    flex: none;
-    width: 120px;
-  }
-  .skgroup .row {
-    color: var(--text-dim);
   }
 
   /* ---------- Contact / footer ---------- */
@@ -547,6 +544,20 @@
   }
 
   /* ---------- Responsive ---------- */
+  /* Below this, the content column meets the viewport edge — reserve
+     room so the nav links don't slide under the edge-pinned toggle. */
+  @media (max-width: 820px) {
+    .nav-links {
+      margin-right: 44px;
+    }
+  }
+  /* Collapse in-page anchors on narrow screens; keep résumé/terminal. */
+  @media (max-width: 700px) {
+    .nav-links a:not(.nav-ext),
+    .nav-divider {
+      display: none;
+    }
+  }
   @media (max-width: 560px) {
     .wrap {
       padding-inline: 18px;

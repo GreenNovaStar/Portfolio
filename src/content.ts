@@ -50,6 +50,14 @@ export const content = {
     photo: `${import.meta.env.BASE_URL}photo.jpg`,
   },
 
+  nav: [
+    { label: 'about', href: '#about' },
+    { label: 'projects', href: '#projects' },
+    { label: 'experience', href: '#experience' },
+    { label: 'education', href: '#education' },
+    { label: 'contact', href: '#contact' },
+  ],
+
   hero: {
     availability: 'Currently building agentic AI at AWS',
     title: 'I build across the stack, from protocol internals to AI agents.',

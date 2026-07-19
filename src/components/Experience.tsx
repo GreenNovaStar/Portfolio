@@ -41,12 +41,12 @@ export function Experience() {
           )}
         </div>
 
-        <div className="skills">
-          <h3># {skills.title.toLowerCase()}</h3>
+        <div className="glance skills">
+          <div className="filename"># toolbox.yml</div>
           {skills.groups.map((group) => (
-            <div className="skgroup" key={group.label}>
-              <span className="lab">{group.label.toLowerCase().replace(/ & /g, '_')}</span>
-              <span className="row">{group.items.join(' · ')}</span>
+            <div className="kv" key={group.label}>
+              <span className="k">{group.label.toLowerCase().replace(/ & /g, '_')}</span>
+              <span className="v">{group.items.join(' · ')}</span>
             </div>
           ))}
         </div>
