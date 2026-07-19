@@ -13,7 +13,7 @@ export function Experience() {
   return (
     <section id="experience" className="section">
       <div className="wrap">
-        <div className="sec-tag">experience</div>
+        <a className="sec-tag" href="#experience">experience</a>
         <p className="sec-intro">{experience.intro}</p>
 
         <div className="timeline">

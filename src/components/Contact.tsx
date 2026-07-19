@@ -6,7 +6,7 @@ export function Contact() {
   return (
     <section id="contact" className="contact">
       <div className="wrap">
-        <div className="sec-tag">contact</div>
+        <a className="sec-tag" href="#contact">contact</a>
         <p>{contact.blurb}</p>
 
         <div className="contact-methods">

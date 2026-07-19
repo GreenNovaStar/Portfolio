@@ -203,6 +203,11 @@
     flex: 1;
     height: 1px;
     background: var(--border);
+    transition: background 0.15s ease;
+  }
+  /* Tags are self-links (click to put the anchor in the URL). */
+  a.sec-tag:hover::after {
+    background: var(--border-hi);
   }
 
   .section {

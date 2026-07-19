@@ -6,7 +6,7 @@ export function Projects() {
   return (
     <section id="projects" className="section">
       <div className="wrap">
-        <div className="sec-tag">projects</div>
+        <a className="sec-tag" href="#projects">projects</a>
         <p className="sec-intro">{work.intro}</p>
 
         {work.projects.map((project) => (

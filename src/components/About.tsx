@@ -6,7 +6,7 @@ export function About() {
   return (
     <section id="about" className="section">
       <div className="wrap">
-        <div className="sec-tag">about</div>
+        <a className="sec-tag" href="#about">about</a>
         <div className="about-copy">
           <p>{about.lead}</p>
           <p className="sub">{about.sub}</p>

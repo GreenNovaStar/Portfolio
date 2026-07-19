@@ -6,7 +6,7 @@ export function Education() {
   return (
     <section id="education" className="section">
       <div className="wrap">
-        <div className="sec-tag">education</div>
+        <a className="sec-tag" href="#education">education</a>
         <div className="edu">
           <span className="edu-school">{education.school}</span>
           <span className="edu-degree">
