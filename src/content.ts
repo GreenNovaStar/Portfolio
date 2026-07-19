@@ -125,10 +125,10 @@ export const content = {
     intro:
       'Managed file transfer, then agentic AI for cloud migration — and next, satellite software at Amazon Leo.',
     // Show this many timeline entries; the rest collapse behind "View more".
-    visibleCount: 4,
+    visibleCount: 3,
     timeline: [
       {
-        when: 'aug 2026 — now',
+        when: 'Aug 2026 — now',
         team: 'Amazon Leo (Kuiper)',
         role: 'Software I&T Engineer · Amazon',
         location: 'Northridge, CA',
@@ -136,7 +136,7 @@ export const content = {
           "Starting August 2026: software integration & test for Amazon Leo, Amazon's low-Earth-orbit satellite broadband constellation (formerly Project Kuiper).",
       },
       {
-        when: 'jan 2026 — aug 2026',
+        when: 'Jan 2026 — Aug 2026',
         team: 'AWS Transform',
         role: 'SDE II · Amazon Web Services',
         location: 'Boston, MA',
@@ -144,20 +144,12 @@ export const content = {
           'Architecting AI-powered migration-assessment agents (Strands Agents) that automate VMware-to-AWS planning: an EC2 compute agent for rightsizing, pricing, and licensing analysis, and a cloud-economics agent that quantifies migration ROI.',
       },
       {
-        when: 'jul 2022 — jan 2026',
+        when: 'Jul 2022 — Jan 2026',
         team: 'AWS Transfer Family',
         role: 'SDE I · Amazon Web Services',
         location: 'Santa Monica, CA',
         blurb:
           'Owned AS2 protocol features end-to-end: transfer recovery via partial S3 fetch and five Drummond interoperability certifications across 21 trading partners. As an away-team contributor to the sister B2B Data Interchange team, built the React/Redux console (frontend SME) and shipped AI-powered EDI Generative Mapping.',
-      },
-      {
-        when: '2015 — 2021',
-        team: 'California State University, Northridge',
-        role: 'B.S. Computer Science',
-        location: 'GPA 3.70',
-        blurb:
-          'Graduated December 2021. Focused on systems, algorithms, and software engineering fundamentals.',
       },
     ] as TimelineItem[],
     skills: {
@@ -172,6 +164,12 @@ export const content = {
         { label: 'Tools', items: ['Strands Agents', 'Docker'] },
       ] as SkillGroup[],
     },
+  },
+
+  education: {
+    school: 'California State University, Northridge',
+    degree: 'B.S. Computer Science',
+    detail: '2015 — 2021 · GPA 3.70',
   },
 
   contact: {
