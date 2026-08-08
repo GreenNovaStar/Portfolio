@@ -90,6 +90,18 @@ export const content = {
     intro: 'Side projects and coursework: the stuff you can actually go poke at.',
     projects: [
       {
+        name: 'Sniper Duel',
+        role: 'Browser sniper-hunt game',
+        blurb:
+          'A 2D sniper duel built with Phaser: hunt enemy snipers hiding in the windows of a procedural city skyline. Scope in to shoot — but scoping exposes you to their fire, so read the glint and duck. Bolt-action pacing, day/night rounds, and elevation-aware AI that can clip you behind cover.',
+        stack: ['JavaScript', 'Phaser.js', 'HTML', 'CSS'],
+        year: '2026',
+        link: {
+          label: 'Play the demo',
+          href: 'https://greennovastar.github.io/sniper-duel/',
+        },
+      },
+      {
         name: 'TastEZ',
         role: 'Recipe & pairing mobile app',
         blurb:
