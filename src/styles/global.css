@@ -112,6 +112,24 @@
     }
   }
 
+  /* Tonight's moon, up in the corner. It parallaxes with the far stars. */
+  .moon {
+    position: absolute;
+    top: 9vh;
+    right: 7vw;
+    overflow: visible;
+    transform: translateY(calc(var(--sy, 0) * -0.05px));
+    filter: drop-shadow(0 0 6px rgba(232, 228, 220, 0.35));
+  }
+  .moon-dark {
+    /* Solid, so stars behind the dark limb are hidden as they would be. */
+    fill: #1b1a1e;
+  }
+  .moon-lit {
+    fill: #e8e4dc;
+    opacity: 0.85;
+  }
+
   /*
    * Satellite pass: a steady dot crossing the sky, flaring briefly midway.
    * It lives in a layer covering the whole page (not the fixed sky) so the

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Moon } from './Moon';
 
 interface Comet {
   id: number;
@@ -183,7 +184,7 @@ function makePass(id: number): Pass {
 /**
  * Background starfield: two layers of randomly scattered stars that drift at
  * different speeds as the page scrolls (parallax), with one hidden constellation
- * among the near stars, plus an occasional shooting star. The first
+ * among the near stars, tonight's moon, plus an occasional shooting star. The first
  * comet comes 10–25s after load so a short visit can still catch one; after
  * that they're rare. Dispatch a `comet` event on window to launch one.
  *
@@ -284,6 +285,7 @@ export function Sky() {
             <span className="stars stars-near" style={{ boxShadow: field.near }} />
           </>
         )}
+        <Moon />
         {comets.map((c) => (
           <span
             key={c.id}
