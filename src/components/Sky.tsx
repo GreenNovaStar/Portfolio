@@ -16,6 +16,10 @@ interface Pass {
   rightward: boolean;
   drift: number;
   duration: number;
+  /** Dots in the pass: 1 normally, more for a freshly launched train. */
+  count: number;
+  /** Seconds between dots in a train. */
+  gap: number;
 }
 
 const rand = (min: number, max: number) => min + Math.random() * (max - min);
@@ -169,6 +173,10 @@ function makePass(id: number): Pass {
     rightward: Math.random() < 0.5,
     drift: rand(-15, 15),
     duration: rand(30, 42),
+    // Now and then a batch that's just been launched, still flying nose to
+    // tail before spreading out to their orbits.
+    count: Math.random() < 1 / 6 ? Math.round(rand(5, 8)) : 1,
+    gap: rand(1.1, 1.6),
   };
 }
 
@@ -181,7 +189,8 @@ function makePass(id: number): Pass {
  *
  * Satellites are the slow, steady counterpart (a nod to Amazon Leo): one dot
  * drifting across the whole sky with a brief flare halfway. They're more
- * frequent than comets, and the first comes early in a visit. They sit in a
+ * frequent than comets, and the first comes early in a visit; now and then a
+ * pass is a train of several in a line. They sit in a
  * page-sized layer rather than the fixed sky, so they scroll with the content
  * instead of hanging on the screen while the text slides past.
  */
@@ -293,22 +302,29 @@ export function Sky() {
         ))}
       </div>
       <div className="sky-page" aria-hidden="true">
-        {passes.map((p) => (
-          <span
-            key={p.id}
-            className="satellite"
-            style={
-              {
-                top: `${p.top}px`,
-                left: p.rightward ? '-1%' : '101%',
-                '--dx': p.rightward ? '102vw' : '-102vw',
-                '--dy': `${p.drift}vh`,
-                '--dur': `${p.duration}s`,
-              } as React.CSSProperties
-            }
-            onAnimationEnd={() => setPasses((all) => all.filter((x) => x.id !== p.id))}
-          />
-        ))}
+        {passes.flatMap((p) =>
+          Array.from({ length: p.count }, (_, i) => (
+            <span
+              key={`${p.id}-${i}`}
+              className="satellite"
+              style={
+                {
+                  top: `${p.top}px`,
+                  left: p.rightward ? '-1%' : '101%',
+                  animationDelay: `${i * p.gap}s`,
+                  '--dx': p.rightward ? '102vw' : '-102vw',
+                  '--dy': `${p.drift}vh`,
+                  '--dur': `${p.duration}s`,
+                } as React.CSSProperties
+              }
+              onAnimationEnd={
+                i === p.count - 1
+                  ? () => setPasses((all) => all.filter((x) => x.id !== p.id))
+                  : undefined
+              }
+            />
+          )),
+        )}
       </div>
     </>
   );
