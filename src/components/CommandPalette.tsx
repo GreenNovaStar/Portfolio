@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { content } from '../content';
+import { whereIsTheIss } from '../iss';
 import { activeShower } from '../meteorShowers';
 
 interface Command {
   name: string;
   hint: string;
-  run: () => void;
+  /** May resolve to a line to show the visitor once the palette closes. */
+  run: () => void | Promise<string>;
 }
 
 const scrollTo = (id: string) => () => {
@@ -44,6 +46,7 @@ function buildCommands(): Command[] {
       hint: 'find one in the stars',
       run: () => window.dispatchEvent(new Event('constellation')),
     },
+    { name: 'iss', hint: 'where is the space station?', run: whereIsTheIss },
   ];
 }
 
@@ -55,6 +58,8 @@ export function CommandPalette() {
   const [isOpen, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState(0);
+  const [note, setNote] = useState<string | null>(null);
+  const noteTimer = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const commands = useMemo(buildCommands, []);
 
@@ -90,12 +95,33 @@ export function CommandPalette() {
 
   useEffect(() => setSelected(0), [query]);
 
-  if (!isOpen) return null;
+  useEffect(() => () => window.clearTimeout(noteTimer.current), []);
+
+  const showNote = (text: string, ms: number) => {
+    window.clearTimeout(noteTimer.current);
+    setNote(text);
+    noteTimer.current = window.setTimeout(() => setNote(null), ms);
+  };
+
+  if (!isOpen) {
+    return note ? (
+      <p className="palette-note" role="status">
+        {note}
+      </p>
+    ) : null;
+  }
 
   const run = (command: Command | undefined) => {
     if (!command) return;
     setOpen(false);
-    command.run();
+    const result = command.run();
+    if (result) {
+      showNote('looking it up…', 15_000);
+      result.then(
+        (text) => showNote(text, 9_000),
+        () => showNote("couldn't reach the tracker, try again in a moment", 5_000),
+      );
+    }
   };
 
   return (
