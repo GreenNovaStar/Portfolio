@@ -51,8 +51,8 @@ export function TerminalIcon() {
 }
 
 const glyph = {
-  width: 18,
-  height: 18,
+  width: 22,
+  height: 22,
   viewBox: '0 0 24 24',
   fill: 'none',
   stroke: 'currentColor',
@@ -67,14 +67,15 @@ export function RoleIcon({ name }: { name: 'satellite' | 'agents' | 'transfer' }
   if (name === 'satellite') {
     return (
       <svg {...glyph}>
-        {/* Body, two solar panels on the diagonal (each with a divider), and
-            signal arcs toward the ground in the lower-left corner. */}
-        <path d="M9 12l3-3 3 3-3 3z" />
-        <path d="M3 6l3-3 4 4-3 3z" />
-        <path d="M14 17l3-3 4 4-3 3z" />
-        <path d="M5 8l3-3M16 19l3-3" />
-        <path d="M8.5 8.5l2 2M13.5 13.5l2 2" />
-        <path d="M3 15a6 6 0 0 1 6 6M3 19a2 2 0 0 1 2 2" />
+        {/* Solid shapes read better than outlines at this size: a body with
+            an antenna, flanked by two solar panels, tilted. */}
+        <g transform="rotate(-35 12 12)">
+          <rect x="9.5" y="8.5" width="5" height="7" rx="1" fill="currentColor" />
+          <rect x="0.5" y="9" width="7" height="6" rx="0.6" fill="currentColor" />
+          <rect x="16.5" y="9" width="7" height="6" rx="0.6" fill="currentColor" />
+          <path d="M7.5 12h2M14.5 12h2M12 8.5V5.5" />
+          <circle cx="12" cy="4.5" r="1.2" fill="currentColor" />
+        </g>
       </svg>
     );
   }
