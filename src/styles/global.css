@@ -113,8 +113,8 @@
   }
 
   /*
-   * The hidden constellation's label. Shares the near stars' drift so it
-   * stays under them, and fades in when the constellation is revealed.
+   * The hidden constellation's stick figure and label. They share the near
+   * stars' drift so they stay on the stars, and fade in when it's revealed.
    */
   .constellation {
     position: absolute;
@@ -134,8 +134,22 @@
     opacity: 0;
     transition: opacity 0.8s ease;
   }
+  .constellation-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    stroke: var(--star);
+    stroke-width: 0.75;
+    stroke-linecap: round;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
   .constellation.revealed .constellation-label {
     opacity: 0.9;
+  }
+  .constellation.revealed .constellation-lines {
+    opacity: 0.4;
   }
 
   /* Tonight's moon, up in the corner. It parallaxes with the far stars. */

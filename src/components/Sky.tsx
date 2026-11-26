@@ -52,6 +52,8 @@ interface Constellation {
   /** Width in px of the 0–1 box. */
   size: number;
   stars: readonly ShapeStar[];
+  /** Pairs of star indexes joined by the usual stick figure. */
+  lines: readonly (readonly [number, number])[];
 }
 
 // Rough proportions, as seen from the northern hemisphere (Crux from the south).
@@ -59,6 +61,17 @@ const CONSTELLATIONS: readonly Constellation[] = [
   {
     name: 'Orion',
     size: 150,
+    lines: [
+      [2, 0],
+      [2, 1],
+      [0, 1],
+      [0, 3],
+      [1, 5],
+      [3, 4],
+      [4, 5],
+      [3, 6],
+      [5, 7],
+    ],
     stars: [
       [0.15, 0.1, 1.2], // Betelgeuse
       [0.75, 0.15, 0.9], // Bellatrix
@@ -73,6 +86,15 @@ const CONSTELLATIONS: readonly Constellation[] = [
   {
     name: 'Big Dipper',
     size: 210,
+    lines: [
+      [0, 1],
+      [1, 2],
+      [2, 3],
+      [3, 0],
+      [3, 4],
+      [4, 5],
+      [5, 6],
+    ],
     stars: [
       [1, 0.1, 1], // Dubhe
       [0.98, 0.45, 0.9], // Merak
@@ -86,6 +108,12 @@ const CONSTELLATIONS: readonly Constellation[] = [
   {
     name: 'Cassiopeia',
     size: 150,
+    lines: [
+      [0, 1],
+      [1, 2],
+      [2, 3],
+      [3, 4],
+    ],
     stars: [
       [0, 0.25, 0.8],
       [0.25, 0.65, 0.9],
@@ -97,6 +125,10 @@ const CONSTELLATIONS: readonly Constellation[] = [
   {
     name: 'Southern Cross',
     size: 100,
+    lines: [
+      [0, 1],
+      [2, 3],
+    ],
     stars: [
       [0.5, 0, 1], // Gacrux
       [0.56, 1, 1.2], // Acrux
@@ -108,6 +140,8 @@ const CONSTELLATIONS: readonly Constellation[] = [
   {
     name: 'Pleiades',
     size: 46,
+    // A cluster, not a figure, so it's only named.
+    lines: [],
     stars: [
       [0.15, 0.35, 0.6],
       [0.4, 0.15, 0.8],
@@ -179,13 +213,26 @@ function placeConstellation(): PlacedConstellation {
     const dy = (y - 0.5) * size;
     return [Math.round(cx + dx * cos - dy * sin), Math.round(cy + dx * sin + dy * cos), spread];
   });
-  return { name: shape.name, stars };
+  return { name: shape.name, stars, lines: shape.lines };
 }
 
 /** A constellation laid out on screen; star x/y are in px. */
 interface PlacedConstellation {
   name: string;
   stars: readonly ShapeStar[];
+  lines: Constellation['lines'];
+}
+
+/** Bounding box of a placed constellation, in the near layer's coordinates. */
+function bounds({ stars }: PlacedConstellation) {
+  const xs = stars.map(([x]) => x);
+  const ys = stars.map(([, y]) => y);
+  return {
+    left: Math.min(...xs),
+    right: Math.max(...xs),
+    top: Math.min(...ys),
+    bottom: Math.max(...ys),
+  };
 }
 
 interface Field {
@@ -205,20 +252,30 @@ function makeField(): Field {
   };
 }
 
-/** Name label under a constellation, shown when it's revealed. */
-function ConstellationLabel({ constellation }: { constellation: PlacedConstellation }) {
-  const xs = constellation.stars.map(([x]) => x);
-  const ys = constellation.stars.map(([, y]) => y);
+/** Stick figure and name for a constellation, shown when it's revealed. */
+function ConstellationFigure({ constellation }: { constellation: PlacedConstellation }) {
+  const { stars, lines, name } = constellation;
+  const box = bounds(constellation);
   return (
-    <span
-      className="constellation-label"
-      style={{
-        left: `${(Math.min(...xs) + Math.max(...xs)) / 2}px`,
-        top: `${Math.max(...ys) + 14}px`,
-      }}
-    >
-      {constellation.name}
-    </span>
+    <>
+      <svg className="constellation-lines" width="1" height="1">
+        {lines.map(([a, b]) => (
+          <line
+            key={`${a}-${b}`}
+            x1={stars[a][0]}
+            y1={stars[a][1]}
+            x2={stars[b][0]}
+            y2={stars[b][1]}
+          />
+        ))}
+      </svg>
+      <span
+        className="constellation-label"
+        style={{ left: `${(box.left + box.right) / 2}px`, top: `${box.bottom + 14}px` }}
+      >
+        {name}
+      </span>
+    </>
   );
 }
 
@@ -276,8 +333,8 @@ function makePass(id: number): Pass {
 /**
  * Background starfield: two layers of randomly scattered stars that drift at
  * different speeds as the page scrolls (parallax), with one hidden
- * constellation among the near stars (a `constellation` event reshuffles and
- * names it), tonight's moon, and an occasional shooting star. The first comet
+ * constellation among the near stars (hovering it, or a `constellation`
+ * event, draws it in), tonight's moon, and an occasional shooting star. The first comet
  * comes 10–25s after load so a short visit can still catch one; after that
  * they're rare, except on the nights around a major meteor shower's peak.
  * Dispatch a `comet` event on window to launch one.
@@ -293,6 +350,8 @@ export function Sky() {
   const ref = useRef<HTMLDivElement>(null);
   const [field, setField] = useState<Field | null>(null);
   const [revealed, setRevealed] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const fieldRef = useRef<Field | null>(null);
   const [comets, setComets] = useState<Comet[]>([]);
   const [passes, setPasses] = useState<Pass[]>([]);
   const nextId = useRef(0);
@@ -315,6 +374,38 @@ export function Sky() {
     return () => {
       window.clearTimeout(timer);
       window.removeEventListener('resize', onResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    fieldRef.current = field;
+  }, [field]);
+
+  useEffect(() => {
+    // Hovering near the hidden constellation draws it in. The sky sits behind
+    // the page and ignores the pointer, so check the position directly.
+    let frame = 0;
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const constellation = fieldRef.current?.constellation;
+        if (!constellation) return;
+        const box = bounds(constellation);
+        const y = e.clientY + (reducedMotion() ? 0 : window.scrollY * 0.12);
+        const pad = 24;
+        setHovered(
+          e.clientX > box.left - pad &&
+            e.clientX < box.right + pad &&
+            y > box.top - pad &&
+            y < box.bottom + pad,
+        );
+      });
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('pointermove', onMove);
     };
   }, []);
 
@@ -401,8 +492,8 @@ export function Sky() {
           <>
             <span className="stars stars-far" style={{ boxShadow: field.far }} />
             <span className="stars stars-near" style={{ boxShadow: field.near }} />
-            <div className={revealed ? 'constellation revealed' : 'constellation'}>
-              <ConstellationLabel constellation={field.constellation} />
+            <div className={revealed || hovered ? 'constellation revealed' : 'constellation'}>
+              <ConstellationFigure constellation={field.constellation} />
             </div>
           </>
         )}
