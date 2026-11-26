@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--
+  Source for public/og-image.png, the link-preview card (1200×630).
+  Regenerate after editing (from the repo root, with Edge installed):
+
+    "/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless \
+      --disable-gpu --hide-scrollbars --window-size=1200,630 \
+      --screenshot="$(pwd -W)/public/og-image.png" "file:///$(pwd -W)/social/og-card.html"
+
+  Key content stays inside a centered safe area because some apps crop the
+  sides of wide previews.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+      body {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 72px;
+        padding: 0 110px;
+        background-color: #111014;
+        background-image:
+          radial-gradient(900px 620px at 0% 0%, rgba(140, 100, 255, 0.22), transparent 70%),
+          radial-gradient(700px 500px at 100% 100%, rgba(140, 100, 255, 0.08), transparent 70%);
+        color: #a19e99;
+        font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+      }
+      #stars {
+        position: absolute;
+        inset: 0;
+      }
+      .avatar {
+        position: relative;
+        flex: none;
+        width: 250px;
+        height: 250px;
+      }
+      .avatar img {
+        display: block;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .ring {
+        position: absolute;
+        inset: -26px;
+        border: 2px dashed #b69cff;
+        border-radius: 50%;
+        opacity: 0.6;
+      }
+      /* Satellite dot on the ring, up and to the right. */
+      .sat {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #b69cff;
+        box-shadow: 0 0 18px #b69cff;
+      }
+      .text {
+        position: relative;
+      }
+      h1 {
+        margin: 0;
+        color: #e8e6e3;
+        font-size: 92px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+      .title {
+        margin: 20px 0 0;
+        color: #b69cff;
+        font-size: 38px;
+        font-weight: 500;
+      }
+      .tagline {
+        margin: 18px 0 0;
+        font-size: 27px;
+        line-height: 1.4;
+      }
+      .url {
+        position: absolute;
+        right: 110px;
+        bottom: 48px;
+        color: #b69cff;
+        font-family: 'Cascadia Code', Consolas, ui-monospace, monospace;
+        font-size: 24px;
+        letter-spacing: 0.04em;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="stars" width="1200" height="630"></canvas>
+    <div class="avatar">
+      <img src="../public/photo.jpg" alt="" />
+      <span class="ring"></span>
+      <span class="sat"></span>
+    </div>
+    <div class="text">
+      <h1>Brian Yip</h1>
+      <p class="title">Software Engineer at Amazon</p>
+      <p class="tagline">Satellite network testing, AI agents,<br />and B2B file transfer.</p>
+    </div>
+    <div class="url">brianyip.dev</div>
+    <script>
+      // Seeded so regenerating the image gives the same sky.
+      var seed = 7;
+      var rand = function () {
+        seed = (seed * 16807) % 2147483647;
+        return seed / 2147483647;
+      };
+      var ctx = document.getElementById('stars').getContext('2d');
+      for (var i = 0; i < 260; i++) {
+        var bright = rand() < 0.15;
+        ctx.fillStyle = bright ? 'rgba(205,185,255,0.75)' : 'rgba(255,255,255,0.28)';
+        ctx.beginPath();
+        ctx.arc(rand() * 1200, rand() * 630, bright ? 1.4 : 0.9, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    </script>
+  </body>
+</html>
