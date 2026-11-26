@@ -6,233 +6,137 @@
  * architecture.
  */
 
-export interface ContactMethod {
+export interface Link {
   label: string;
-  /** Display text, e.g. an email or handle. */
-  value: string;
   href: string;
 }
 
 export interface Project {
   name: string;
-  role: string;
+  /** One line: what it is. */
   blurb: string;
   stack: string[];
   year: string;
-  /** Optional external link (e.g. a public repo). */
-  link?: { label: string; href: string };
+  link?: Link;
 }
 
-export interface TimelineItem {
+export interface Role {
   when: string;
-  /** Team name — the headline of the entry. */
   team: string;
-  /** Role + org, shown as the subtitle. */
-  role: string;
+  title: string;
   location: string;
-  blurb: string;
-}
-
-export interface SkillGroup {
-  label: string;
-  items: string[];
+  /**
+   * Short lines describing what you worked on. `[text](url)` renders as an
+   * inline link, used to point at public AWS docs and announcements.
+   */
+  notes: string[];
+  stack: string[];
 }
 
 export const content = {
   meta: {
     name: 'Brian Yip',
-    handle: 'Software Engineer · Amazon',
+    title: 'Software Engineer at Amazon',
+    tagline: 'Satellite network testing, AI agents, and B2B file transfer.',
     email: 'contact@brianyip.dev',
     resumeHref: `${import.meta.env.BASE_URL}resume.pdf`,
     terminalUrl: 'https://terminal.brianyip.dev',
-    // Hero photo: drop an image in public/ and reference it via BASE_URL.
-    // Leave '' to hide.
+    // Drop an image in public/ and reference it via BASE_URL. Leave '' to hide.
     photo: `${import.meta.env.BASE_URL}photo.jpg`,
   },
 
-  nav: [
-    { label: 'about', href: '#about' },
-    { label: 'projects', href: '#projects' },
-    { label: 'experience', href: '#experience' },
-    { label: 'education', href: '#education' },
-    { label: 'contact', href: '#contact' },
+  intro: [
+    "I'm a software engineer at Amazon. I'm currently on the Amazon Leo team in Northridge, CA, where I work on test automation for the satellite network.",
+    'Before that I spent four years at AWS, first on the AS2 protocol for AWS Transfer Family and then building migration assessment agents for AWS Transform.',
+    'Outside of work I make small browser games and a MyAnimeList app in Flutter.',
   ],
 
-  hero: {
-    availability: 'Currently testing satellite networks at Amazon Leo',
-    title: 'I build across the stack, from protocol internals to AI agents.',
-    // Rich intro paragraph: {b: "..."} segments render bold/emphasized.
-    intro: [
-      "I'm ",
-      { b: 'Brian Yip' },
-      ', a software engineer with 4+ years at Amazon, from ',
-      { b: 'AWS Transfer Family AS2' },
-      ' and ',
-      { b: 'agentic AI on AWS Transform' },
-      ' to the ',
-      { b: 'satellite network test automation' },
-      ' I build today at Amazon Leo.',
-    ] as Array<string | { b: string }>,
-  },
-
-  about: {
-    lead: 'I build the software that makes complex enterprise workflows reliable and automatic, from AI agents that replace weeks of manual analysis to file-transfer protocols that resume instead of starting over.',
-    sub: 'I like going deep, chasing a bug down to a single byte at a protocol boundary, then shipping full-stack from a React console to the CDK infrastructure under it. I care about correctness, honest engineering, and systems a teammate can reason about at 3 a.m.',
-    glance: [
-      { k: 'Role', v: 'Software I&T Engineer II · Amazon Leo' },
-      { k: 'Building on the side', v: 'A MyAnimeList mobile app (Flutter)' },
-      { k: 'Before this', v: 'AWS Transform · AWS Transfer Family' },
-      { k: 'Languages', v: 'Dart, Java, TypeScript, JavaScript, Python' },
-      { k: 'Tools', v: 'Step Functions · Lambda · CDK · Bedrock' },
-    ],
-  },
-
-  work: {
-    title: 'Projects',
-    intro: 'Side projects and coursework: the stuff you can actually go poke at.',
-    projects: [
-      {
-        name: 'Sniper Duel',
-        role: 'Browser sniper-hunt game',
-        blurb:
-          'A 2D sniper duel built with Phaser: hunt enemy snipers hiding in the windows of a procedural city skyline. Scope in to shoot — but scoping exposes you to their fire, so read the glint and duck. Bolt-action pacing, day/night rounds, and elevation-aware AI that can clip you behind cover.',
-        stack: ['JavaScript', 'Phaser.js', 'HTML', 'CSS'],
-        year: '2026',
-        link: {
-          label: 'Play the demo',
-          href: 'https://greennovastar.github.io/sniper-duel/',
-        },
-      },
-      {
-        name: 'TastEZ',
-        role: 'Recipe & pairing mobile app',
-        blurb:
-          'A cross-platform Flutter app that helps home cooks decide what to make: it pulls recipes from the Spoonacular API, suggests drink pairings, and finds nearby ingredient sources via Google Maps. Built as a CSUN senior capstone.',
-        stack: ['Flutter', 'Dart', 'Spoonacular API', 'Google Maps API'],
-        year: '2021 — 2022',
-        link: {
-          label: 'View on GitHub',
-          href: 'https://github.com/GreenNovaStar/TastEZ',
-        },
-      },
-      {
-        name: 'MyAnimeList Client',
-        role: 'Unofficial MyAnimeList mobile app',
-        blurb:
-          'A cross-platform Flutter client for MyAnimeList across Android, iOS, and Web. Browse trending and airing anime, search the catalog, and track a personal watchlist against the MyAnimeList API.',
-        stack: ['Flutter', 'Dart', 'REST API'],
-        year: '2021 — present',
-        link: {
-          label: 'View on GitHub',
-          href: 'https://github.com/GreenNovaStar/MyAnimeList_Client',
-        },
-      },
-      {
-        name: 'MoChinko',
-        role: 'Browser Pachinko game',
-        blurb:
-          'A playable Pachinko game built with Phaser.js: drop a ball, watch it bounce through the pins, and land in a scoring pocket. Runs entirely in the browser, with a live demo you can try right now.',
-        stack: ['JavaScript', 'Phaser.js', 'HTML', 'CSS'],
-        year: '2021',
-        link: {
-          label: 'Play the demo',
-          href: 'https://greennovastar.github.io/MoChinko/',
-        },
-      },
-    ] as Project[],
-  },
-
-  experience: {
-    title: 'Experience',
-    intro:
-      'Managed file transfer, then agentic AI for cloud migration — and now, satellite network test at Amazon Leo.',
-    // Show this many timeline entries; the rest collapse behind "View more".
-    visibleCount: 3,
-    timeline: [
-      {
-        when: 'Aug 2026 — now',
-        team: 'Amazon Leo (Kuiper)',
-        role: 'Software I&T Engineer II (SDE in Test) · Amazon',
-        location: 'Northridge, CA',
-        blurb:
-          "Software integration & test for Amazon Leo, Amazon's low-Earth-orbit satellite broadband constellation (formerly Project Kuiper). Scaling a serverless test orchestration pipeline (SQS, Step Functions, Lambda) from 1 to 4 antennas, automating IXIA network testing in Python, and consolidating three CI/CD pipelines into one CDK-based deployment.",
-      },
-      {
-        when: 'Jan 2026 — Aug 2026',
-        team: 'AWS Transform',
-        role: 'SDE II · Amazon Web Services',
-        location: 'Boston, MA',
-        blurb:
-          'Built AI-powered migration-assessment agents (Strands Agents) for VMware-to-AWS planning, replacing a fixed CrewAI pipeline with a conversational flow: an EC2 compute agent for rightsizing, pricing, and licensing analysis, and a cloud-economics agent that quantifies migration savings. Gated releases with a rubric-based evaluation across 60 scenarios.',
-      },
-      {
-        when: 'Jul 2022 — Dec 2025',
-        team: 'AWS Transfer Family',
-        role: 'SDE I · Amazon Web Services',
-        location: 'Santa Monica, CA',
-        blurb:
-          'Owned AS2 protocol features end-to-end: transfer recovery via partial S3 fetch (lifting the 1 GB file limit), per-connector rate limits raising send throughput from 3 to 100 TPS, and five Drummond interoperability certifications across 21 trading partners. As an away-team contributor to the sister B2B Data Interchange team, built the React/Redux console (frontend SME) and shipped AI-powered EDI Generative Mapping.',
-      },
-    ] as TimelineItem[],
-    skills: {
-      title: 'Toolbox',
-      groups: [
-        { label: 'Languages', items: ['Java', 'Python', 'TypeScript', 'JavaScript', 'SQL'] },
-        { label: 'Frontend', items: ['React', 'Redux'] },
-        {
-          label: 'Cloud & infra',
-          items: [
-            'Lambda',
-            'Step Functions',
-            'SQS',
-            'S3',
-            'DynamoDB',
-            'ECS Fargate',
-            'EventBridge',
-            'CDK',
-            'CloudFormation',
-          ],
-        },
-        { label: 'AI & LLM', items: ['Amazon Bedrock', 'Strands Agents', 'Agent evaluation'] },
-        { label: 'Testing', items: ['IXIA (IxNetwork RESTpy)', 'pytest', 'JUnit', 'Jest'] },
-        { label: 'Tools', items: ['Docker', 'Git', 'Linux', 'CI/CD'] },
-      ] as SkillGroup[],
+  work: [
+    {
+      when: '2026 –',
+      team: 'Amazon Leo',
+      title: 'Software I&T Engineer II',
+      location: 'Northridge, CA',
+      notes: [
+        'Scaling the serverless test orchestration pipeline (Step Functions, SQS, Lambda) from one antenna to four.',
+        'Automating IXIA network tests in Python so the full suite runs without manual setup.',
+      ],
+      stack: ['Python', 'Step Functions', 'Lambda', 'SQS', 'CDK', 'IXIA'],
     },
-  },
+    {
+      when: '2026',
+      team: 'AWS Transform',
+      title: 'Software Development Engineer II',
+      location: 'Boston, MA',
+      notes: [
+        'Built the [compute](https://docs.aws.amazon.com/transform/latest/userguide/transform-app-assessments-compute.html) and [cloud economics](https://docs.aws.amazon.com/transform/latest/userguide/transform-app-assessments-business-value.html) agents (Strands Agents) for VMware-to-AWS assessments.',
+        'Wrote the evaluation gate that scores agent output across 60 scenarios and blocks regressions.',
+      ],
+      stack: ['Python', 'Strands Agents', 'Amazon Bedrock', 'LLM evaluation', 'CDK'],
+    },
+    {
+      when: '2022 – 25',
+      team: 'AWS Transfer Family',
+      title: 'Software Development Engineer I',
+      location: 'Santa Monica, CA',
+      notes: [
+        'Added transfer recovery to AS2, which let us remove the 1 GB file size limit.',
+        'Raised AS2 send throughput from 3 to 100 TPS per connector by moving to per-connector rate limits.',
+        'Unblocked partners on locked-down networks with [static IP addresses](https://docs.aws.amazon.com/transfer/latest/userguide/configure-as2-connector.html) for firewall allowlisting and support for [self-signed partner TLS certificates](https://docs.aws.amazon.com/transfer/latest/userguide/managing-as2-partners.html#configure-as2-certificate).',
+        'Added CloudFormation support for AS2 [custom directory locations](https://aws.amazon.com/about-aws/whats-new/2025/01/aws-transfer-family-custom-directory-locations-as2-files/), which let inbound files, MDNs, and status files each land in their own folder.',
+        'Led five [Drummond AS2 certifications](https://aws.amazon.com/about-aws/whats-new/2023/06/aws-transfer-family-drummond-group-as2-certification/) from 2023 to 2025, testing interoperability against 21 partner vendors. AWS Transfer Family is on [Drummond’s certified products list](https://www.drummondgroup.com/certified-products/b2b-interoperability/#AS2).',
+        'Built the [AWS B2B Data Interchange](https://docs.aws.amazon.com/b2bi/latest/userguide/what-is-b2bi.html) console in React and Redux, and shipped [Generative Mapping](https://docs.aws.amazon.com/b2bi/latest/userguide/generative-ai-assisted-mapping.html) on Amazon Bedrock.',
+      ],
+      stack: [
+        'Java',
+        'TypeScript',
+        'React',
+        'Redux',
+        'Lambda',
+        'ECS Fargate',
+        'SQS',
+        'S3',
+        'DynamoDB',
+        'EventBridge',
+        'Amazon Bedrock',
+        'CDK',
+      ],
+    },
+  ] as Role[],
+
+  projects: [
+    {
+      name: 'MyAnimeList Client',
+      blurb: 'An unofficial MyAnimeList app for Android, iOS, and web.',
+      stack: ['Flutter', 'Dart'],
+      year: '2021 –',
+      link: { label: 'source', href: 'https://github.com/GreenNovaStar/MyAnimeList_Client' },
+    },
+    {
+      name: 'TastEZ',
+      blurb: 'A recipe and drink pairing app. My CSUN senior capstone.',
+      stack: ['Flutter', 'Dart'],
+      year: '2022',
+      link: { label: 'source', href: 'https://github.com/GreenNovaStar/TastEZ' },
+    },
+    {
+      name: 'MoChinko',
+      blurb: 'A pachinko game that runs in the browser.',
+      stack: ['JavaScript', 'Phaser'],
+      year: '2021',
+      link: { label: 'play', href: 'https://greennovastar.github.io/MoChinko/' },
+    },
+  ] as Project[],
 
   education: {
+    when: '2015 – 21',
     school: 'California State University, Northridge',
     degree: 'B.S. Computer Science',
-    detail: '2015 — 2021 · GPA 3.70',
+    detail: 'GPA 3.70',
   },
 
-  contact: {
-    title: 'Contact',
-    blurb:
-      "If you're working on agentic AI, hard backend systems, or enterprise software that has to stay reliable, I'd love to compare notes.",
-    methods: [
-      {
-        label: 'Email',
-        value: 'contact@brianyip.dev',
-        href: 'mailto:contact@brianyip.dev',
-      },
-      {
-        label: 'LinkedIn',
-        value: '/in/brian-yip-dev',
-        href: 'https://linkedin.com/in/brian-yip-dev',
-      },
-      {
-        label: 'GitHub',
-        value: '@GreenNovaStar',
-        href: 'https://github.com/GreenNovaStar',
-      },
-    ] as ContactMethod[],
-  },
-
-  footer: {
-    // {year} is replaced with the current year at render time.
-    copyright: '© {year} Brian Yip',
-  },
+  // {year} is replaced with the current year at render time.
+  copyright: '© {year} Brian Yip',
 } as const;
 
 export type Content = typeof content;

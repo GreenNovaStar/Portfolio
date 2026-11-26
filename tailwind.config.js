@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  // Theme is driven by [data-theme] on <html>, set before paint in index.html.
-  darkMode: ['selector', '[data-theme="dark"]'],
+  // Light/dark follows the OS setting (prefers-color-scheme).
+  darkMode: 'media',
   theme: {
     extend: {
       fontFamily: {

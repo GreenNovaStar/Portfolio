@@ -1,25 +1,27 @@
-import { Nav } from './components/Nav';
-import { Hero } from './components/Hero';
+import { Sidebar } from './components/Sidebar';
 import { About } from './components/About';
-import { Projects } from './components/Projects';
 import { Experience } from './components/Experience';
+import { Projects } from './components/Projects';
 import { Education } from './components/Education';
-import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { CommandPalette } from './components/CommandPalette';
+import { Sky } from './components/Sky';
 
 export default function App() {
   return (
     <>
-      <Nav />
-      <main>
-        <Hero />
-        <About />
-        <Projects />
-        <Experience />
-        <Education />
-        <Contact />
-      </main>
-      <Footer />
+      <Sky />
+      <div className="layout">
+        <Sidebar />
+        <main className="content">
+          <About />
+          <Experience />
+          <Projects />
+          <Education />
+          <Footer />
+        </main>
+      </div>
+      <CommandPalette />
     </>
   );
 }

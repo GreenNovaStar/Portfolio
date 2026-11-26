@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="dark light" />
     <meta
       name="description"
-      content="Brian Yip is a Software Development Engineer at AWS building distributed systems and cloud infrastructure."
+      content="Brian Yip is a software engineer at Amazon working on Amazon Leo, AWS Transform, and AWS Transfer Family."
     />
 
     <!-- Favicon set (shared "BY" monogram with terminal.brianyip.dev) -->
@@ -15,29 +15,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 
-    <title>Brian Yip — Software Development Engineer</title>
-
-    <!-- Set theme before first paint to avoid a flash of the wrong theme. -->
-    <script>
-      (function () {
-        try {
-          var root = document.documentElement;
-          var param = new URLSearchParams(location.search).get('theme');
-          var saved = localStorage.getItem('by-theme');
-          var theme =
-            param === 'light' || param === 'dark'
-              ? param
-              : saved === 'light' || saved === 'dark'
-                ? saved
-                : window.matchMedia('(prefers-color-scheme: light)').matches
-                  ? 'light'
-                  : 'dark';
-          root.setAttribute('data-theme', theme);
-        } catch (e) {
-          document.documentElement.setAttribute('data-theme', 'dark');
-        }
-      })();
-    </script>
+    <title>Brian Yip</title>
   </head>
   <body>
     <div id="root"></div>

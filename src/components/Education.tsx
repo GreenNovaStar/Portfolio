@@ -4,14 +4,15 @@ export function Education() {
   const { education } = content;
 
   return (
-    <section id="education" className="section">
-      <div className="wrap">
-        <a className="sec-tag" href="#education">education</a>
-        <div className="edu">
-          <span className="edu-school">{education.school}</span>
-          <span className="edu-degree">
-            {education.degree} · {education.detail}
-          </span>
+    <section id="education" aria-label="Education">
+      <h2 className="sec-label">Education</h2>
+      <div className="entry">
+        <span className="when">{education.when}</span>
+        <div>
+          <h3>
+            {education.degree} <span className="at">· {education.school}</span>
+          </h3>
+          <p className="where">{education.detail}</p>
         </div>
       </div>
     </section>
