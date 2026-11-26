@@ -129,6 +129,46 @@
     }
   }
 
+  /* Satellite pass: a steady dot crossing the sky, flaring briefly midway. */
+  .satellite {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--text);
+    box-shadow: 0 0 6px var(--star);
+    opacity: 0;
+    animation: pass var(--dur) linear forwards;
+  }
+  @keyframes pass {
+    0% {
+      opacity: 0;
+      transform: translate(0, 0);
+    }
+    6% {
+      opacity: 0.75;
+    }
+    46% {
+      opacity: 0.75;
+      transform: translate(calc(var(--dx) * 0.46), calc(var(--dy) * 0.46)) scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: translate(calc(var(--dx) * 0.5), calc(var(--dy) * 0.5)) scale(2);
+    }
+    54% {
+      opacity: 0.75;
+      transform: translate(calc(var(--dx) * 0.54), calc(var(--dy) * 0.54)) scale(1);
+    }
+    94% {
+      opacity: 0.75;
+    }
+    100% {
+      opacity: 0;
+      transform: translate(var(--dx), var(--dy));
+    }
+  }
+
   /* Shooting star: a thin streak, bright at the head, that flies and fades. */
   .comet {
     position: absolute;

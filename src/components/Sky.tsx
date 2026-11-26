@@ -9,6 +9,14 @@ interface Comet {
   distance: number;
 }
 
+interface Pass {
+  id: number;
+  top: number;
+  rightward: boolean;
+  drift: number;
+  duration: number;
+}
+
 const rand = (min: number, max: number) => min + Math.random() * (max - min);
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -27,15 +35,30 @@ function makeComet(id: number): Comet {
   };
 }
 
+function makePass(id: number): Pass {
+  return {
+    id,
+    top: rand(8, 70),
+    rightward: Math.random() < 0.5,
+    drift: rand(-15, 15),
+    duration: rand(30, 42),
+  };
+}
+
 /**
  * Background starfield: two star layers that drift at different speeds as
  * the page scrolls (parallax), plus an occasional shooting star. The first
  * comet comes 10–25s after load so a short visit can still catch one; after
  * that they're rare. Dispatch a `comet` event on window to launch one.
+ *
+ * Satellites are the slow, steady counterpart (a nod to Amazon Leo): one dot
+ * drifting across the whole sky with a brief flare halfway. They're more
+ * frequent than comets, and the first comes early in a visit.
  */
 export function Sky() {
   const ref = useRef<HTMLDivElement>(null);
   const [comets, setComets] = useState<Comet[]>([]);
+  const [passes, setPasses] = useState<Pass[]>([]);
   const nextId = useRef(0);
 
   useEffect(() => {
@@ -76,8 +99,39 @@ export function Sky() {
     };
   }, []);
 
+  useEffect(() => {
+    let timer = 0;
+    const schedule = (delayMs: number) => {
+      timer = window.setTimeout(() => {
+        if (!document.hidden && !reducedMotion()) {
+          // One at a time keeps it a quiet detail rather than traffic.
+          setPasses((p) => (p.length ? p : [makePass(nextId.current++)]));
+        }
+        schedule(rand(45_000, 90_000));
+      }, delayMs);
+    };
+    schedule(rand(3_000, 8_000));
+    return () => window.clearTimeout(timer);
+  }, []);
+
   return (
     <div className="sky" ref={ref} aria-hidden="true">
+      {passes.map((p) => (
+        <span
+          key={p.id}
+          className="satellite"
+          style={
+            {
+              top: `${p.top}%`,
+              left: p.rightward ? '-1%' : '101%',
+              '--dx': p.rightward ? '102vw' : '-102vw',
+              '--dy': `${p.drift}vh`,
+              '--dur': `${p.duration}s`,
+            } as React.CSSProperties
+          }
+          onAnimationEnd={() => setPasses((all) => all.filter((x) => x.id !== p.id))}
+        />
+      ))}
       {comets.map((c) => (
         <span
           key={c.id}
