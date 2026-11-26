@@ -83,7 +83,13 @@
         background: var(--accent);
         opacity: 0.25;
       }
-      /* The satellite has slipped off its orbit and drifts away. */
+      /* The satellite sits on an arm rotated to a random point on the orbit
+         (set by the script below), then drifts outward off it. */
+      .arm {
+        position: absolute;
+        inset: 0;
+        transform: rotate(var(--start, 0deg));
+      }
       .stray {
         position: absolute;
         top: -4px;
@@ -98,7 +104,7 @@
       }
       @keyframes drift {
         to {
-          transform: translate(90px, -40px);
+          transform: translate(var(--dx, 40px), var(--dy, -70px));
           opacity: 0.4;
         }
       }
@@ -135,18 +141,33 @@
       @media (prefers-reduced-motion: reduce) {
         .stray {
           animation: none;
-          transform: translate(60px, -26px);
+          transform: translate(calc(var(--dx, 40px) * 0.6), calc(var(--dy, -70px) * 0.6));
         }
       }
     </style>
   </head>
   <body>
     <main>
-      <div class="orbit" aria-hidden="true"><span class="stray"></span></div>
+      <div class="orbit" aria-hidden="true">
+        <span class="arm" id="arm"><span class="stray"></span></span>
+      </div>
       <p class="code">404 · SIGNAL LOST</p>
       <h1>Lost in orbit</h1>
       <p>This page drifted out of range, or never existed. Let's get you back on course.</p>
       <a href="/">Return to base</a>
     </main>
+    <script>
+      (function () {
+        var rand = function (min, max) {
+          return min + Math.random() * (max - min);
+        };
+        var arm = document.getElementById('arm');
+        // Upper part of the orbit only, so it never drifts into the text below.
+        arm.style.setProperty('--start', rand(-110, 110) + 'deg');
+        // In the arm's frame "up" is away from the planet, so dy is outward.
+        arm.style.setProperty('--dx', rand(-50, 50) + 'px');
+        arm.style.setProperty('--dy', -rand(45, 85) + 'px');
+      })();
+    </script>
   </body>
 </html>
