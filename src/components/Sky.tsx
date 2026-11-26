@@ -328,7 +328,7 @@ function makePass(id: number): Pass {
     // Now and then a batch that's just been launched, still flying nose to
     // tail before spreading out to their orbits.
     count: Math.random() < 1 / 6 ? Math.round(rand(5, 8)) : 1,
-    gap: rand(1.1, 1.6),
+    gap: rand(2.4, 3.4),
   };
 }
 
