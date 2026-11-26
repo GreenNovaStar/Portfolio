@@ -5,7 +5,7 @@
 /*
  * Split layout: a sticky sidebar (identity, section nav, links) and a
  * scrolling content column. Collapses to a single column on narrow screens.
- * Light/dark follows the OS setting; there is no toggle.
+ * Dark theme only.
  */
 
 @layer base {
@@ -13,33 +13,20 @@
     --font-body: -apple-system, 'Segoe UI', system-ui, Roboto, Helvetica, Arial, sans-serif;
     --font-mono: ui-monospace, 'Cascadia Code', Consolas, Menlo, monospace;
 
-    --bg: #f7f6f9;
-    --text: #1f1e1c;
-    --text-dim: #63605a;
-    --text-faint: #8f8b84;
-    --rule: #dcd9d2;
-    --accent: #6b46d6;
-    --accent-soft: rgba(107, 70, 214, 0.09);
-    --dot: rgba(31, 30, 28, 0.18);
-    --star: rgba(107, 70, 214, 0.45);
-    --glow: rgba(107, 70, 214, 0.1);
+    /* Dark only: the starfield, glow, and comets are designed for a night
+       sky. A light theme would need its own take on the background. */
+    --bg: #111014;
+    --text: #e8e6e3;
+    --text-dim: #a19e99;
+    --text-faint: #6f6c68;
+    --rule: #2a2c30;
+    --accent: #b69cff;
+    --accent-soft: rgba(182, 156, 255, 0.1);
+    --dot: rgba(255, 255, 255, 0.28);
+    --star: rgba(205, 185, 255, 0.7);
+    --glow: rgba(140, 100, 255, 0.14);
 
-    color-scheme: light dark;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #111014;
-      --text: #e8e6e3;
-      --text-dim: #a19e99;
-      --text-faint: #6f6c68;
-      --rule: #2a2c30;
-      --accent: #b69cff;
-      --accent-soft: rgba(182, 156, 255, 0.1);
-      --dot: rgba(255, 255, 255, 0.28);
-      --star: rgba(205, 185, 255, 0.7);
-      --glow: rgba(140, 100, 255, 0.14);
-    }
+    color-scheme: dark;
   }
 
   html {

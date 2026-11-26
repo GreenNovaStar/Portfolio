@@ -1,8 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  // Light/dark follows the OS setting (prefers-color-scheme).
-  darkMode: 'media',
   theme: {
     extend: {
       fontFamily: {
