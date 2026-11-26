@@ -43,6 +43,8 @@ export const content = {
     location: 'Northridge, CA',
     // IANA zone for the sidebar's local-time line.
     timeZone: 'America/Los_Angeles',
+    // Rough [latitude, longitude] of the location, for the sky's sunrise and sunset glow.
+    coordinates: [34.23, -118.54],
     email: 'contact@brianyip.dev',
     resumeHref: `${import.meta.env.BASE_URL}resume.pdf`,
     terminalUrl: 'https://terminal.brianyip.dev',

@@ -152,6 +152,26 @@
     opacity: 0.4;
   }
 
+  /*
+   * Sunrise or sunset glow along the bottom of the sky. Sky.tsx sets its
+   * opacity from how close Northridge is to either; it's absent otherwise.
+   * Kept faint so --text-faint still clears 4.5:1 over its brightest part.
+   */
+  .horizon {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 45vh;
+    background: radial-gradient(
+      120% 100% at 50% 100%,
+      rgba(255, 150, 100, 0.09),
+      rgba(200, 90, 130, 0.05) 45%,
+      transparent 75%
+    );
+    transition: opacity 2s ease;
+  }
+
   /* Tonight's moon, up in the corner. It parallaxes with the far stars. */
   .moon {
     position: absolute;

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { content } from '../content';
 import { activeShower } from '../meteorShowers';
+import { twilight } from '../sun';
 import { Moon } from './Moon';
 
 interface Comet {
@@ -334,7 +336,8 @@ function makePass(id: number): Pass {
  * Background starfield: two layers of randomly scattered stars that drift at
  * different speeds as the page scrolls (parallax), with one hidden
  * constellation among the near stars (hovering it, or a `constellation`
- * event, draws it in), tonight's moon, and an occasional shooting star. The first comet
+ * event, draws it in), tonight's moon, a warm horizon around sunrise and
+ * sunset in Northridge, and an occasional shooting star. The first comet
  * comes 10–25s after load so a short visit can still catch one; after that
  * they're rare, except on the nights around a major meteor shower's peak.
  * Dispatch a `comet` event on window to launch one.
@@ -351,6 +354,7 @@ export function Sky() {
   const [field, setField] = useState<Field | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [dusk, setDusk] = useState(0);
   const fieldRef = useRef<Field | null>(null);
   const [comets, setComets] = useState<Comet[]>([]);
   const [passes, setPasses] = useState<Pass[]>([]);
@@ -380,6 +384,15 @@ export function Sky() {
   useEffect(() => {
     fieldRef.current = field;
   }, [field]);
+
+  useEffect(() => {
+    // Warm the horizon around sunrise and sunset where the sidebar's clock is.
+    const [lat, lon] = content.meta.coordinates;
+    const update = () => setDusk(twilight(Date.now(), lat, lon));
+    update();
+    const interval = window.setInterval(update, 60_000);
+    return () => window.clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     // Hovering near the hidden constellation draws it in. The sky sits behind
@@ -488,6 +501,7 @@ export function Sky() {
   return (
     <>
       <div className="sky" ref={ref} aria-hidden="true">
+        {dusk > 0 && <div className="horizon" style={{ opacity: dusk }} />}
         {field && (
           <>
             <span className="stars stars-far" style={{ boxShadow: field.far }} />
