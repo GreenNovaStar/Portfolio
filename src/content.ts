@@ -41,7 +41,7 @@ export interface SkillGroup {
 export const content = {
   meta: {
     name: 'Brian Yip',
-    handle: 'Software Engineer · AWS',
+    handle: 'Software Engineer · Amazon',
     email: 'contact@brianyip.dev',
     resumeHref: `${import.meta.env.BASE_URL}resume.pdf`,
     terminalUrl: 'https://terminal.brianyip.dev',
@@ -59,17 +59,19 @@ export const content = {
   ],
 
   hero: {
-    availability: 'Currently building agentic AI at AWS',
+    availability: 'Currently testing satellite networks at Amazon Leo',
     title: 'I build across the stack, from protocol internals to AI agents.',
     // Rich intro paragraph: {b: "..."} segments render bold/emphasized.
     intro: [
       "I'm ",
       { b: 'Brian Yip' },
-      ', a Software Development Engineer at AWS with 4+ years shipping end-to-end for enterprise customers, from ',
+      ', a software engineer with 4+ years at Amazon, from ',
       { b: 'AWS Transfer Family AS2' },
+      ' and ',
+      { b: 'agentic AI on AWS Transform' },
       ' to the ',
-      { b: 'agentic AI systems' },
-      ' I build today on AWS Transform.',
+      { b: 'satellite network test automation' },
+      ' I build today at Amazon Leo.',
     ] as Array<string | { b: string }>,
   },
 
@@ -77,11 +79,11 @@ export const content = {
     lead: 'I build the software that makes complex enterprise workflows reliable and automatic, from AI agents that replace weeks of manual analysis to file-transfer protocols that resume instead of starting over.',
     sub: 'I like going deep, chasing a bug down to a single byte at a protocol boundary, then shipping full-stack from a React console to the CDK infrastructure under it. I care about correctness, honest engineering, and systems a teammate can reason about at 3 a.m.',
     glance: [
-      { k: 'Role', v: 'SDE II · AWS' },
+      { k: 'Role', v: 'Software I&T Engineer II · Amazon Leo' },
       { k: 'Building on the side', v: 'A MyAnimeList mobile app (Flutter)' },
-      { k: 'Before this', v: 'AWS Transfer Family (+ AWS B2BI away-team)' },
+      { k: 'Before this', v: 'AWS Transform · AWS Transfer Family' },
       { k: 'Languages', v: 'Dart, Java, TypeScript, JavaScript, Python' },
-      { k: 'Tools', v: 'Strands Agents · Lambda · CDK' },
+      { k: 'Tools', v: 'Step Functions · Lambda · CDK · Bedrock' },
     ],
   },
 
@@ -143,17 +145,17 @@ export const content = {
   experience: {
     title: 'Experience',
     intro:
-      'Managed file transfer, then agentic AI for cloud migration — and next, satellite software at Amazon Leo.',
+      'Managed file transfer, then agentic AI for cloud migration — and now, satellite network test at Amazon Leo.',
     // Show this many timeline entries; the rest collapse behind "View more".
     visibleCount: 3,
     timeline: [
       {
         when: 'Aug 2026 — now',
         team: 'Amazon Leo (Kuiper)',
-        role: 'Software I&T Engineer · Amazon',
+        role: 'Software I&T Engineer II (SDE in Test) · Amazon',
         location: 'Northridge, CA',
         blurb:
-          "Starting August 2026: software integration & test for Amazon Leo, Amazon's low-Earth-orbit satellite broadband constellation (formerly Project Kuiper).",
+          "Software integration & test for Amazon Leo, Amazon's low-Earth-orbit satellite broadband constellation (formerly Project Kuiper). Scaling a serverless test orchestration pipeline (SQS, Step Functions, Lambda) from 1 to 4 antennas, automating IXIA network testing in Python, and consolidating three CI/CD pipelines into one CDK-based deployment.",
       },
       {
         when: 'Jan 2026 — Aug 2026',
@@ -161,27 +163,39 @@ export const content = {
         role: 'SDE II · Amazon Web Services',
         location: 'Boston, MA',
         blurb:
-          'Architecting AI-powered migration-assessment agents (Strands Agents) that automate VMware-to-AWS planning: an EC2 compute agent for rightsizing, pricing, and licensing analysis, and a cloud-economics agent that quantifies migration ROI.',
+          'Built AI-powered migration-assessment agents (Strands Agents) for VMware-to-AWS planning, replacing a fixed CrewAI pipeline with a conversational flow: an EC2 compute agent for rightsizing, pricing, and licensing analysis, and a cloud-economics agent that quantifies migration savings. Gated releases with a rubric-based evaluation across 60 scenarios.',
       },
       {
-        when: 'Jul 2022 — Jan 2026',
+        when: 'Jul 2022 — Dec 2025',
         team: 'AWS Transfer Family',
         role: 'SDE I · Amazon Web Services',
         location: 'Santa Monica, CA',
         blurb:
-          'Owned AS2 protocol features end-to-end: transfer recovery via partial S3 fetch and five Drummond interoperability certifications across 21 trading partners. As an away-team contributor to the sister B2B Data Interchange team, built the React/Redux console (frontend SME) and shipped AI-powered EDI Generative Mapping.',
+          'Owned AS2 protocol features end-to-end: transfer recovery via partial S3 fetch (lifting the 1 GB file limit), per-connector rate limits raising send throughput from 3 to 100 TPS, and five Drummond interoperability certifications across 21 trading partners. As an away-team contributor to the sister B2B Data Interchange team, built the React/Redux console (frontend SME) and shipped AI-powered EDI Generative Mapping.',
       },
     ] as TimelineItem[],
     skills: {
       title: 'Toolbox',
       groups: [
-        { label: 'Languages', items: ['Java', 'TypeScript', 'JavaScript', 'Python'] },
+        { label: 'Languages', items: ['Java', 'Python', 'TypeScript', 'JavaScript', 'SQL'] },
         { label: 'Frontend', items: ['React', 'Redux'] },
         {
           label: 'Cloud & infra',
-          items: ['Lambda', 'DynamoDB', 'ECS Fargate', 'EventBridge', 'CDK', 'CloudFormation'],
+          items: [
+            'Lambda',
+            'Step Functions',
+            'SQS',
+            'S3',
+            'DynamoDB',
+            'ECS Fargate',
+            'EventBridge',
+            'CDK',
+            'CloudFormation',
+          ],
         },
-        { label: 'Tools', items: ['Strands Agents', 'Docker'] },
+        { label: 'AI & LLM', items: ['Amazon Bedrock', 'Strands Agents', 'Agent evaluation'] },
+        { label: 'Testing', items: ['IXIA (IxNetwork RESTpy)', 'pytest', 'JUnit', 'Jest'] },
+        { label: 'Tools', items: ['Docker', 'Git', 'Linux', 'CI/CD'] },
       ] as SkillGroup[],
     },
   },
