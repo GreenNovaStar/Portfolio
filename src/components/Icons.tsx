@@ -67,14 +67,14 @@ export function RoleIcon({ name }: { name: 'satellite' | 'agents' | 'transfer' }
   if (name === 'satellite') {
     return (
       <svg {...glyph}>
-        {/* Solid shapes read better than outlines at this size: a body with
-            an antenna, flanked by two solar panels, tilted. */}
+        {/* Body with an antenna, flanked by two solar panels (each with a
+            divider so the outline doesn't read as an empty box), tilted. */}
         <g transform="rotate(-35 12 12)">
-          <rect x="9.5" y="8.5" width="5" height="7" rx="1" fill="currentColor" />
-          <rect x="0.5" y="9" width="7" height="6" rx="0.6" fill="currentColor" />
-          <rect x="16.5" y="9" width="7" height="6" rx="0.6" fill="currentColor" />
-          <path d="M7.5 12h2M14.5 12h2M12 8.5V5.5" />
-          <circle cx="12" cy="4.5" r="1.2" fill="currentColor" />
+          <rect x="9.5" y="8.5" width="5" height="7" rx="1" />
+          <rect x="1" y="9" width="6.5" height="6" rx="0.6" />
+          <rect x="16.5" y="9" width="6.5" height="6" rx="0.6" />
+          <path d="M4.25 9v6M19.75 9v6M12 8.5V5.5" />
+          <circle cx="12" cy="4.3" r="1.2" />
         </g>
       </svg>
     );
