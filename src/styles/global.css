@@ -635,31 +635,7 @@
 
   /* ---------- Narrow screens: stack the sidebar above the content ---------- */
   @media (max-width: 900px) {
-    /* Shooting star: a thin streak, bright at the head, that flies and fades. */
-  .comet {
-    position: absolute;
-    height: 1.5px;
-    border-radius: 999px;
-    background: linear-gradient(to right, transparent, var(--star) 70%, var(--text));
-    transform-origin: right center;
-    opacity: 0;
-    animation: comet 1.2s ease-out forwards;
-  }
-  @keyframes comet {
-    0% {
-      opacity: 0;
-      transform: rotate(var(--angle)) translateX(0);
-    }
-    15% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-      transform: rotate(var(--angle)) translateX(var(--dist));
-    }
-  }
-
-  .layout {
+    .layout {
       display: block;
       padding: 0 24px;
     }
