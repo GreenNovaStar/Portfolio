@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { content } from '../content';
+import { activeShower } from '../meteorShowers';
 
 interface Command {
   name: string;
@@ -16,6 +17,7 @@ const open = (href: string) => () => {
 
 function buildCommands(): Command[] {
   const { meta } = content;
+  const shower = activeShower();
   return [
     { name: 'about', hint: 'jump to About', run: scrollTo('about') },
     { name: 'work', hint: 'jump to Work', run: scrollTo('work') },
@@ -34,7 +36,7 @@ function buildCommands(): Command[] {
     { name: 'terminal', hint: 'open terminal.brianyip.dev', run: open(meta.terminalUrl) },
     {
       name: 'comet',
-      hint: 'make a wish',
+      hint: shower ? `the ${shower} peak tonight` : 'make a wish',
       run: () => window.dispatchEvent(new Event('comet')),
     },
   ];

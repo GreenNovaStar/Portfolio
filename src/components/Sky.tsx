@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { activeShower } from '../meteorShowers';
 import { Moon } from './Moon';
 
 interface Comet {
@@ -153,7 +154,28 @@ function makeField() {
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function makeComet(id: number): Comet {
+/** Screen point (px) that shower meteors fly away from. */
+interface Radiant {
+  x: number;
+  y: number;
+}
+
+function makeComet(id: number, radiant: Radiant | null): Comet {
+  if (radiant) {
+    // Shower meteors all trace back to one point, just above the screen.
+    const top = rand(5, 45);
+    const left = rand(5, 95);
+    const dx = (left / 100) * window.innerWidth - radiant.x;
+    const dy = (top / 100) * window.innerHeight - radiant.y;
+    return {
+      id,
+      top,
+      left,
+      angle: (Math.atan2(dy, dx) * 180) / Math.PI,
+      length: rand(70, 140),
+      distance: rand(180, 360),
+    };
+  }
   // Head toward the lower right or lower left, starting in the upper part of
   // the screen so the streak stays mostly on-screen.
   const rightward = Math.random() < 0.5;
@@ -186,7 +208,8 @@ function makePass(id: number): Pass {
  * different speeds as the page scrolls (parallax), with one hidden constellation
  * among the near stars, tonight's moon, plus an occasional shooting star. The first
  * comet comes 10–25s after load so a short visit can still catch one; after
- * that they're rare. Dispatch a `comet` event on window to launch one.
+ * that they're rare, except on the nights around a major meteor shower's peak.
+ * Dispatch a `comet` event on window to launch one.
  *
  * Satellites are the slow, steady counterpart (a nod to Amazon Leo): one dot
  * drifting across the whole sky with a brief flare halfway. They're more
@@ -241,16 +264,22 @@ export function Sky() {
   }, []);
 
   useEffect(() => {
-    const launch = () => setComets((c) => [...c, makeComet(nextId.current++)]);
+    // Near a major shower's peak, meteors come every few seconds instead of
+    // every few minutes, all from the same radiant.
+    const shower = activeShower() !== null;
+    const radiant = shower
+      ? { x: rand(0.2, 0.8) * window.innerWidth, y: -0.1 * window.innerHeight }
+      : null;
+    const launch = () => setComets((c) => [...c, makeComet(nextId.current++, radiant)]);
 
     let timer = 0;
     const schedule = (delayMs: number) => {
       timer = window.setTimeout(() => {
         if (!document.hidden && !reducedMotion()) launch();
-        schedule(rand(60_000, 180_000));
+        schedule(shower ? rand(8_000, 25_000) : rand(60_000, 180_000));
       }, delayMs);
     };
-    schedule(rand(10_000, 25_000));
+    schedule(shower ? rand(4_000, 10_000) : rand(10_000, 25_000));
 
     // On request (the palette's `comet` command) it runs even with reduced
     // motion, since the visitor asked for it explicitly.
