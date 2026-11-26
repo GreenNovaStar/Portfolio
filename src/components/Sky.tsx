@@ -11,6 +11,7 @@ interface Comet {
 
 interface Pass {
   id: number;
+  /** Page offset in px, so the pass scrolls with the content. */
   top: number;
   rightward: boolean;
   drift: number;
@@ -64,7 +65,7 @@ function makeComet(id: number): Comet {
 function makePass(id: number): Pass {
   return {
     id,
-    top: rand(8, 70),
+    top: window.scrollY + (rand(8, 70) / 100) * window.innerHeight,
     rightward: Math.random() < 0.5,
     drift: rand(-15, 15),
     duration: rand(30, 42),
@@ -79,7 +80,9 @@ function makePass(id: number): Pass {
  *
  * Satellites are the slow, steady counterpart (a nod to Amazon Leo): one dot
  * drifting across the whole sky with a brief flare halfway. They're more
- * frequent than comets, and the first comes early in a visit.
+ * frequent than comets, and the first comes early in a visit. They sit in a
+ * page-sized layer rather than the fixed sky, so they scroll with the content
+ * instead of hanging on the screen while the text slides past.
  */
 export function Sky() {
   const ref = useRef<HTMLDivElement>(null);
@@ -163,45 +166,49 @@ export function Sky() {
   }, []);
 
   return (
-    <div className="sky" ref={ref} aria-hidden="true">
-      {field && (
-        <>
-          <span className="stars stars-far" style={{ boxShadow: field.far }} />
-          <span className="stars stars-near" style={{ boxShadow: field.near }} />
-        </>
-      )}
-      {passes.map((p) => (
-        <span
-          key={p.id}
-          className="satellite"
-          style={
-            {
-              top: `${p.top}%`,
-              left: p.rightward ? '-1%' : '101%',
-              '--dx': p.rightward ? '102vw' : '-102vw',
-              '--dy': `${p.drift}vh`,
-              '--dur': `${p.duration}s`,
-            } as React.CSSProperties
-          }
-          onAnimationEnd={() => setPasses((all) => all.filter((x) => x.id !== p.id))}
-        />
-      ))}
-      {comets.map((c) => (
-        <span
-          key={c.id}
-          className="comet"
-          style={
-            {
-              top: `${c.top}%`,
-              left: `${c.left}%`,
-              width: `${c.length}px`,
-              '--angle': `${c.angle}deg`,
-              '--dist': `${c.distance}px`,
-            } as React.CSSProperties
-          }
-          onAnimationEnd={() => setComets((all) => all.filter((x) => x.id !== c.id))}
-        />
-      ))}
-    </div>
+    <>
+      <div className="sky" ref={ref} aria-hidden="true">
+        {field && (
+          <>
+            <span className="stars stars-far" style={{ boxShadow: field.far }} />
+            <span className="stars stars-near" style={{ boxShadow: field.near }} />
+          </>
+        )}
+        {comets.map((c) => (
+          <span
+            key={c.id}
+            className="comet"
+            style={
+              {
+                top: `${c.top}%`,
+                left: `${c.left}%`,
+                width: `${c.length}px`,
+                '--angle': `${c.angle}deg`,
+                '--dist': `${c.distance}px`,
+              } as React.CSSProperties
+            }
+            onAnimationEnd={() => setComets((all) => all.filter((x) => x.id !== c.id))}
+          />
+        ))}
+      </div>
+      <div className="sky-page" aria-hidden="true">
+        {passes.map((p) => (
+          <span
+            key={p.id}
+            className="satellite"
+            style={
+              {
+                top: `${p.top}px`,
+                left: p.rightward ? '-1%' : '101%',
+                '--dx': p.rightward ? '102vw' : '-102vw',
+                '--dy': `${p.drift}vh`,
+                '--dur': `${p.duration}s`,
+              } as React.CSSProperties
+            }
+            onAnimationEnd={() => setPasses((all) => all.filter((x) => x.id !== p.id))}
+          />
+        ))}
+      </div>
+    </>
   );
 }

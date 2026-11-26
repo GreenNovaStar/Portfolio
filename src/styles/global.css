@@ -112,7 +112,22 @@
     }
   }
 
-  /* Satellite pass: a steady dot crossing the sky, flaring briefly midway. */
+  /*
+   * Satellite pass: a steady dot crossing the sky, flaring briefly midway.
+   * It lives in a layer covering the whole page (not the fixed sky) so the
+   * browser scrolls it with the content; driving it from --sy would trail
+   * the text by a frame. Clipped so a pass never widens or lengthens the page.
+   */
+  #root {
+    position: relative;
+  }
+  .sky-page {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: clip;
+    pointer-events: none;
+  }
   .satellite {
     position: absolute;
     width: 3px;
