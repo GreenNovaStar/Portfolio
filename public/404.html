@@ -83,45 +83,18 @@
         background: var(--accent);
         opacity: 0.25;
       }
-      /* The satellite rides an arm that keeps orbiting from a random start
-         (set by the script below), slowing as it loses its grip, while the
-         satellite spirals outward off the ring. */
-      .arm {
-        position: absolute;
-        inset: 0;
-        transform: rotate(var(--start, 0deg));
-        animation: sweep 14s cubic-bezier(0.25, 0.6, 0.35, 1) forwards;
-      }
-      @keyframes sweep {
-        to {
-          transform: rotate(calc(var(--start, 0deg) + var(--sweep, 300deg)));
-        }
-      }
+      /* Positioned every frame by the script below, from the orbit's center. */
       .stray {
         position: absolute;
-        top: -4px;
+        top: 50%;
         left: 50%;
         width: 8px;
         height: 8px;
-        margin-left: -4px;
+        margin: -4px 0 0 -4px;
         border-radius: 50%;
         background: var(--accent);
         box-shadow: 0 0 10px var(--accent);
-        animation: escape 14s linear forwards;
-      }
-      /* Hugs the ring for most of a lap, then peels away and fades. */
-      @keyframes escape {
-        55% {
-          transform: translateY(-6px);
-        }
-        80% {
-          transform: translateY(-30px);
-          opacity: 0.85;
-        }
-        100% {
-          transform: translateY(-90px);
-          opacity: 0.35;
-        }
+        will-change: transform, opacity;
       }
       .code {
         margin: 0;
@@ -153,24 +126,12 @@
         background: var(--accent);
         color: var(--bg);
       }
-      @media (prefers-reduced-motion: reduce) {
-        /* Still image of the end state: drifted off, above the planet. */
-        .arm {
-          animation: none;
-          transform: rotate(calc(var(--start, 0deg) + var(--sweep, 300deg)));
-        }
-        .stray {
-          animation: none;
-          transform: translateY(-60px);
-          opacity: 0.5;
-        }
-      }
     </style>
   </head>
   <body>
     <main>
       <div class="orbit" aria-hidden="true">
-        <span class="arm" id="arm"><span class="stray"></span></span>
+        <span class="stray" id="stray"></span>
       </div>
       <p class="code">404 · SIGNAL LOST</p>
       <h1>Lost in orbit</h1>
@@ -178,18 +139,72 @@
       <a href="/">Return to base</a>
     </main>
     <script>
+      // The satellite rides the ring for a fifth to a quarter of a lap, then
+      // spirals off it: its distance from the ring grows exponentially (slow
+      // at first, then faster) while its angular speed falls as it moves
+      // out, the way an orbit slows with altitude. Both come from the same
+      // clock, so the path stays one smooth curve while it fades.
       (function () {
+        var stray = document.getElementById('stray');
+        var R = 60; // ring radius in px (half the 120px orbit)
+        var growth = 0.6; // exponential rate of moving away
+        var seed = 2; // px/s initial outward speed
+        var step = 1 / 60;
         var rand = function (min, max) {
           return min + Math.random() * (max - min);
         };
-        var arm = document.getElementById('arm');
-        // Choose where it breaks away (upper part of the orbit, clear of the
-        // text below), then back out a random lap length and direction, so
-        // the starting point is effectively random.
-        var end = rand(-60, 60);
-        var sweep = rand(220, 330) * (Math.random() < 0.5 ? 1 : -1);
-        arm.style.setProperty('--start', end - sweep + 'deg');
-        arm.style.setProperty('--sweep', sweep + 'deg');
+        // Angular speed on the ring; this range puts the break-away at
+        // roughly 1/5 to 1/4 of a lap.
+        var omega0 = rand(0.6, 0.75);
+        var dir = Math.random() < 0.5 ? 1 : -1;
+
+        var radiusAt = function (t) {
+          return R + (seed / growth) * (Math.exp(growth * t) - 1);
+        };
+        var opacityAt = function (r) {
+          var away = r - R;
+          return away < 25 ? 1 : Math.max(0, 1 - (away - 25) / 70);
+        };
+
+        // Run the path once up front to learn how far around it travels, then
+        // choose the start so it fades out above the planet, clear of the
+        // text below. The start is still random within that.
+        var sweep = 0;
+        for (var t = step; opacityAt(radiusAt(t)) > 0; t += step) {
+          sweep += omega0 * Math.pow(R / radiusAt(t), 1.5) * step;
+        }
+        // Anywhere from about 3 to 9 o'clock over the top; at that distance
+        // even the lowest of those stays above the text.
+        var fadeAt = -Math.PI / 2 + rand(-1.9, 1.9);
+        var start = fadeAt - dir * sweep;
+
+        var place = function (theta, r, opacity) {
+          stray.style.transform =
+            'translate(' + Math.cos(theta) * r + 'px,' + Math.sin(theta) * r + 'px)';
+          stray.style.opacity = opacity;
+        };
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          // A still frame just after it has slipped off the ring.
+          place(start + dir * sweep * 0.6, radiusAt(3), 0.85);
+          return;
+        }
+
+        var theta = start;
+        var elapsed = 0;
+        var last = performance.now();
+        var tick = function (now) {
+          var dt = Math.min((now - last) / 1000, 0.05);
+          last = now;
+          elapsed += dt;
+          var r = radiusAt(elapsed);
+          theta += dir * omega0 * Math.pow(R / r, 1.5) * dt;
+          var opacity = opacityAt(r);
+          place(theta, r, opacity);
+          if (opacity > 0) requestAnimationFrame(tick);
+        };
+        place(start, R, 1);
+        requestAnimationFrame(tick);
       })();
     </script>
   </body>
