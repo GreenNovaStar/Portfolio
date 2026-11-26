@@ -40,6 +40,9 @@ export const content = {
     name: 'Brian Yip',
     title: 'Software Engineer at Amazon',
     tagline: 'Satellite network testing, AI agents, and B2B file transfer.',
+    location: 'Northridge, CA',
+    // IANA zone for the sidebar's local-time line.
+    timeZone: 'America/Los_Angeles',
     email: 'contact@brianyip.dev',
     resumeHref: `${import.meta.env.BASE_URL}resume.pdf`,
     terminalUrl: 'https://terminal.brianyip.dev',

@@ -1,6 +1,7 @@
 import { content } from '../content';
 import { useActiveSection } from '../hooks/useActiveSection';
 import { GitHubIcon, LinkedInIcon, MailIcon, TerminalIcon } from './Icons';
+import { LocalTime } from './LocalTime';
 
 const sections = ['about', 'work', 'projects', 'education'] as const;
 
@@ -26,6 +27,7 @@ export function Sidebar() {
         <h1 className="name">{meta.name}</h1>
         <p className="title">{meta.title}</p>
         <p className="tagline">{meta.tagline}</p>
+        <LocalTime />
 
         <nav className="side-nav" aria-label="Sections">
           {sections.map((id) => (

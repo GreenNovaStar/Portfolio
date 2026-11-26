@@ -278,8 +278,24 @@
     max-width: 300px;
   }
 
+  .local-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 14px 0 0;
+    color: var(--text-faint);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .local-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
   .side-nav {
-    margin-top: 56px;
+    margin-top: 48px;
     display: flex;
     flex-direction: column;
     gap: 14px;
