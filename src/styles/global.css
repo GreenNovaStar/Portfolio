@@ -18,7 +18,8 @@
     --bg: #111014;
     --text: #e8e6e3;
     --text-dim: #a19e99;
-    --text-faint: #6f6c68;
+    /* Lowest that clears WCAG AA (4.5:1) for small text, even over the glow. */
+    --text-faint: #8a8680;
     --rule: #2a2c30;
     --accent: #b69cff;
     --accent-soft: rgba(182, 156, 255, 0.1);
