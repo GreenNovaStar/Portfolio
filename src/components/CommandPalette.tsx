@@ -39,6 +39,11 @@ function buildCommands(): Command[] {
       hint: shower ? `the ${shower} peak tonight` : 'make a wish',
       run: () => window.dispatchEvent(new Event('comet')),
     },
+    {
+      name: 'constellation',
+      hint: 'find one in the stars',
+      run: () => window.dispatchEvent(new Event('constellation')),
+    },
   ];
 }
 

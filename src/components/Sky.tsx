@@ -120,36 +120,106 @@ const CONSTELLATIONS: readonly Constellation[] = [
   },
 ];
 
+/** On-screen boxes of the page's text and images, to keep the sky clear of. */
+function contentRects(): DOMRect[] {
+  return [...document.querySelectorAll('.layout :is(h1, h2, h3, p, li, a, img, time, .shell)')]
+    .map((el) => el.getBoundingClientRect())
+    .filter((r) => r.bottom > 0 && r.top < window.innerHeight && r.width > 0);
+}
+
+/**
+ * Pick a spot in the upper part of the screen that doesn't sit behind text or
+ * the moon, so the shape and its label can be seen. Shrinks the shape a little
+ * if it can't find room, and falls back to anywhere if the page is crowded.
+ * Returns the center and the size to draw at.
+ */
+function openSpot(size: number): [number, number, number] {
+  const rects = [
+    ...contentRects(),
+    ...[...document.querySelectorAll('.moon')].map((el) => el.getBoundingClientRect()),
+  ];
+  for (const scale of [1, 0.8, 0.65, 0.5]) {
+    // Half the size covers any tilt; the extra below is room for the label.
+    const half = size * scale * 0.6;
+    for (let i = 0; i < 60; i++) {
+      const cx = rand(half + 8, Math.max(half + 8, window.innerWidth - half - 24));
+      const cy = rand(half + 8, Math.max(half + 8, window.innerHeight * 0.6));
+      const clear = rects.every(
+        (r) =>
+          cx + half < r.left ||
+          cx - half > r.right ||
+          cy + half + 28 < r.top ||
+          cy - half > r.bottom,
+      );
+      if (clear) return [cx, cy, size * scale];
+    }
+  }
+  return [
+    rand(size, Math.max(size, window.innerWidth - size)),
+    rand(size * 0.6, Math.max(size, window.innerHeight * 0.6)),
+    size,
+  ];
+}
+
 /**
  * One constellation per visit, as an easter egg among the near stars. It's
  * placed in the upper part of the screen so it's visible without scrolling,
  * and tilted a little so it reads as found rather than drawn.
  */
-function constellationShadows(): string {
+function placeConstellation(): PlacedConstellation {
   const shape = CONSTELLATIONS[Math.floor(Math.random() * CONSTELLATIONS.length)];
-  const size = shape.size;
-  const cx = rand(size, Math.max(size, window.innerWidth - size));
-  const cy = rand(size * 0.6, Math.max(size, window.innerHeight * 0.6));
+  const [cx, screenY, size] = openSpot(shape.size);
+  // The near layer has drifted up by this much at the current scroll.
+  const cy = screenY + (reducedMotion() ? 0 : window.scrollY * 0.12);
   const tilt = (rand(-25, 25) * Math.PI) / 180;
   const cos = Math.cos(tilt);
   const sin = Math.sin(tilt);
-  return shape.stars
-    .map(([x, y, spread]) => {
-      const dx = (x - 0.5) * size;
-      const dy = (y - 0.5) * size;
-      const px = Math.round(cx + dx * cos - dy * sin);
-      const py = Math.round(cy + dx * sin + dy * cos);
-      return `${px}px ${py}px 0 ${spread}px`;
-    })
-    .join(',');
+  const stars = shape.stars.map(([x, y, spread]): ShapeStar => {
+    const dx = (x - 0.5) * size;
+    const dy = (y - 0.5) * size;
+    return [Math.round(cx + dx * cos - dy * sin), Math.round(cy + dx * sin + dy * cos), spread];
+  });
+  return { name: shape.name, stars };
 }
 
-function makeField() {
+/** A constellation laid out on screen; star x/y are in px. */
+interface PlacedConstellation {
+  name: string;
+  stars: readonly ShapeStar[];
+}
+
+interface Field {
+  far: string;
+  near: string;
+  constellation: PlacedConstellation;
+}
+
+function makeField(): Field {
+  const constellation = placeConstellation();
+  const shape = constellation.stars.map(([x, y, spread]) => `${x}px ${y}px 0 ${spread}px`);
   return {
     // Mostly pinpricks with a few slightly larger ones.
     far: starShadows(1 / 7000, [0, 0, 0, 0, 0.4], 0.05),
-    near: `${starShadows(1 / 38000, [0.3, 0.5, 0.8], 0.12)},${constellationShadows()}`,
+    near: `${starShadows(1 / 38000, [0.3, 0.5, 0.8], 0.12)},${shape.join(',')}`,
+    constellation,
   };
+}
+
+/** Name label under a constellation, shown when it's revealed. */
+function ConstellationLabel({ constellation }: { constellation: PlacedConstellation }) {
+  const xs = constellation.stars.map(([x]) => x);
+  const ys = constellation.stars.map(([, y]) => y);
+  return (
+    <span
+      className="constellation-label"
+      style={{
+        left: `${(Math.min(...xs) + Math.max(...xs)) / 2}px`,
+        top: `${Math.max(...ys) + 14}px`,
+      }}
+    >
+      {constellation.name}
+    </span>
+  );
 }
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -205,10 +275,11 @@ function makePass(id: number): Pass {
 
 /**
  * Background starfield: two layers of randomly scattered stars that drift at
- * different speeds as the page scrolls (parallax), with one hidden constellation
- * among the near stars, tonight's moon, plus an occasional shooting star. The first
- * comet comes 10–25s after load so a short visit can still catch one; after
- * that they're rare, except on the nights around a major meteor shower's peak.
+ * different speeds as the page scrolls (parallax), with one hidden
+ * constellation among the near stars (a `constellation` event reshuffles and
+ * names it), tonight's moon, and an occasional shooting star. The first comet
+ * comes 10–25s after load so a short visit can still catch one; after that
+ * they're rare, except on the nights around a major meteor shower's peak.
  * Dispatch a `comet` event on window to launch one.
  *
  * Satellites are the slow, steady counterpart (a nod to Amazon Leo): one dot
@@ -220,7 +291,8 @@ function makePass(id: number): Pass {
  */
 export function Sky() {
   const ref = useRef<HTMLDivElement>(null);
-  const [field, setField] = useState<{ far: string; near: string } | null>(null);
+  const [field, setField] = useState<Field | null>(null);
+  const [revealed, setRevealed] = useState(false);
   const [comets, setComets] = useState<Comet[]>([]);
   const [passes, setPasses] = useState<Pass[]>([]);
   const nextId = useRef(0);
@@ -243,6 +315,23 @@ export function Sky() {
     return () => {
       window.clearTimeout(timer);
       window.removeEventListener('resize', onResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    // The palette's `constellation` command: a fresh sky with its
+    // constellation named for a few seconds.
+    let timer = 0;
+    const reveal = () => {
+      setField(makeField());
+      setRevealed(true);
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setRevealed(false), 5_000);
+    };
+    window.addEventListener('constellation', reveal);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener('constellation', reveal);
     };
   }, []);
 
@@ -312,6 +401,9 @@ export function Sky() {
           <>
             <span className="stars stars-far" style={{ boxShadow: field.far }} />
             <span className="stars stars-near" style={{ boxShadow: field.near }} />
+            <div className={revealed ? 'constellation revealed' : 'constellation'}>
+              <ConstellationLabel constellation={field.constellation} />
+            </div>
           </>
         )}
         <Moon />
