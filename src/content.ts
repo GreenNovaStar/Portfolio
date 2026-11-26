@@ -31,6 +31,8 @@ export interface Role {
    */
   notes: string[];
   stack: string[];
+  /** Glyph drawn in this role's timeline node. */
+  icon: 'satellite' | 'agents' | 'transfer';
 }
 
 export const content = {
@@ -55,6 +57,7 @@ export const content = {
     {
       when: '2026 –',
       team: 'Amazon Leo',
+      icon: 'satellite',
       title: 'Software I&T Engineer II',
       location: 'Northridge, CA',
       notes: [
@@ -66,6 +69,7 @@ export const content = {
     {
       when: '2026',
       team: 'AWS Transform',
+      icon: 'agents',
       title: 'Software Development Engineer II',
       location: 'Boston, MA',
       notes: [
@@ -77,6 +81,7 @@ export const content = {
     {
       when: '2022 – 25',
       team: 'AWS Transfer Family',
+      icon: 'transfer',
       title: 'Software Development Engineer I',
       location: 'Santa Monica, CA',
       notes: [

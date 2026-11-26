@@ -1,6 +1,7 @@
 import { content } from '../content';
 import { Chips } from './Chips';
 import { Note } from './Note';
+import { RoleIcon } from './Icons';
 
 export function Experience() {
   return (
@@ -9,7 +10,9 @@ export function Experience() {
       <ol className="entries timeline">
         {content.work.map((role, i) => (
           <li className={i === 0 ? 'entry current' : 'entry'} key={role.team}>
-            <span className="node" aria-hidden="true" />
+            <span className="node" aria-hidden="true">
+              <RoleIcon name={role.icon} />
+            </span>
             <span className="when">{role.when}</span>
             <div>
               <h3>

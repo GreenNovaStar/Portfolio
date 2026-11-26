@@ -49,3 +49,46 @@ export function TerminalIcon() {
     </svg>
   );
 }
+
+const glyph = {
+  width: 18,
+  height: 18,
+  viewBox: '0 0 24 24',
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeWidth: 1.8,
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round',
+  'aria-hidden': true,
+} as const;
+
+/** Small line glyphs for the Work timeline nodes. */
+export function RoleIcon({ name }: { name: 'satellite' | 'agents' | 'transfer' }) {
+  if (name === 'satellite') {
+    return (
+      <svg {...glyph}>
+        <g transform="rotate(-45 12 12)">
+          <rect x="10" y="9" width="4" height="6" rx="0.5" />
+          <rect x="2.5" y="10" width="5" height="4" />
+          <rect x="16.5" y="10" width="5" height="4" />
+          <path d="M7.5 12H10M14 12h2.5" />
+        </g>
+      </svg>
+    );
+  }
+  if (name === 'agents') {
+    return (
+      <svg {...glyph}>
+        <circle cx="6" cy="7" r="2.5" />
+        <circle cx="18" cy="7" r="2.5" />
+        <circle cx="12" cy="18" r="2.5" />
+        <path d="M8.5 7h7M7.3 9.2l3.4 6.6M16.7 9.2l-3.4 6.6" />
+      </svg>
+    );
+  }
+  return (
+    <svg {...glyph}>
+      <path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5" />
+    </svg>
+  );
+}
