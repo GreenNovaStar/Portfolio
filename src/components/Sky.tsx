@@ -38,11 +38,111 @@ function starShadows(perPixel: number, spreads: readonly number[], drift: number
   return stars.join(',');
 }
 
+/** [x, y, spread]: x/y in 0–1 across the shape, spread is brightness. */
+type ShapeStar = readonly [number, number, number];
+
+interface Constellation {
+  name: string;
+  /** Width in px of the 0–1 box. */
+  size: number;
+  stars: readonly ShapeStar[];
+}
+
+// Rough proportions, as seen from the northern hemisphere (Crux from the south).
+const CONSTELLATIONS: readonly Constellation[] = [
+  {
+    name: 'Orion',
+    size: 150,
+    stars: [
+      [0.15, 0.1, 1.2], // Betelgeuse
+      [0.75, 0.15, 0.9], // Bellatrix
+      [0.45, 0, 0.5], // Meissa
+      [0.36, 0.5, 0.9], // Alnitak
+      [0.48, 0.46, 0.9], // Alnilam
+      [0.6, 0.42, 0.9], // Mintaka
+      [0.25, 0.92, 0.8], // Saiph
+      [0.85, 0.86, 1.2], // Rigel
+    ],
+  },
+  {
+    name: 'Big Dipper',
+    size: 210,
+    stars: [
+      [1, 0.1, 1], // Dubhe
+      [0.98, 0.45, 0.9], // Merak
+      [0.74, 0.5, 0.8], // Phecda
+      [0.71, 0.26, 0.6], // Megrez
+      [0.49, 0.22, 1], // Alioth
+      [0.28, 0.18, 0.9], // Mizar
+      [0.03, 0.36, 0.9], // Alkaid
+    ],
+  },
+  {
+    name: 'Cassiopeia',
+    size: 150,
+    stars: [
+      [0, 0.25, 0.8],
+      [0.25, 0.65, 0.9],
+      [0.5, 0.38, 1],
+      [0.76, 0.72, 0.9],
+      [1, 0.3, 0.8],
+    ],
+  },
+  {
+    name: 'Southern Cross',
+    size: 100,
+    stars: [
+      [0.5, 0, 1], // Gacrux
+      [0.56, 1, 1.2], // Acrux
+      [0.12, 0.42, 1], // Mimosa
+      [0.88, 0.5, 0.7], // Delta Crucis
+      [0.7, 0.74, 0.4], // Epsilon Crucis
+    ],
+  },
+  {
+    name: 'Pleiades',
+    size: 46,
+    stars: [
+      [0.15, 0.35, 0.6],
+      [0.4, 0.15, 0.8],
+      [0.55, 0.4, 0.9],
+      [0.75, 0.25, 0.6],
+      [0.45, 0.62, 0.7],
+      [0.85, 0.65, 0.6],
+      [0.25, 0.75, 0.5],
+    ],
+  },
+];
+
+/**
+ * One constellation per visit, as an easter egg among the near stars. It's
+ * placed in the upper part of the screen so it's visible without scrolling,
+ * and tilted a little so it reads as found rather than drawn.
+ */
+function constellationShadows(): string {
+  const shape = CONSTELLATIONS[Math.floor(Math.random() * CONSTELLATIONS.length)];
+  const size = shape.size;
+  const cx = rand(size, Math.max(size, window.innerWidth - size));
+  const cy = rand(size * 0.6, Math.max(size, window.innerHeight * 0.6));
+  const tilt = (rand(-25, 25) * Math.PI) / 180;
+  const cos = Math.cos(tilt);
+  const sin = Math.sin(tilt);
+  return shape.stars
+    .map(([x, y, spread]) => {
+      const dx = (x - 0.5) * size;
+      const dy = (y - 0.5) * size;
+      const px = Math.round(cx + dx * cos - dy * sin);
+      const py = Math.round(cy + dx * sin + dy * cos);
+      return `${px}px ${py}px 0 ${spread}px`;
+    })
+    .join(',');
+}
+
 function makeField() {
   return {
     // Mostly pinpricks with a few slightly larger ones.
     far: starShadows(1 / 7000, [0, 0, 0, 0, 0.4], 0.05),
-    near: starShadows(1 / 38000, [0.3, 0.5, 0.8], 0.12),
+    near: `${starShadows(1 / 38000, [0.3, 0.5, 0.8], 0.12)},${constellationShadows()}`,
   };
 }
 
@@ -74,7 +174,8 @@ function makePass(id: number): Pass {
 
 /**
  * Background starfield: two layers of randomly scattered stars that drift at
- * different speeds as the page scrolls (parallax), plus an occasional shooting star. The first
+ * different speeds as the page scrolls (parallax), with one hidden constellation
+ * among the near stars, plus an occasional shooting star. The first
  * comet comes 10–25s after load so a short visit can still catch one; after
  * that they're rare. Dispatch a `comet` event on window to launch one.
  *
