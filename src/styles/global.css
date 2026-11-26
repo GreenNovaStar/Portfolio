@@ -86,38 +86,33 @@
 
 @layer components {
   /*
-   * Starfield: two tiles of hand-placed stars at different sizes so the
-   * repeat isn't obvious. The second layer twinkles slowly.
+   * Starfield. Stars are scattered at random across the viewport by Sky.tsx
+   * and drawn as box-shadows on a 1px element per layer, so there's no tile
+   * to repeat. Two layers drift at different speeds as the page scrolls
+   * (--sy is the scroll offset); the near layer also twinkles.
    */
-  .sky,
-  .sky::after {
+  .sky {
     position: fixed;
     inset: 0;
     z-index: -1;
+    overflow: hidden;
     pointer-events: none;
   }
-  .sky {
-    overflow: hidden;
-    background-image:
-      radial-gradient(1px 1px at 20px 30px, var(--dot) 99%, transparent),
-      radial-gradient(1px 1px at 140px 80px, var(--dot) 99%, transparent),
-      radial-gradient(1.5px 1.5px at 60px 170px, var(--dot) 99%, transparent),
-      radial-gradient(1px 1px at 210px 210px, var(--dot) 99%, transparent),
-      radial-gradient(1px 1px at 250px 40px, var(--dot) 99%, transparent),
-      radial-gradient(1.5px 1.5px at 180px 140px, var(--dot) 99%, transparent);
-    background-size: 280px 260px;
-    /* --sy is the scroll offset, set from Sky.tsx; far stars drift slowest. */
-    background-position: 0 calc(var(--sy, 0) * -0.05px);
+  .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    border-radius: 50%;
   }
-  .sky::after {
-    content: '';
-    background-image:
-      radial-gradient(1.5px 1.5px at 90px 60px, var(--star) 99%, transparent),
-      radial-gradient(1px 1px at 300px 190px, var(--star) 99%, transparent),
-      radial-gradient(2px 2px at 220px 330px, var(--star) 99%, transparent),
-      radial-gradient(1px 1px at 30px 280px, var(--star) 99%, transparent);
-    background-size: 410px 380px;
-    background-position: 0 calc(var(--sy, 0) * -0.12px);
+  .stars-far {
+    color: var(--dot);
+    transform: translateY(calc(var(--sy, 0) * -0.05px));
+  }
+  .stars-near {
+    color: var(--star);
+    transform: translateY(calc(var(--sy, 0) * -0.12px));
     animation: twinkle 7s ease-in-out infinite alternate;
   }
   @keyframes twinkle {
@@ -683,7 +678,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .sky::after,
+    .stars-near,
     .current .node {
       animation: none;
     }

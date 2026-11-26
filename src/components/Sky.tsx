@@ -19,6 +19,32 @@ interface Pass {
 
 const rand = (min: number, max: number) => min + Math.random() * (max - min);
 
+/**
+ * Scatter stars over the viewport plus the extra height the layers travel
+ * while parallaxing. Each star is one box-shadow (color comes from the CSS
+ * `color`), so a whole layer is a single 1px element.
+ */
+function starShadows(perPixel: number, spreads: readonly number[], drift: number): string {
+  const width = window.innerWidth;
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const height = window.innerHeight + Math.max(400, scrollable * drift + 100);
+  const count = Math.round(width * height * perPixel);
+  const stars: string[] = [];
+  for (let i = 0; i < count; i++) {
+    const spread = spreads[Math.floor(Math.random() * spreads.length)];
+    stars.push(`${Math.round(rand(0, width))}px ${Math.round(rand(0, height))}px 0 ${spread}px`);
+  }
+  return stars.join(',');
+}
+
+function makeField() {
+  return {
+    // Mostly pinpricks with a few slightly larger ones.
+    far: starShadows(1 / 7000, [0, 0, 0, 0, 0.4], 0.05),
+    near: starShadows(1 / 38000, [0.3, 0.5, 0.8], 0.12),
+  };
+}
+
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function makeComet(id: number): Comet {
@@ -46,8 +72,8 @@ function makePass(id: number): Pass {
 }
 
 /**
- * Background starfield: two star layers that drift at different speeds as
- * the page scrolls (parallax), plus an occasional shooting star. The first
+ * Background starfield: two layers of randomly scattered stars that drift at
+ * different speeds as the page scrolls (parallax), plus an occasional shooting star. The first
  * comet comes 10–25s after load so a short visit can still catch one; after
  * that they're rare. Dispatch a `comet` event on window to launch one.
  *
@@ -57,9 +83,31 @@ function makePass(id: number): Pass {
  */
 export function Sky() {
   const ref = useRef<HTMLDivElement>(null);
+  const [field, setField] = useState<{ far: string; near: string } | null>(null);
   const [comets, setComets] = useState<Comet[]>([]);
   const [passes, setPasses] = useState<Pass[]>([]);
   const nextId = useRef(0);
+
+  useEffect(() => {
+    setField(makeField());
+    // Re-scatter only when the width changes, so a phone's address bar
+    // showing and hiding doesn't reshuffle the sky.
+    let width = window.innerWidth;
+    let timer = 0;
+    const onResize = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        if (window.innerWidth === width) return;
+        width = window.innerWidth;
+        setField(makeField());
+      }, 200);
+    };
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (reducedMotion()) return;
@@ -116,6 +164,12 @@ export function Sky() {
 
   return (
     <div className="sky" ref={ref} aria-hidden="true">
+      {field && (
+        <>
+          <span className="stars stars-far" style={{ boxShadow: field.far }} />
+          <span className="stars stars-near" style={{ boxShadow: field.near }} />
+        </>
+      )}
       {passes.map((p) => (
         <span
           key={p.id}
