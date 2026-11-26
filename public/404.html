@@ -83,12 +83,19 @@
         background: var(--accent);
         opacity: 0.25;
       }
-      /* The satellite sits on an arm rotated to a random point on the orbit
-         (set by the script below), then drifts outward off it. */
+      /* The satellite rides an arm that keeps orbiting from a random start
+         (set by the script below), slowing as it loses its grip, while the
+         satellite spirals outward off the ring. */
       .arm {
         position: absolute;
         inset: 0;
         transform: rotate(var(--start, 0deg));
+        animation: sweep 14s cubic-bezier(0.25, 0.6, 0.35, 1) forwards;
+      }
+      @keyframes sweep {
+        to {
+          transform: rotate(calc(var(--start, 0deg) + var(--sweep, 300deg)));
+        }
       }
       .stray {
         position: absolute;
@@ -100,12 +107,20 @@
         border-radius: 50%;
         background: var(--accent);
         box-shadow: 0 0 10px var(--accent);
-        animation: drift 8s ease-out 0.6s forwards;
+        animation: escape 14s linear forwards;
       }
-      @keyframes drift {
-        to {
-          transform: translate(var(--dx, 40px), var(--dy, -70px));
-          opacity: 0.4;
+      /* Hugs the ring for most of a lap, then peels away and fades. */
+      @keyframes escape {
+        55% {
+          transform: translateY(-6px);
+        }
+        80% {
+          transform: translateY(-30px);
+          opacity: 0.85;
+        }
+        100% {
+          transform: translateY(-90px);
+          opacity: 0.35;
         }
       }
       .code {
@@ -139,9 +154,15 @@
         color: var(--bg);
       }
       @media (prefers-reduced-motion: reduce) {
+        /* Still image of the end state: drifted off, above the planet. */
+        .arm {
+          animation: none;
+          transform: rotate(calc(var(--start, 0deg) + var(--sweep, 300deg)));
+        }
         .stray {
           animation: none;
-          transform: translate(calc(var(--dx, 40px) * 0.6), calc(var(--dy, -70px) * 0.6));
+          transform: translateY(-60px);
+          opacity: 0.5;
         }
       }
     </style>
@@ -162,11 +183,13 @@
           return min + Math.random() * (max - min);
         };
         var arm = document.getElementById('arm');
-        // Upper part of the orbit only, so it never drifts into the text below.
-        arm.style.setProperty('--start', rand(-110, 110) + 'deg');
-        // In the arm's frame "up" is away from the planet, so dy is outward.
-        arm.style.setProperty('--dx', rand(-50, 50) + 'px');
-        arm.style.setProperty('--dy', -rand(45, 85) + 'px');
+        // Choose where it breaks away (upper part of the orbit, clear of the
+        // text below), then back out a random lap length and direction, so
+        // the starting point is effectively random.
+        var end = rand(-60, 60);
+        var sweep = rand(220, 330) * (Math.random() < 0.5 ? 1 : -1);
+        arm.style.setProperty('--start', end - sweep + 'deg');
+        arm.style.setProperty('--sweep', sweep + 'deg');
       })();
     </script>
   </body>
