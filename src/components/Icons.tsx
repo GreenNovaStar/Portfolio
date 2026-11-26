@@ -67,12 +67,14 @@ export function RoleIcon({ name }: { name: 'satellite' | 'agents' | 'transfer' }
   if (name === 'satellite') {
     return (
       <svg {...glyph}>
-        <g transform="rotate(-45 12 12)">
-          <rect x="10" y="9" width="4" height="6" rx="0.5" />
-          <rect x="2.5" y="10" width="5" height="4" />
-          <rect x="16.5" y="10" width="5" height="4" />
-          <path d="M7.5 12H10M14 12h2.5" />
-        </g>
+        {/* Body, two solar panels on the diagonal (each with a divider), and
+            signal arcs toward the ground in the lower-left corner. */}
+        <path d="M9 12l3-3 3 3-3 3z" />
+        <path d="M3 6l3-3 4 4-3 3z" />
+        <path d="M14 17l3-3 4 4-3 3z" />
+        <path d="M5 8l3-3M16 19l3-3" />
+        <path d="M8.5 8.5l2 2M13.5 13.5l2 2" />
+        <path d="M3 15a6 6 0 0 1 6 6M3 19a2 2 0 0 1 2 2" />
       </svg>
     );
   }
