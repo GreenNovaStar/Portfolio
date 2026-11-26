@@ -4,13 +4,14 @@ import { content } from './content';
 export function greetConsole(): void {
   const accent = 'color:#b69cff;font-weight:600';
   const dim = 'color:#a19e99';
-  const art = [
-    ' ____  _   _ ',
-    '| __ )\ \ / /',
-    '|  _ \ \ V / ',
-    '| |_) | | |  ',
-    '|____/  |_|  ',
-  ].join('\n');
+  // String.raw keeps the backslashes literal; in a normal string a
+  // backslash before a space is an escape that silently drops it.
+  const art = String.raw`
+ ____  _   _
+| __ )\ \ / /
+|  _ \ \ V /
+| |_) | | |
+|____/  |_|`.slice(1);
 
   console.log(`%c${art}`, `${accent};font-family:monospace`);
   console.log(
